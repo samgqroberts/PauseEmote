@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		946BA6C31669A927000D7768 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C21669A927000D7768 /* UIKit.framework */; };
+		946BA6C51669A927000D7768 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C41669A927000D7768 /* Foundation.framework */; };
+		946BA6C71669A927000D7768 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C61669A927000D7768 /* CoreGraphics.framework */; };
+		946BA6CD1669A927000D7768 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6CB1669A927000D7768 /* InfoPlist.strings */; };
+		946BA6CF1669A927000D7768 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BA6CE1669A927000D7768 /* main.m */; };
+		946BA6D31669A927000D7768 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BA6D21669A927000D7768 /* AppDelegate.m */; };
+		946BA6D51669A927000D7768 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6D41669A927000D7768 /* Default.png */; };
+		946BA6D71669A927000D7768 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6D61669A927000D7768 /* Default@2x.png */; };
+		946BA6D91669A927000D7768 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6D81669A927000D7768 /* Default-568h@2x.png */; };
+		946BA6DC1669A927000D7768 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6DA1669A927000D7768 /* MainStoryboard_iPhone.storyboard */; };
+		946BA6DF1669A927000D7768 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6DD1669A927000D7768 /* MainStoryboard_iPad.storyboard */; };
+		946BA6E21669A927000D7768 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BA6E11669A927000D7768 /* ViewController.m */; };
+		946BA6EA1669A927000D7768 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6E91669A927000D7768 /* SenTestingKit.framework */; };
+		946BA6EB1669A927000D7768 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C21669A927000D7768 /* UIKit.framework */; };
+		946BA6EC1669A927000D7768 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C41669A927000D7768 /* Foundation.framework */; };
+		946BA6F41669A927000D7768 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6F21669A927000D7768 /* InfoPlist.strings */; };
+		946BA6F71669A927000D7768 /* Pause_Emote_v03_01Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		946BA6ED1669A927000D7768 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 946BA6B51669A927000D7768 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 946BA6BD1669A927000D7768;
+			remoteInfo = "Pause Emote v03.01";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		946BA6BE1669A927000D7768 /* Pause Emote v03.01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pause Emote v03.01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		946BA6C21669A927000D7768 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		946BA6C41669A927000D7768 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		946BA6C61669A927000D7768 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		946BA6CA1669A927000D7768 /* Pause Emote v03.01-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pause Emote v03.01-Info.plist"; sourceTree = "<group>"; };
+		946BA6CC1669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		946BA6CE1669A927000D7768 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		946BA6D01669A927000D7768 /* Pause Emote v03.01-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pause Emote v03.01-Prefix.pch"; sourceTree = "<group>"; };
+		946BA6D11669A927000D7768 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		946BA6D21669A927000D7768 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		946BA6D41669A927000D7768 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		946BA6D61669A927000D7768 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		946BA6D81669A927000D7768 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		946BA6DB1669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		946BA6DE1669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		946BA6E01669A927000D7768 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		946BA6E11669A927000D7768 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		946BA6E81669A927000D7768 /* Pause Emote v03.01Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pause Emote v03.01Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		946BA6E91669A927000D7768 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		946BA6F11669A927000D7768 /* Pause Emote v03.01Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pause Emote v03.01Tests-Info.plist"; sourceTree = "<group>"; };
+		946BA6F31669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		946BA6F51669A927000D7768 /* Pause_Emote_v03_01Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pause_Emote_v03_01Tests.h; sourceTree = "<group>"; };
+		946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pause_Emote_v03_01Tests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		946BA6BB1669A927000D7768 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				946BA6C31669A927000D7768 /* UIKit.framework in Frameworks */,
+				946BA6C51669A927000D7768 /* Foundation.framework in Frameworks */,
+				946BA6C71669A927000D7768 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		946BA6E41669A927000D7768 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				946BA6EA1669A927000D7768 /* SenTestingKit.framework in Frameworks */,
+				946BA6EB1669A927000D7768 /* UIKit.framework in Frameworks */,
+				946BA6EC1669A927000D7768 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		946BA6B31669A927000D7768 = {
+			isa = PBXGroup;
+			children = (
+				946BA6C81669A927000D7768 /* Pause Emote v03.01 */,
+				946BA6EF1669A927000D7768 /* Pause Emote v03.01Tests */,
+				946BA6C11669A927000D7768 /* Frameworks */,
+				946BA6BF1669A927000D7768 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		946BA6BF1669A927000D7768 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				946BA6BE1669A927000D7768 /* Pause Emote v03.01.app */,
+				946BA6E81669A927000D7768 /* Pause Emote v03.01Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		946BA6C11669A927000D7768 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				946BA6C21669A927000D7768 /* UIKit.framework */,
+				946BA6C41669A927000D7768 /* Foundation.framework */,
+				946BA6C61669A927000D7768 /* CoreGraphics.framework */,
+				946BA6E91669A927000D7768 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		946BA6C81669A927000D7768 /* Pause Emote v03.01 */ = {
+			isa = PBXGroup;
+			children = (
+				946BA6D11669A927000D7768 /* AppDelegate.h */,
+				946BA6D21669A927000D7768 /* AppDelegate.m */,
+				946BA6DA1669A927000D7768 /* MainStoryboard_iPhone.storyboard */,
+				946BA6DD1669A927000D7768 /* MainStoryboard_iPad.storyboard */,
+				946BA6E01669A927000D7768 /* ViewController.h */,
+				946BA6E11669A927000D7768 /* ViewController.m */,
+				946BA6C91669A927000D7768 /* Supporting Files */,
+			);
+			path = "Pause Emote v03.01";
+			sourceTree = "<group>";
+		};
+		946BA6C91669A927000D7768 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				946BA6CA1669A927000D7768 /* Pause Emote v03.01-Info.plist */,
+				946BA6CB1669A927000D7768 /* InfoPlist.strings */,
+				946BA6CE1669A927000D7768 /* main.m */,
+				946BA6D01669A927000D7768 /* Pause Emote v03.01-Prefix.pch */,
+				946BA6D41669A927000D7768 /* Default.png */,
+				946BA6D61669A927000D7768 /* Default@2x.png */,
+				946BA6D81669A927000D7768 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		946BA6EF1669A927000D7768 /* Pause Emote v03.01Tests */ = {
+			isa = PBXGroup;
+			children = (
+				946BA6F51669A927000D7768 /* Pause_Emote_v03_01Tests.h */,
+				946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */,
+				946BA6F01669A927000D7768 /* Supporting Files */,
+			);
+			path = "Pause Emote v03.01Tests";
+			sourceTree = "<group>";
+		};
+		946BA6F01669A927000D7768 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				946BA6F11669A927000D7768 /* Pause Emote v03.01Tests-Info.plist */,
+				946BA6F21669A927000D7768 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		946BA6BD1669A927000D7768 /* Pause Emote v03.01 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 946BA6FA1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01" */;
+			buildPhases = (
+				946BA6BA1669A927000D7768 /* Sources */,
+				946BA6BB1669A927000D7768 /* Frameworks */,
+				946BA6BC1669A927000D7768 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pause Emote v03.01";
+			productName = "Pause Emote v03.01";
+			productReference = 946BA6BE1669A927000D7768 /* Pause Emote v03.01.app */;
+			productType = "com.apple.product-type.application";
+		};
+		946BA6E71669A927000D7768 /* Pause Emote v03.01Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 946BA6FD1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01Tests" */;
+			buildPhases = (
+				946BA6E31669A927000D7768 /* Sources */,
+				946BA6E41669A927000D7768 /* Frameworks */,
+				946BA6E51669A927000D7768 /* Resources */,
+				946BA6E61669A927000D7768 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				946BA6EE1669A927000D7768 /* PBXTargetDependency */,
+			);
+			name = "Pause Emote v03.01Tests";
+			productName = "Pause Emote v03.01Tests";
+			productReference = 946BA6E81669A927000D7768 /* Pause Emote v03.01Tests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		946BA6B51669A927000D7768 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Andy Law";
+			};
+			buildConfigurationList = 946BA6B81669A927000D7768 /* Build configuration list for PBXProject "Pause Emote v03.01" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 946BA6B31669A927000D7768;
+			productRefGroup = 946BA6BF1669A927000D7768 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				946BA6BD1669A927000D7768 /* Pause Emote v03.01 */,
+				946BA6E71669A927000D7768 /* Pause Emote v03.01Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		946BA6BC1669A927000D7768 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				946BA6CD1669A927000D7768 /* InfoPlist.strings in Resources */,
+				946BA6D51669A927000D7768 /* Default.png in Resources */,
+				946BA6D71669A927000D7768 /* Default@2x.png in Resources */,
+				946BA6D91669A927000D7768 /* Default-568h@2x.png in Resources */,
+				946BA6DC1669A927000D7768 /* MainStoryboard_iPhone.storyboard in Resources */,
+				946BA6DF1669A927000D7768 /* MainStoryboard_iPad.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		946BA6E51669A927000D7768 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				946BA6F41669A927000D7768 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		946BA6E61669A927000D7768 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		946BA6BA1669A927000D7768 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				946BA6CF1669A927000D7768 /* main.m in Sources */,
+				946BA6D31669A927000D7768 /* AppDelegate.m in Sources */,
+				946BA6E21669A927000D7768 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		946BA6E31669A927000D7768 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				946BA6F71669A927000D7768 /* Pause_Emote_v03_01Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		946BA6EE1669A927000D7768 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 946BA6BD1669A927000D7768 /* Pause Emote v03.01 */;
+			targetProxy = 946BA6ED1669A927000D7768 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		946BA6CB1669A927000D7768 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				946BA6CC1669A927000D7768 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		946BA6DA1669A927000D7768 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				946BA6DB1669A927000D7768 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		946BA6DD1669A927000D7768 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				946BA6DE1669A927000D7768 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		946BA6F21669A927000D7768 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				946BA6F31669A927000D7768 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		946BA6F81669A927000D7768 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		946BA6F91669A927000D7768 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		946BA6FB1669A927000D7768 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
+				INFOPLIST_FILE = "Pause Emote v03.01/Pause Emote v03.01-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		946BA6FC1669A927000D7768 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
+				INFOPLIST_FILE = "Pause Emote v03.01/Pause Emote v03.01-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		946BA6FE1669A927000D7768 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pause Emote v03.01.app/Pause Emote v03.01";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
+				INFOPLIST_FILE = "Pause Emote v03.01Tests/Pause Emote v03.01Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		946BA6FF1669A927000D7768 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pause Emote v03.01.app/Pause Emote v03.01";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
+				INFOPLIST_FILE = "Pause Emote v03.01Tests/Pause Emote v03.01Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		946BA6B81669A927000D7768 /* Build configuration list for PBXProject "Pause Emote v03.01" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				946BA6F81669A927000D7768 /* Debug */,
+				946BA6F91669A927000D7768 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		946BA6FA1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				946BA6FB1669A927000D7768 /* Debug */,
+				946BA6FC1669A927000D7768 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		946BA6FD1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				946BA6FE1669A927000D7768 /* Debug */,
+				946BA6FF1669A927000D7768 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 946BA6B51669A927000D7768 /* Project object */;
+}
