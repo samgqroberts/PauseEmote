@@ -13,7 +13,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [self customizeAppearance];
+    
     return YES;
+}
+
+// customize the appearance of the nav bar
+-(void)customizeAppearance {
+
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

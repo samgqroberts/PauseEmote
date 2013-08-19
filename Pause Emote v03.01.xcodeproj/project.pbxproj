@@ -25,6 +25,16 @@
 		946BA6EC1669A927000D7768 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C41669A927000D7768 /* Foundation.framework */; };
 		946BA6F41669A927000D7768 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6F21669A927000D7768 /* InfoPlist.strings */; };
 		946BA6F71669A927000D7768 /* Pause_Emote_v03_01Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */; };
+		BEC62FE217C27BE40010B89F /* PELogFeelingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */; };
+		BEC62FED17C297DE0010B89F /* NavBarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FEC17C297DE0010B89F /* NavBarBackground.png */; };
+		BEC62FF017C299C30010B89F /* PENavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC62FEF17C299C30010B89F /* PENavigationController.m */; };
+		BEC62FF217C29FB80010B89F /* LogFeelingsBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FF117C29FB80010B89F /* LogFeelingsBackground.png */; };
+		BEC62FF517C2A0B10010B89F /* PEUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC62FF417C2A0B10010B89F /* PEUtil.m */; };
+		BEC62FF717C2A4C30010B89F /* CellBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FF617C2A4C30010B89F /* CellBackground.png */; };
+		BEC62FFA17C2B3770010B89F /* PEToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC62FF917C2B3770010B89F /* PEToolBar.m */; };
+		BEC62FFC17C2B4EA0010B89F /* CalendarIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FFB17C2B4EA0010B89F /* CalendarIcon.png */; };
+		BEC62FFE17C2B9D40010B89F /* AddIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FFD17C2B9D40010B89F /* AddIcon.png */; };
+		BEC6300417C2BDBF0010B89F /* SettingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6300317C2BDBF0010B89F /* SettingsIcon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +73,20 @@
 		946BA6F31669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		946BA6F51669A927000D7768 /* Pause_Emote_v03_01Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pause_Emote_v03_01Tests.h; sourceTree = "<group>"; };
 		946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pause_Emote_v03_01Tests.m; sourceTree = "<group>"; };
+		BEC62FE017C27BE40010B89F /* PELogFeelingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PELogFeelingsViewController.h; sourceTree = "<group>"; };
+		BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PELogFeelingsViewController.m; sourceTree = "<group>"; };
+		BEC62FEC17C297DE0010B89F /* NavBarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBackground.png; sourceTree = SOURCE_ROOT; };
+		BEC62FEE17C299C30010B89F /* PENavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PENavigationController.h; sourceTree = "<group>"; };
+		BEC62FEF17C299C30010B89F /* PENavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PENavigationController.m; sourceTree = "<group>"; };
+		BEC62FF117C29FB80010B89F /* LogFeelingsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogFeelingsBackground.png; sourceTree = SOURCE_ROOT; };
+		BEC62FF317C2A0B10010B89F /* PEUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEUtil.h; sourceTree = "<group>"; };
+		BEC62FF417C2A0B10010B89F /* PEUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEUtil.m; sourceTree = "<group>"; };
+		BEC62FF617C2A4C30010B89F /* CellBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CellBackground.png; sourceTree = SOURCE_ROOT; };
+		BEC62FF817C2B3770010B89F /* PEToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEToolBar.h; sourceTree = "<group>"; };
+		BEC62FF917C2B3770010B89F /* PEToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEToolBar.m; sourceTree = "<group>"; };
+		BEC62FFB17C2B4EA0010B89F /* CalendarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CalendarIcon.png; sourceTree = SOURCE_ROOT; };
+		BEC62FFD17C2B9D40010B89F /* AddIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddIcon.png; sourceTree = SOURCE_ROOT; };
+		BEC6300317C2BDBF0010B89F /* SettingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsIcon.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +116,14 @@
 		946BA6B31669A927000D7768 = {
 			isa = PBXGroup;
 			children = (
+				BEC62FF817C2B3770010B89F /* PEToolBar.h */,
+				BEC62FF917C2B3770010B89F /* PEToolBar.m */,
+				BEC62FF317C2A0B10010B89F /* PEUtil.h */,
+				BEC62FF417C2A0B10010B89F /* PEUtil.m */,
+				BEC62FEE17C299C30010B89F /* PENavigationController.h */,
+				BEC62FEF17C299C30010B89F /* PENavigationController.m */,
+				BEC62FE017C27BE40010B89F /* PELogFeelingsViewController.h */,
+				BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */,
 				00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */,
 				946BA6C81669A927000D7768 /* Pause Emote v03.01 */,
 				946BA6EF1669A927000D7768 /* Pause Emote v03.01Tests */,
@@ -137,6 +169,12 @@
 		946BA6C91669A927000D7768 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BEC6300317C2BDBF0010B89F /* SettingsIcon.png */,
+				BEC62FFD17C2B9D40010B89F /* AddIcon.png */,
+				BEC62FFB17C2B4EA0010B89F /* CalendarIcon.png */,
+				BEC62FF617C2A4C30010B89F /* CellBackground.png */,
+				BEC62FF117C29FB80010B89F /* LogFeelingsBackground.png */,
+				BEC62FEC17C297DE0010B89F /* NavBarBackground.png */,
 				946BA6CA1669A927000D7768 /* Pause Emote v03.01-Info.plist */,
 				946BA6CB1669A927000D7768 /* InfoPlist.strings */,
 				946BA6CE1669A927000D7768 /* main.m */,
@@ -246,6 +284,12 @@
 				946BA6DC1669A927000D7768 /* MainStoryboard_iPhone.storyboard in Resources */,
 				946BA6DF1669A927000D7768 /* MainStoryboard_iPad.storyboard in Resources */,
 				00FB1C8C16E52766009741CF /* pe logo horizontal.png in Resources */,
+				BEC62FED17C297DE0010B89F /* NavBarBackground.png in Resources */,
+				BEC62FF217C29FB80010B89F /* LogFeelingsBackground.png in Resources */,
+				BEC62FF717C2A4C30010B89F /* CellBackground.png in Resources */,
+				BEC62FFC17C2B4EA0010B89F /* CalendarIcon.png in Resources */,
+				BEC62FFE17C2B9D40010B89F /* AddIcon.png in Resources */,
+				BEC6300417C2BDBF0010B89F /* SettingsIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +327,10 @@
 				946BA6CF1669A927000D7768 /* main.m in Sources */,
 				946BA6D31669A927000D7768 /* AppDelegate.m in Sources */,
 				946BA6E21669A927000D7768 /* ViewController.m in Sources */,
+				BEC62FE217C27BE40010B89F /* PELogFeelingsViewController.m in Sources */,
+				BEC62FF017C299C30010B89F /* PENavigationController.m in Sources */,
+				BEC62FF517C2A0B10010B89F /* PEUtil.m in Sources */,
+				BEC62FFA17C2B3770010B89F /* PEToolBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
