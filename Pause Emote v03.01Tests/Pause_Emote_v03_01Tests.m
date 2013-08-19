@@ -2,8 +2,8 @@
 //  Pause_Emote_v03_01Tests.m
 //  Pause Emote v03.01Tests
 //
-//  Created by Andy Law on 11/30/12.
-//  Copyright (c) 2012 Andy Law. All rights reserved.
+//  Created by Amy Goldfeder on 11/30/12.
+//  Copyright (c) 2012 Amy Goldfeder. All rights reserved.
 //
 
 #import "Pause_Emote_v03_01Tests.h"

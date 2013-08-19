@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00FB1C8C16E52766009741CF /* pe logo horizontal.png in Resources */ = {isa = PBXBuildFile; fileRef = 00FB1C8B16E52766009741CF /* pe logo horizontal.png */; };
 		946BA6C31669A927000D7768 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C21669A927000D7768 /* UIKit.framework */; };
 		946BA6C51669A927000D7768 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C41669A927000D7768 /* Foundation.framework */; };
 		946BA6C71669A927000D7768 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 946BA6C61669A927000D7768 /* CoreGraphics.framework */; };
 		946BA6CD1669A927000D7768 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6CB1669A927000D7768 /* InfoPlist.strings */; };
 		946BA6CF1669A927000D7768 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BA6CE1669A927000D7768 /* main.m */; };
 		946BA6D31669A927000D7768 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BA6D21669A927000D7768 /* AppDelegate.m */; };
-		946BA6D51669A927000D7768 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6D41669A927000D7768 /* Default.png */; };
+		946BA6D51669A927000D7768 /* Image View - Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6D41669A927000D7768 /* Image View - Default-568h@2x.png */; };
 		946BA6D71669A927000D7768 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6D61669A927000D7768 /* Default@2x.png */; };
 		946BA6D91669A927000D7768 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6D81669A927000D7768 /* Default-568h@2x.png */; };
 		946BA6DC1669A927000D7768 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6DA1669A927000D7768 /* MainStoryboard_iPhone.storyboard */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		00FB1C8B16E52766009741CF /* pe logo horizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pe logo horizontal.png"; sourceTree = SOURCE_ROOT; };
 		946BA6BE1669A927000D7768 /* Pause Emote v03.01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pause Emote v03.01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		946BA6C21669A927000D7768 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		946BA6C41669A927000D7768 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -47,7 +50,7 @@
 		946BA6D01669A927000D7768 /* Pause Emote v03.01-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pause Emote v03.01-Prefix.pch"; sourceTree = "<group>"; };
 		946BA6D11669A927000D7768 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		946BA6D21669A927000D7768 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		946BA6D41669A927000D7768 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		946BA6D41669A927000D7768 /* Image View - Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Image View - Default-568h@2x.png"; sourceTree = "<group>"; };
 		946BA6D61669A927000D7768 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		946BA6D81669A927000D7768 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		946BA6DB1669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 		946BA6B31669A927000D7768 = {
 			isa = PBXGroup;
 			children = (
+				00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */,
 				946BA6C81669A927000D7768 /* Pause Emote v03.01 */,
 				946BA6EF1669A927000D7768 /* Pause Emote v03.01Tests */,
 				946BA6C11669A927000D7768 /* Frameworks */,
@@ -137,7 +141,8 @@
 				946BA6CB1669A927000D7768 /* InfoPlist.strings */,
 				946BA6CE1669A927000D7768 /* main.m */,
 				946BA6D01669A927000D7768 /* Pause Emote v03.01-Prefix.pch */,
-				946BA6D41669A927000D7768 /* Default.png */,
+				946BA6D41669A927000D7768 /* Image View - Default-568h@2x.png */,
+				00FB1C8B16E52766009741CF /* pe logo horizontal.png */,
 				946BA6D61669A927000D7768 /* Default@2x.png */,
 				946BA6D81669A927000D7768 /* Default-568h@2x.png */,
 			);
@@ -209,7 +214,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0450;
-				ORGANIZATIONNAME = "Andy Law";
+				ORGANIZATIONNAME = "Pause Emote";
 			};
 			buildConfigurationList = 946BA6B81669A927000D7768 /* Build configuration list for PBXProject "Pause Emote v03.01" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -235,11 +240,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				946BA6CD1669A927000D7768 /* InfoPlist.strings in Resources */,
-				946BA6D51669A927000D7768 /* Default.png in Resources */,
+				946BA6D51669A927000D7768 /* Image View - Default-568h@2x.png in Resources */,
 				946BA6D71669A927000D7768 /* Default@2x.png in Resources */,
 				946BA6D91669A927000D7768 /* Default-568h@2x.png in Resources */,
 				946BA6DC1669A927000D7768 /* MainStoryboard_iPhone.storyboard in Resources */,
 				946BA6DF1669A927000D7768 /* MainStoryboard_iPad.storyboard in Resources */,
+				00FB1C8C16E52766009741CF /* pe logo horizontal.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,7 +349,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -358,6 +365,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "77E76354-86BB-428E-BAA2-F1845CD903F9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E76354-86BB-428E-BAA2-F1845CD903F9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -372,7 +381,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -380,6 +390,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "77E76354-86BB-428E-BAA2-F1845CD903F9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E76354-86BB-428E-BAA2-F1845CD903F9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -389,10 +401,14 @@
 		946BA6FB1669A927000D7768 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
 				INFOPLIST_FILE = "Pause Emote v03.01/Pause Emote v03.01-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "77E76354-86BB-428E-BAA2-F1845CD903F9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E76354-86BB-428E-BAA2-F1845CD903F9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -400,10 +416,12 @@
 		946BA6FC1669A927000D7768 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
 				INFOPLIST_FILE = "Pause Emote v03.01/Pause Emote v03.01-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "77E76354-86BB-428E-BAA2-F1845CD903F9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -461,6 +479,7 @@
 				946BA6FC1669A927000D7768 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		946BA6FD1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01Tests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +488,7 @@
 				946BA6FF1669A927000D7768 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
