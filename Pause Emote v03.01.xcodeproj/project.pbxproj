@@ -35,6 +35,7 @@
 		BEC62FFC17C2B4EA0010B89F /* CalendarIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FFB17C2B4EA0010B89F /* CalendarIcon.png */; };
 		BEC62FFE17C2B9D40010B89F /* AddIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FFD17C2B9D40010B89F /* AddIcon.png */; };
 		BEC6300417C2BDBF0010B89F /* SettingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6300317C2BDBF0010B89F /* SettingsIcon.png */; };
+		BEC6300A17C2C5B40010B89F /* PEFeelingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6300917C2C5B40010B89F /* PEFeelingsCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,8 @@
 		BEC62FFB17C2B4EA0010B89F /* CalendarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CalendarIcon.png; sourceTree = SOURCE_ROOT; };
 		BEC62FFD17C2B9D40010B89F /* AddIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddIcon.png; sourceTree = SOURCE_ROOT; };
 		BEC6300317C2BDBF0010B89F /* SettingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsIcon.png; sourceTree = SOURCE_ROOT; };
+		BEC6300817C2C5B40010B89F /* PEFeelingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEFeelingsCell.h; sourceTree = "<group>"; };
+		BEC6300917C2C5B40010B89F /* PEFeelingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEFeelingsCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,8 @@
 		946BA6B31669A927000D7768 = {
 			isa = PBXGroup;
 			children = (
+				BEC6300817C2C5B40010B89F /* PEFeelingsCell.h */,
+				BEC6300917C2C5B40010B89F /* PEFeelingsCell.m */,
 				BEC62FF817C2B3770010B89F /* PEToolBar.h */,
 				BEC62FF917C2B3770010B89F /* PEToolBar.m */,
 				BEC62FF317C2A0B10010B89F /* PEUtil.h */,
@@ -331,6 +336,7 @@
 				BEC62FF017C299C30010B89F /* PENavigationController.m in Sources */,
 				BEC62FF517C2A0B10010B89F /* PEUtil.m in Sources */,
 				BEC62FFA17C2B3770010B89F /* PEToolBar.m in Sources */,
+				BEC6300A17C2C5B40010B89F /* PEFeelingsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,4 +10,6 @@
 
 @interface PELogFeelingsViewController : UITableViewController
 
+@property float cellHeight;
+
 @end

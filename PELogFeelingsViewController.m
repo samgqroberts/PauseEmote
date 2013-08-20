@@ -9,20 +9,29 @@
 #import "PELogFeelingsViewController.h"
 #import "PEUtil.h"
 #import "PEToolBar.h"
+#import "PEFeelingsCell.h"
+
+#define SEPARATOR_HEIGHT 10.0
+#define CELL_KERNING -2.8
+#define CELL_TEXT_COLOR @"#d5d5d6"
+#define JOY_COLOR @"#ffcb50"
+#define SAD_COLOR @"#155d6d"
+#define HOPE_COLOR @"#009a52"
+#define ANXIOUS_COLOR @"#f46331"
+#define CALM_COLOR @"#673363"
+#define ANGER_COLOR @"#f00729"
+#define CONFUSED_COLOR @"#1a7a7a"
+#define SHAME_COLOR @"#ce1345"
+#define CUSTOM_FEELING_COLOR @"#333333"
 
 @interface PELogFeelingsViewController ()
 
-@property float separatorHeight;
-@property float cellKerning;
-@property float cellHeight;
 @property UIColor *cellTextColor;
 
 @end
 
 @implementation PELogFeelingsViewController
 
-@synthesize separatorHeight;
-@synthesize cellKerning;
 @synthesize cellHeight;
 @synthesize cellTextColor;
 
@@ -45,19 +54,14 @@
     // customize separatorss
     self.tableView.separatorColor = [UIColor clearColor];
     
-    // initialize separator cell properties
-    separatorHeight = 10.0;
-    
     // initialize content cell properties
     CGRect screenBound = [[UIScreen mainScreen] bounds];
     CGSize screenSize = screenBound.size;
     // CGFloat screenWidth = screenSize.width;
     CGFloat screenHeight = screenSize.height;
-    cellHeight = (screenHeight - self.navigationController.navigationBar.frame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height - separatorHeight*10) / 10;
+    cellHeight = (screenHeight - self.navigationController.navigationBar.frame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height - SEPARATOR_HEIGHT*10) / 10;
     
-    cellTextColor = [PEUtil colorFromHexString:@"#d5d5d6"];
-    
-    cellKerning = -2.3;
+    cellTextColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LogFeelingsBackground.png"]];
     self.tableView.backgroundView = imageView;
@@ -114,7 +118,14 @@
     [toolbar setBackgroundColor: [UIColor clearColor]];
     toolbar.translucent = YES;
     
-    buttons = [[NSMutableArray alloc] initWithCapacity: 3];
+    buttons = [[NSMutableArray alloc] initWithCapacity: 4];
+    
+    spacer = [[UIBarButtonItem alloc]
+              initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+              target:nil
+              action:nil];
+    spacer.width = -9;
+    [buttons addObject:spacer];
     
     UIImage *settingsImage = [UIImage imageNamed:@"SettingsIcon.png"];
     UIButton *settings = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -168,7 +179,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row%2 == 0) {
-        return separatorHeight;
+        return SEPARATOR_HEIGHT;
     }
     return cellHeight;
 }
@@ -176,19 +187,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"LogFeelingsCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    PEFeelingsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     // separator cells
     if (indexPath.row%2 == 0) {
         cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     
+    UIColor *intensityColor = [UIColor clearColor];
     cell.backgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"CellBackground.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
-    //cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"cell_pressed.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
-    
-    cell.frame=CGRectMake(23,0,tableView.bounds.size.width,23);
     
     cell.textLabel.textColor = cellTextColor;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:37.0];
@@ -196,41 +206,52 @@
     NSString *cellLabel = @"";
     
     if (indexPath.row/2 == 0) {
+        intensityColor = [PEUtil colorFromHexString:JOY_COLOR];
         cellLabel = @"JOY";
     }
     if (indexPath.row/2 == 1) {
+        intensityColor = [PEUtil colorFromHexString:SAD_COLOR];
         cellLabel = @"SAD";
     }
     if (indexPath.row/2 == 2) {
+        intensityColor = [PEUtil colorFromHexString:HOPE_COLOR];
         cellLabel = @"HOPE";
     }
     if (indexPath.row/2 == 3) {
+        intensityColor = [PEUtil colorFromHexString:ANXIOUS_COLOR];
         cellLabel = @"ANXIOUS";
     }
     if (indexPath.row/2 == 4) {
+        intensityColor = [PEUtil colorFromHexString:CALM_COLOR];
         cellLabel = @"CALM";
     }
     if (indexPath.row/2 == 5) {
+        intensityColor = [PEUtil colorFromHexString:ANGER_COLOR];
         cellLabel = @"ANGER";
     }
     if (indexPath.row/2 == 6) {
+        intensityColor = [PEUtil colorFromHexString:CONFUSED_COLOR];
         cellLabel = @"CONFUSED";
     }
     if (indexPath.row/2 == 7) {
+        intensityColor = [PEUtil colorFromHexString:SHAME_COLOR];
         cellLabel = @"SHAME";
     }
     if (indexPath.row/2 == 8) {
+        intensityColor = [PEUtil colorFromHexString:CUSTOM_FEELING_COLOR];
         cellLabel = @"PICK YOUR OWN";
     }
     if (indexPath.row/2 == 9) {
         cellLabel = @"inputTODO";
     }
     
+    [cell initIntensity:intensityColor];
+    
     // apply kerning to cell label
     NSMutableAttributedString *attributedString;
     attributedString = [[NSMutableAttributedString alloc] initWithString:cellLabel];
     [attributedString addAttribute:NSKernAttributeName
-                             value:[NSNumber numberWithFloat:cellKerning]
+                             value:[NSNumber numberWithFloat:CELL_KERNING]
                              range:NSMakeRange(0, [cellLabel length])];
     
     cell.textLabel.attributedText = attributedString;
