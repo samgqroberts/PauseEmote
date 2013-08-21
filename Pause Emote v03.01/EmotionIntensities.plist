@@ -6,73 +6,73 @@
 	<array>
 		<string>Not Happy</string>
 		<string>Pretty Good</string>
-		<string>I&apos;m alright</string>
-		<string>Feeling really good</string>
-		<string>I&apos;m really happy!</string>
+		<string>I&apos;m Alright</string>
+		<string>Feeling Really Good</string>
+		<string>I&apos;m really Happy!</string>
 	</array>
 	<key>Sad</key>
 	<array>
 		<string>Not Sad</string>
-		<string>Not so sad</string>
+		<string>Not so Sad</string>
 		<string>I&apos;m alright</string>
-		<string>Feeling sad</string>
-		<string>I&apos;m really sad...</string>
+		<string>Feeling Sad</string>
+		<string>I&apos;m really Sad...</string>
 	</array>
 	<key>Hope</key>
 	<array>
-		<string>Not feeling hope</string>
+		<string>Not feeling Hope</string>
 		<string>Things are looking up</string>
-		<string>I&apos;m getting excited...</string>
-		<string>Can&apos;t wait for the future</string>
+		<string>I&apos;m getting excited</string>
+		<string>The future is bright!</string>
 		<string>Anything is possible!!</string>
 	</array>
 	<key>Anxious</key>
 	<array>
-		<string>Not anxious</string>
-		<string>Pretty calm</string>
-		<string>I&apos;m getting stirred</string>
-		<string>Pretty anxious</string>
-		<string>Freaking out!</string>
+		<string>Not Anxious</string>
+		<string>Feeling worried</string>
+		<string>I&apos;m getting stirred up</string>
+		<string>Pretty Anxious</string>
+		<string>Really panicked!!</string>
 	</array>
 	<key>Calm</key>
 	<array>
-		<string>Not calm</string>
-		<string>Feeling Pleasant</string>
-		<string>Chill</string>
+		<string>Not Calm</string>
+		<string>Feeling pleasant</string>
+		<string>Really chill</string>
 		<string>Very peaceful</string>
 		<string>Super relaxed</string>
 	</array>
 	<key>Pick Your Own</key>
 	<array>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
-		<string></string>
+		<string>Not very</string>
+		<string>A little bit</string>
+		<string>A little bit more</string>
+		<string>A whole lot</string>
+		<string>Extremely</string>
 	</array>
 	<key>Anger</key>
 	<array>
 		<string>Not Angry</string>
 		<string>I&apos;m a bit annoyed</string>
-		<string>I&apos;m alright but...</string>
-		<string>Feeling angry</string>
-		<string>I&apos;m really furious!</string>
+		<string>Definitely frustrated</string>
+		<string>Feeling Angry</string>
+		<string>I&apos;m really furious</string>
 	</array>
 	<key>Confused</key>
 	<array>
 		<string>Not Confused</string>
 		<string>I&apos;m a bit puzzled</string>
-		<string>I&apos;m not sure</string>
+		<string>I&apos;m missing the point</string>
 		<string>Feeling perplexed</string>
-		<string>I&apos;m missing the point!</string>
+		<string>I&apos;m so lost!</string>
 	</array>
 	<key>Shame</key>
 	<array>
 		<string>Not Ashamed</string>
 		<string>I&apos;m a bit embarassed</string>
+		<string>I&apos;m really regretting that</string>
 		<string>I&apos;m feeling dumb</string>
-		<string>Feeling ashamed</string>
-		<string>I&apos;m really regretting that!</string>
+		<string>I want to disappear</string>
 	</array>
 </dict>
 </plist>

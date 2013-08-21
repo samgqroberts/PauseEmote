@@ -20,5 +20,6 @@
 -(float)newIntensityWidth:(float)newIntensityWidth;
 -(void)initCustomEmotion:(NSString *)newCustomEmotion;
 -(void)initCustomEmotionTextField;
+-(void) setIntensityFrame:(float)newIntensity;
 
 @end

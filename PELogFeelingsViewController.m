@@ -37,6 +37,9 @@
 #define SETTINGS_ICON_HEIGHT 27.0
 #define REFRESH_ICON_WIDTH 30.0
 #define REFRESH_ICON_HEIGHT 27.0
+#define EMOTION_TITLE_FONT_SIZE 37.0
+#define COMMENT_PROMPT_FONT_SIZE 20.0
+#define EMOTION_INTENSITY_FONT_SIZE 18.0
 
 @interface PELogFeelingsViewController ()
 
@@ -48,7 +51,7 @@
 @property PEFeelingsCell *customEmotionCell;
 @property PEFeelingsCell *commentCell;
 @property NSArray *emotions;
-@property NSMutableDictionary *cells;
+@property NSMutableDictionary *intensities;
 @property int numberOfCells;
 
 @end
@@ -57,7 +60,7 @@
 
 @synthesize screenSize;
 @synthesize numberOfCells;
-@synthesize cells;
+@synthesize intensities;
 @synthesize emotions;
 @synthesize submitButton;
 @synthesize commentCell;
@@ -89,7 +92,7 @@
     
     //init cells info
     numberOfCells = [emotions count] + 1; // +1 for comment cell
-    cells = [NSMutableDictionary dictionary];
+    intensities = [NSMutableDictionary dictionary];
     
     // disable scrolling
     self.tableView.scrollEnabled = NO;
@@ -237,10 +240,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.row/2 < [self.emotions count] && [self.cells objectForKey: [self.emotions objectAtIndex:indexPath.row/2]] != nil) {
-//        return [self.cells objectForKey: [self.emotions objectAtIndex:indexPath.row]];
-//    }
-    
     static NSString *CellIdentifier = @"LogFeelingsCell";
     PEFeelingsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -259,7 +258,7 @@
     UIColor *emotionColor = [UIColor clearColor];
     NSString *cellLabel = @"";
     NSString *emotion = @"";
-    UIFont *font = [UIFont boldSystemFontOfSize:37.0];
+    UIFont *font = [UIFont boldSystemFontOfSize:height_factor(EMOTION_TITLE_FONT_SIZE)];
     
     if (indexPath.row/2 == 0) {
         emotionColor = [PEUtil colorFromHexString: [emotionColors valueForKey:@"Joy"]];
@@ -309,7 +308,7 @@
     if (indexPath.row/2 == 9) {
         emotion = @"Comment";
         cellLabel = @"Why are you feeling this way?";
-        font = [UIFont systemFontOfSize:20];
+        font = [UIFont systemFontOfSize:height_factor(COMMENT_PROMPT_FONT_SIZE)];
         
     }
     
@@ -320,10 +319,10 @@
     // apply kerning to cell label
     cell.textLabel.attributedText = [self attributedStringWithText:cellLabel withKerning:CELL_KERNING];
     
-//    // after all this initialization, save to cells array
-//    if (indexPath.row/2 < [emotions count]) {
-//    [self.cells setValue:cell forKey: [emotions objectAtIndex:indexPath.row/2]];
-//    }
+    if (indexPath.row/2 < [self.emotions count] && [self.intensities objectForKey: [self.emotions objectAtIndex:indexPath.row/2]] != nil) {
+        [cell setIntensityFrame: [(NSNumber *)[self.intensities objectForKey: [self.emotions objectAtIndex:indexPath.row/2]] floatValue]];
+        [self updateTextForCell:cell];
+    }
     
     return cell;
 }
@@ -357,6 +356,7 @@
     self.commentCell.customEmotion = nil;
     self.commentCell.customEmotionField = nil;
     self.commentCell = nil;
+    self.intensities = [NSMutableDictionary dictionary];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -447,24 +447,32 @@
         // update intensity based on touch
         float intensity = [cell newIntensityWidth:touchPoint.x];
         
+        if (![cell.emotion isEqualToString: [self.emotions objectAtIndex:[emotions count]-1]]) {
+            [self.intensities setValue:[NSNumber numberWithFloat:intensity] forKey: cell.emotion];
+        }
+        
         // update text based on intensity
-        float fontSize;
-        NSString *text;
-        if ([cell.emotion isEqualToString:@"Pick Your Own"]) {
-            fontSize = 18.0;
-            text = [cell.customEmotion uppercaseString];
-        }
-        else if (intensity == 0) {
-            fontSize = 37.0;
-            text = [cell.emotion uppercaseString];
-        }
-        else {
-            fontSize = 18.0;
-            text = [[emotionIntensities valueForKey:cell.emotion][((int)intensity)/2] uppercaseString];
-        }
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:fontSize];
-        cell.textLabel.attributedText = [self attributedStringWithText:text withKerning:CELL_KERNING];
+        [self updateTextForCell:cell];
     }
+}
+
+- (void) updateTextForCell:(PEFeelingsCell *)cell {
+    float fontSize;
+    NSString *text;
+    if ([cell.emotion isEqualToString:@"Pick Your Own"]) {
+        fontSize = height_factor(EMOTION_INTENSITY_FONT_SIZE);
+        text = [[[(NSString *)[emotionIntensities valueForKey:cell.emotion][((int)cell.intensity/2)] uppercaseString] stringByAppendingString: @" "] stringByAppendingString:[cell.customEmotion uppercaseString]] ;
+    }
+    else if (cell.intensity == 0) {
+        fontSize = height_factor(EMOTION_TITLE_FONT_SIZE);
+        text = [cell.emotion uppercaseString];
+    }
+    else {
+        fontSize = height_factor(EMOTION_INTENSITY_FONT_SIZE);
+        text = [[emotionIntensities valueForKey:cell.emotion][((int)cell.intensity)/2] uppercaseString];
+    }
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:fontSize];
+    cell.textLabel.attributedText = [self attributedStringWithText:text withKerning:CELL_KERNING];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -476,16 +484,16 @@
             
             // if nothing was typed, assume they'd still wanna be able to pick their own again without refreshing
             if ([textView.text isEqualToString:@""]) {
-                textView.frame = CGRectMake(0, 0, 0, 0);
+                textView.frame = CGRectMake(0, 0, 0, 0); // hacky
                 self.customEmotionCell.customEmotion = nil;
                 self.customEmotionCell.customEmotionField = nil;
-                self.customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:37.0];
+                self.customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:height_factor(EMOTION_TITLE_FONT_SIZE)];
                 self.customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.emotion uppercaseString] withKerning:CELL_KERNING];
             }
             else {
                 textView.frame = CGRectMake(0, 0, 0, 0); // hacky
                 [customEmotionCell initCustomEmotion:textView.text];
-                customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:18.0];
+                customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:height_factor(EMOTION_INTENSITY_FONT_SIZE)];
                 customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.customEmotion uppercaseString] withKerning:CELL_KERNING];
             }
         }
