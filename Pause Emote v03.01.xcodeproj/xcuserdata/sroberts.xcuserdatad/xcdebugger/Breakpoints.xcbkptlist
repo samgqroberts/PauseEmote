@@ -8,12 +8,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "PELogFeelingsViewController.m"
-         timestampString = "398643278.366062"
+         timestampString = "398727074.797632"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "188"
-         endingLineNumber = "188"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         startingLineNumber = "367"
+         endingLineNumber = "367"
+         landmarkName = "-touchEvent:withEvent:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

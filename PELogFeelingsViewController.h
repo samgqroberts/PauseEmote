@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PELogFeelingsViewController : UITableViewController
+@interface PELogFeelingsViewController : UITableViewController<UIGestureRecognizerDelegate>
 
-@property float cellHeight;
+@property int cellHeight;
 
 @end

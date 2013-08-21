@@ -36,6 +36,9 @@
 		BEC62FFE17C2B9D40010B89F /* AddIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FFD17C2B9D40010B89F /* AddIcon.png */; };
 		BEC6300417C2BDBF0010B89F /* SettingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6300317C2BDBF0010B89F /* SettingsIcon.png */; };
 		BEC6300A17C2C5B40010B89F /* PEFeelingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6300917C2C5B40010B89F /* PEFeelingsCell.m */; };
+		BEC6300D17C3B18D0010B89F /* PELogFeelingsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6300C17C3B18D0010B89F /* PELogFeelingsTableView.m */; };
+		BEC6300F17C3FC4B0010B89F /* EmotionColors.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC6300E17C3FC4B0010B89F /* EmotionColors.plist */; };
+		BEC6301717C405EE0010B89F /* EmotionIntensities.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301617C405EE0010B89F /* EmotionIntensities.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		00FB1C8B16E52766009741CF /* pe logo horizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pe logo horizontal.png"; sourceTree = SOURCE_ROOT; };
 		946BA6BE1669A927000D7768 /* Pause Emote v03.01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pause Emote v03.01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		946BA6C21669A927000D7768 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -74,22 +77,26 @@
 		946BA6F31669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		946BA6F51669A927000D7768 /* Pause_Emote_v03_01Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pause_Emote_v03_01Tests.h; sourceTree = "<group>"; };
 		946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pause_Emote_v03_01Tests.m; sourceTree = "<group>"; };
-		BEC62FE017C27BE40010B89F /* PELogFeelingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PELogFeelingsViewController.h; sourceTree = "<group>"; };
-		BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PELogFeelingsViewController.m; sourceTree = "<group>"; };
+		BEC62FE017C27BE40010B89F /* PELogFeelingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PELogFeelingsViewController.h; path = ../PELogFeelingsViewController.h; sourceTree = "<group>"; };
+		BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PELogFeelingsViewController.m; path = ../PELogFeelingsViewController.m; sourceTree = "<group>"; };
 		BEC62FEC17C297DE0010B89F /* NavBarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBackground.png; sourceTree = SOURCE_ROOT; };
-		BEC62FEE17C299C30010B89F /* PENavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PENavigationController.h; sourceTree = "<group>"; };
-		BEC62FEF17C299C30010B89F /* PENavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PENavigationController.m; sourceTree = "<group>"; };
+		BEC62FEE17C299C30010B89F /* PENavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PENavigationController.h; path = ../PENavigationController.h; sourceTree = "<group>"; };
+		BEC62FEF17C299C30010B89F /* PENavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PENavigationController.m; path = ../PENavigationController.m; sourceTree = "<group>"; };
 		BEC62FF117C29FB80010B89F /* LogFeelingsBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogFeelingsBackground.png; sourceTree = SOURCE_ROOT; };
-		BEC62FF317C2A0B10010B89F /* PEUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEUtil.h; sourceTree = "<group>"; };
-		BEC62FF417C2A0B10010B89F /* PEUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEUtil.m; sourceTree = "<group>"; };
+		BEC62FF317C2A0B10010B89F /* PEUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PEUtil.h; path = ../PEUtil.h; sourceTree = "<group>"; };
+		BEC62FF417C2A0B10010B89F /* PEUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PEUtil.m; path = ../PEUtil.m; sourceTree = "<group>"; };
 		BEC62FF617C2A4C30010B89F /* CellBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CellBackground.png; sourceTree = SOURCE_ROOT; };
-		BEC62FF817C2B3770010B89F /* PEToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEToolBar.h; sourceTree = "<group>"; };
-		BEC62FF917C2B3770010B89F /* PEToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEToolBar.m; sourceTree = "<group>"; };
+		BEC62FF817C2B3770010B89F /* PEToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PEToolBar.h; path = ../PEToolBar.h; sourceTree = "<group>"; };
+		BEC62FF917C2B3770010B89F /* PEToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PEToolBar.m; path = ../PEToolBar.m; sourceTree = "<group>"; };
 		BEC62FFB17C2B4EA0010B89F /* CalendarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CalendarIcon.png; sourceTree = SOURCE_ROOT; };
 		BEC62FFD17C2B9D40010B89F /* AddIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddIcon.png; sourceTree = SOURCE_ROOT; };
 		BEC6300317C2BDBF0010B89F /* SettingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsIcon.png; sourceTree = SOURCE_ROOT; };
-		BEC6300817C2C5B40010B89F /* PEFeelingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEFeelingsCell.h; sourceTree = "<group>"; };
-		BEC6300917C2C5B40010B89F /* PEFeelingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEFeelingsCell.m; sourceTree = "<group>"; };
+		BEC6300817C2C5B40010B89F /* PEFeelingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PEFeelingsCell.h; path = ../PEFeelingsCell.h; sourceTree = "<group>"; };
+		BEC6300917C2C5B40010B89F /* PEFeelingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PEFeelingsCell.m; path = ../PEFeelingsCell.m; sourceTree = "<group>"; };
+		BEC6300B17C3B18B0010B89F /* PELogFeelingsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PELogFeelingsTableView.h; path = ../PELogFeelingsTableView.h; sourceTree = "<group>"; };
+		BEC6300C17C3B18D0010B89F /* PELogFeelingsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PELogFeelingsTableView.m; path = ../PELogFeelingsTableView.m; sourceTree = "<group>"; };
+		BEC6300E17C3FC4B0010B89F /* EmotionColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmotionColors.plist; sourceTree = "<group>"; };
+		BEC6301617C405EE0010B89F /* EmotionIntensities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmotionIntensities.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,17 +126,6 @@
 		946BA6B31669A927000D7768 = {
 			isa = PBXGroup;
 			children = (
-				BEC6300817C2C5B40010B89F /* PEFeelingsCell.h */,
-				BEC6300917C2C5B40010B89F /* PEFeelingsCell.m */,
-				BEC62FF817C2B3770010B89F /* PEToolBar.h */,
-				BEC62FF917C2B3770010B89F /* PEToolBar.m */,
-				BEC62FF317C2A0B10010B89F /* PEUtil.h */,
-				BEC62FF417C2A0B10010B89F /* PEUtil.m */,
-				BEC62FEE17C299C30010B89F /* PENavigationController.h */,
-				BEC62FEF17C299C30010B89F /* PENavigationController.m */,
-				BEC62FE017C27BE40010B89F /* PELogFeelingsViewController.h */,
-				BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */,
-				00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */,
 				946BA6C81669A927000D7768 /* Pause Emote v03.01 */,
 				946BA6EF1669A927000D7768 /* Pause Emote v03.01Tests */,
 				946BA6C11669A927000D7768 /* Frameworks */,
@@ -160,10 +156,10 @@
 		946BA6C81669A927000D7768 /* Pause Emote v03.01 */ = {
 			isa = PBXGroup;
 			children = (
-				946BA6D11669A927000D7768 /* AppDelegate.h */,
-				946BA6D21669A927000D7768 /* AppDelegate.m */,
-				946BA6DA1669A927000D7768 /* MainStoryboard_iPhone.storyboard */,
-				946BA6DD1669A927000D7768 /* MainStoryboard_iPad.storyboard */,
+				BEC6301517C3FEDB0010B89F /* Automatic Files */,
+				BEC6301417C3FEC00010B89F /* Navigation Bar */,
+				BEC6301317C3FEAD0010B89F /* Util */,
+				BEC6301217C3FE970010B89F /* Log Feelings */,
 				946BA6E01669A927000D7768 /* ViewController.h */,
 				946BA6E11669A927000D7768 /* ViewController.m */,
 				946BA6C91669A927000D7768 /* Supporting Files */,
@@ -174,20 +170,11 @@
 		946BA6C91669A927000D7768 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BEC6300317C2BDBF0010B89F /* SettingsIcon.png */,
-				BEC62FFD17C2B9D40010B89F /* AddIcon.png */,
-				BEC62FFB17C2B4EA0010B89F /* CalendarIcon.png */,
-				BEC62FF617C2A4C30010B89F /* CellBackground.png */,
-				BEC62FF117C29FB80010B89F /* LogFeelingsBackground.png */,
-				BEC62FEC17C297DE0010B89F /* NavBarBackground.png */,
-				946BA6CA1669A927000D7768 /* Pause Emote v03.01-Info.plist */,
+				BEC6301117C3FE6E0010B89F /* Property Lists */,
+				BEC6301017C3FE510010B89F /* Images */,
 				946BA6CB1669A927000D7768 /* InfoPlist.strings */,
 				946BA6CE1669A927000D7768 /* main.m */,
 				946BA6D01669A927000D7768 /* Pause Emote v03.01-Prefix.pch */,
-				946BA6D41669A927000D7768 /* Image View - Default-568h@2x.png */,
-				00FB1C8B16E52766009741CF /* pe logo horizontal.png */,
-				946BA6D61669A927000D7768 /* Default@2x.png */,
-				946BA6D81669A927000D7768 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -209,6 +196,78 @@
 				946BA6F21669A927000D7768 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BEC6301017C3FE510010B89F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */,
+				946BA6D41669A927000D7768 /* Image View - Default-568h@2x.png */,
+				00FB1C8B16E52766009741CF /* pe logo horizontal.png */,
+				946BA6D61669A927000D7768 /* Default@2x.png */,
+				946BA6D81669A927000D7768 /* Default-568h@2x.png */,
+				BEC6300317C2BDBF0010B89F /* SettingsIcon.png */,
+				BEC62FFD17C2B9D40010B89F /* AddIcon.png */,
+				BEC62FFB17C2B4EA0010B89F /* CalendarIcon.png */,
+				BEC62FF617C2A4C30010B89F /* CellBackground.png */,
+				BEC62FF117C29FB80010B89F /* LogFeelingsBackground.png */,
+				BEC62FEC17C297DE0010B89F /* NavBarBackground.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		BEC6301117C3FE6E0010B89F /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				BEC6300E17C3FC4B0010B89F /* EmotionColors.plist */,
+				946BA6CA1669A927000D7768 /* Pause Emote v03.01-Info.plist */,
+				BEC6301617C405EE0010B89F /* EmotionIntensities.plist */,
+			);
+			name = "Property Lists";
+			sourceTree = "<group>";
+		};
+		BEC6301217C3FE970010B89F /* Log Feelings */ = {
+			isa = PBXGroup;
+			children = (
+				BEC62FE017C27BE40010B89F /* PELogFeelingsViewController.h */,
+				BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */,
+				BEC6300B17C3B18B0010B89F /* PELogFeelingsTableView.h */,
+				BEC6300C17C3B18D0010B89F /* PELogFeelingsTableView.m */,
+				BEC6300817C2C5B40010B89F /* PEFeelingsCell.h */,
+				BEC6300917C2C5B40010B89F /* PEFeelingsCell.m */,
+			);
+			name = "Log Feelings";
+			sourceTree = "<group>";
+		};
+		BEC6301317C3FEAD0010B89F /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				BEC62FF317C2A0B10010B89F /* PEUtil.h */,
+				BEC62FF417C2A0B10010B89F /* PEUtil.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+		BEC6301417C3FEC00010B89F /* Navigation Bar */ = {
+			isa = PBXGroup;
+			children = (
+				BEC62FF817C2B3770010B89F /* PEToolBar.h */,
+				BEC62FF917C2B3770010B89F /* PEToolBar.m */,
+				BEC62FEE17C299C30010B89F /* PENavigationController.h */,
+				BEC62FEF17C299C30010B89F /* PENavigationController.m */,
+			);
+			name = "Navigation Bar";
+			sourceTree = "<group>";
+		};
+		BEC6301517C3FEDB0010B89F /* Automatic Files */ = {
+			isa = PBXGroup;
+			children = (
+				946BA6D11669A927000D7768 /* AppDelegate.h */,
+				946BA6D21669A927000D7768 /* AppDelegate.m */,
+				946BA6DA1669A927000D7768 /* MainStoryboard_iPhone.storyboard */,
+				946BA6DD1669A927000D7768 /* MainStoryboard_iPad.storyboard */,
+			);
+			name = "Automatic Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,6 +354,8 @@
 				BEC62FFC17C2B4EA0010B89F /* CalendarIcon.png in Resources */,
 				BEC62FFE17C2B9D40010B89F /* AddIcon.png in Resources */,
 				BEC6300417C2BDBF0010B89F /* SettingsIcon.png in Resources */,
+				BEC6300F17C3FC4B0010B89F /* EmotionColors.plist in Resources */,
+				BEC6301717C405EE0010B89F /* EmotionIntensities.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +398,7 @@
 				BEC62FF517C2A0B10010B89F /* PEUtil.m in Sources */,
 				BEC62FFA17C2B3770010B89F /* PEToolBar.m in Sources */,
 				BEC6300A17C2C5B40010B89F /* PEFeelingsCell.m in Sources */,
+				BEC6300D17C3B18D0010B89F /* PELogFeelingsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

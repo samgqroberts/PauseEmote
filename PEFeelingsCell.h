@@ -12,7 +12,9 @@
 
 @property float intensity;
 @property UIView *intensityView;
+@property NSString *emotion;
 
--(void)initIntensity:(UIColor *)feelingColor;
+- (void)initForEmotion:(NSString *)emotionName withColor:(UIColor *)feelingColor;
+-(float)newIntensityWidth:(float)newIntensityWidth;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "PEFeelingsCell.h"
 #define INITIAL_INTENSITY_WIDTH 17
+#define INTENSITY_VIEW_TAG 99
 #define TEXT_SPACING 1
 
 
@@ -19,6 +20,7 @@
 
 @implementation PEFeelingsCell
 
+@synthesize emotion;
 @synthesize intensityWidth;
 @synthesize intensity;
 @synthesize intensityView;
@@ -32,17 +34,71 @@
     return self;
 }
 
-- (void)initIntensity:(UIColor *)feelingColor {
+- (void)initForEmotion:(NSString *)emotionName withColor:(UIColor *)feelingColor {
     [self setIntensityFrame: 0];
+    self.emotion = emotionName;
     [intensityView setBackgroundColor: feelingColor];
-    [self.contentView addSubview: intensityView];
+}
+
+- (void)listSubviewsOfView:(UIView *)view {
+    
+    // Get the subviews of the view
+    NSArray *subviews = [view subviews];
+    
+    // Return if there are no subviews
+    if ([subviews count] == 0) return;
+    
+    for (UIView *subview in subviews) {
+        
+        NSLog(@"%@", subview);
+        
+        // List the subviews of subview
+        [self listSubviewsOfView:subview];
+    }
 }
 
 - (void) setIntensityFrame: (float)newIntensity {
     intensity = newIntensity;
     intensityWidth = (self.frame.size.width - INITIAL_INTENSITY_WIDTH)*intensity/10 + INITIAL_INTENSITY_WIDTH;
-    CGRect intensityViewFrame = CGRectMake(0, 0, intensityWidth, self.frame.size.height);
-    intensityView = [[UIView alloc] initWithFrame: intensityViewFrame];
+    
+    [self removeIntensityView];
+    [self addIntensityView];
+}
+
+- (float) newIntensityWidth: (float)newIntensityWidth {
+    if (newIntensityWidth <= INITIAL_INTENSITY_WIDTH) {
+        [self setIntensityFrame:0];
+        return 0;
+    }
+    intensityWidth = newIntensityWidth;
+    intensity = 10 * (intensityWidth - INITIAL_INTENSITY_WIDTH) / (self.frame.size.width - INITIAL_INTENSITY_WIDTH);
+    
+    [self removeIntensityView];
+    [self addIntensityView];
+    [self.contentView setNeedsDisplay];
+    
+    return intensity;
+}
+
+- (void) removeIntensityView {
+    for (UIView *subview in [self.contentView subviews]) {
+        if (subview.tag == INTENSITY_VIEW_TAG) {
+            [subview removeFromSuperview];
+            //[subview performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
+        }
+    }
+}
+
+- (void) addIntensityView {
+    if (!intensityView) {
+        intensityView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, intensityWidth, self.frame.size.height)];
+        intensityView.tag = INTENSITY_VIEW_TAG;
+        [intensityView setUserInteractionEnabled:NO];
+    }
+    else {
+        intensityView.frame = CGRectMake(0, 0, intensityWidth, self.frame.size.height);
+    }
+    [self.contentView insertSubview:intensityView atIndex: 0];
 }
 
 - (void)layoutSubviews {

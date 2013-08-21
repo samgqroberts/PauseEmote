@@ -10,28 +10,24 @@
 #import "PEUtil.h"
 #import "PEToolBar.h"
 #import "PEFeelingsCell.h"
+#import "PELogFeelingsTableView.h"
 
 #define SEPARATOR_HEIGHT 10.0
 #define CELL_KERNING -2.8
 #define CELL_TEXT_COLOR @"#d5d5d6"
-#define JOY_COLOR @"#ffcb50"
-#define SAD_COLOR @"#155d6d"
-#define HOPE_COLOR @"#009a52"
-#define ANXIOUS_COLOR @"#f46331"
-#define CALM_COLOR @"#673363"
-#define ANGER_COLOR @"#f00729"
-#define CONFUSED_COLOR @"#1a7a7a"
-#define SHAME_COLOR @"#ce1345"
-#define CUSTOM_FEELING_COLOR @"#333333"
 
 @interface PELogFeelingsViewController ()
 
+@property NSDictionary *emotionColors;
 @property UIColor *cellTextColor;
+@property NSDictionary *emotionIntensities;
 
 @end
 
 @implementation PELogFeelingsViewController
 
+@synthesize emotionIntensities;
+@synthesize emotionColors;
 @synthesize cellHeight;
 @synthesize cellTextColor;
 
@@ -48,10 +44,14 @@
 {
     [super viewDidLoad];
     
+    emotionColors = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"EmotionColors" ofType: @"plist"]];
+    
+    emotionIntensities = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"EmotionIntensities" ofType: @"plist"]];
+    
     // disable scrolling
     self.tableView.scrollEnabled = NO;
     
-    // customize separatorss
+    // customize separators
     self.tableView.separatorColor = [UIColor clearColor];
     
     // initialize content cell properties
@@ -67,10 +67,10 @@
     self.tableView.backgroundView = imageView;
     
     [self initNavigationBar];
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
@@ -137,9 +137,9 @@
     
     // create a spacer between the buttons
     spacer = [[UIBarButtonItem alloc]
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                               target:nil
-                               action:nil];
+              initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+              target:nil
+              action:nil];
     spacer.width = -3;
     [buttons addObject:spacer];
     
@@ -150,6 +150,7 @@
     [add setImage:addImage forState: UIControlStateNormal];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithCustomView:add];
     [buttons addObject: addButton];
+    
     
     [toolbar setItems:buttons animated:NO];
     
@@ -197,68 +198,81 @@
         return cell;
     }
     
-    UIColor *intensityColor = [UIColor clearColor];
     cell.backgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"CellBackground.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
     
     cell.textLabel.textColor = cellTextColor;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:37.0];
     
+    UIColor *emotionColor = [UIColor clearColor];
     NSString *cellLabel = @"";
+    NSString *emotion = @"";
     
     if (indexPath.row/2 == 0) {
-        intensityColor = [PEUtil colorFromHexString:JOY_COLOR];
+        emotionColor = [PEUtil colorFromHexString: [emotionColors valueForKey:@"Joy"]];
+        emotion = @"Joy";
         cellLabel = @"JOY";
     }
     if (indexPath.row/2 == 1) {
-        intensityColor = [PEUtil colorFromHexString:SAD_COLOR];
+        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Sad"]];
+        emotion = @"Sad";
         cellLabel = @"SAD";
     }
     if (indexPath.row/2 == 2) {
-        intensityColor = [PEUtil colorFromHexString:HOPE_COLOR];
+        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Hope"]];
+        emotion = @"Hope";
         cellLabel = @"HOPE";
     }
     if (indexPath.row/2 == 3) {
-        intensityColor = [PEUtil colorFromHexString:ANXIOUS_COLOR];
+        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Anxious"]];
+        emotion = @"Anxious";
         cellLabel = @"ANXIOUS";
     }
     if (indexPath.row/2 == 4) {
-        intensityColor = [PEUtil colorFromHexString:CALM_COLOR];
+        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Calm"]];
+        emotion = @"Calm";
         cellLabel = @"CALM";
     }
     if (indexPath.row/2 == 5) {
-        intensityColor = [PEUtil colorFromHexString:ANGER_COLOR];
+        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Anger"]];
+        emotion = @"Anger";
         cellLabel = @"ANGER";
     }
     if (indexPath.row/2 == 6) {
-        intensityColor = [PEUtil colorFromHexString:CONFUSED_COLOR];
+        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Confused"]];
+        emotion = @"Confused";
         cellLabel = @"CONFUSED";
     }
     if (indexPath.row/2 == 7) {
-        intensityColor = [PEUtil colorFromHexString:SHAME_COLOR];
+        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Shame"]];
+        emotion = @"Shame";
         cellLabel = @"SHAME";
     }
     if (indexPath.row/2 == 8) {
-        intensityColor = [PEUtil colorFromHexString:CUSTOM_FEELING_COLOR];
+        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Pick Your Own"]];
+        emotion = @"Pick Your Own";
         cellLabel = @"PICK YOUR OWN";
     }
     if (indexPath.row/2 == 9) {
         cellLabel = @"inputTODO";
     }
     
-    [cell initIntensity:intensityColor];
+    [cell initForEmotion:emotion withColor:emotionColor];
     
     // apply kerning to cell label
-    NSMutableAttributedString *attributedString;
-    attributedString = [[NSMutableAttributedString alloc] initWithString:cellLabel];
-    [attributedString addAttribute:NSKernAttributeName
-                             value:[NSNumber numberWithFloat:CELL_KERNING]
-                             range:NSMakeRange(0, [cellLabel length])];
-    
-    cell.textLabel.attributedText = attributedString;
+    cell.textLabel.attributedText = [self attributedStringWithText:cellLabel withKerning:CELL_KERNING];
     
     // Configure the cell...
     
     return cell;
+}
+
+-(NSAttributedString *) attributedStringWithText:(NSString *)text withKerning:(float)kerning {
+    NSMutableAttributedString *attributedString;
+    attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+    [attributedString addAttribute:NSKernAttributeName
+                             value:[NSNumber numberWithFloat:kerning]
+                             range:NSMakeRange(0, [text length])];
+    return attributedString;
 }
 
 -(void)calendarClicked {
@@ -274,43 +288,43 @@
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Table view delegate
 
@@ -323,6 +337,43 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+-(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touchEvent:touches withEvent:event];
+    [super touchesBegan:touches withEvent:event];
+}
+
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touchEvent:touches withEvent:event];
+    [super touchesMoved:touches withEvent:event];
+}
+
+-(void) touchEvent:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (touches.count == 1) {
+        UITouch *touch = [touches anyObject];
+        CGPoint touchPoint = [touch locationInView:self.tableView];\
+        if ((int)touchPoint.y % (int)(cellHeight + SEPARATOR_HEIGHT) < SEPARATOR_HEIGHT) {
+            return;
+        }
+        int row = 2 * touchPoint.y / (cellHeight + SEPARATOR_HEIGHT);
+        row += row%2==0?1:0;\
+        
+        NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:0];
+        
+        PEFeelingsCell *cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:path];
+        
+        float intensity = [cell newIntensityWidth:touchPoint.x];
+        if (intensity == 0) {
+            cell.textLabel.font = [UIFont boldSystemFontOfSize:37.0];
+            cell.textLabel.attributedText = [self attributedStringWithText:[cell.emotion uppercaseString] withKerning:CELL_KERNING];
+        }
+        else {
+            cell.textLabel.font = [UIFont boldSystemFontOfSize: 18.0];
+            cell.textLabel.attributedText = [self attributedStringWithText:[[emotionIntensities valueForKey:cell.emotion][((int)intensity)/2] uppercaseString] withKerning:CELL_KERNING];
+        }
+        
+    }
 }
 
 @end

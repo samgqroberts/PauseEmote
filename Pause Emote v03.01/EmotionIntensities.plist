@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Joy</key>
+	<array>
+		<string>Not Happy</string>
+		<string>Pretty Good</string>
+		<string>I&apos;m alright</string>
+		<string>Feeling really good</string>
+		<string>I&apos;m really happy!</string>
+	</array>
+	<key>Sad</key>
+	<array>
+		<string>Not Sad</string>
+		<string>Not so sad</string>
+		<string>I&apos;m alright</string>
+		<string>Feeling sad</string>
+		<string>I&apos;m really sad...</string>
+	</array>
+	<key>Hope</key>
+	<array>
+		<string>hope1</string>
+		<string>hop2</string>
+		<string>hope3</string>
+		<string>hope4</string>
+		<string>hope5</string>
+	</array>
+	<key>Anxious</key>
+	<array>
+		<string>Not anxious</string>
+		<string>Pretty calm</string>
+		<string>I&apos;m getting stirred</string>
+		<string>Pretty anxious</string>
+		<string>Freaking out!</string>
+	</array>
+	<key>Calm</key>
+	<array>
+		<string>calm1</string>
+		<string>calm2</string>
+		<string>calm3</string>
+		<string>calm4</string>
+		<string>calm5</string>
+	</array>
+	<key>Pick Your Own</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Anger</key>
+	<array>
+		<string>Not Angry</string>
+		<string>I&apos;m a bit annoyed</string>
+		<string>I&apos;m alright but...</string>
+		<string>Feeling angry</string>
+		<string>I&apos;m really furious!</string>
+	</array>
+	<key>Confused</key>
+	<array>
+		<string>Not Confused</string>
+		<string>I&apos;m a bit puzzled</string>
+		<string>I&apos;m not sure</string>
+		<string>Feeling perplexed</string>
+		<string>I&apos;m missing the point!</string>
+	</array>
+	<key>Shame</key>
+	<array>
+		<string>Not Ashamed</string>
+		<string>I&apos;m a bit embarassed</string>
+		<string>I&apos;m feeling dumb</string>
+		<string>Feeling ashamed</string>
+		<string>I&apos;m really regretting that!</string>
+	</array>
+</dict>
+</plist>

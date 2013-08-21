@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Joy</key>
+	<string>#ffcb50</string>
+	<key>Sad</key>
+	<string>#155d6d</string>
+	<key>Hope</key>
+	<string>#009a52</string>
+	<key>Anxious</key>
+	<string>#f46331</string>
+	<key>Calm</key>
+	<string>#673363</string>
+	<key>Anger</key>
+	<string>#f00729</string>
+	<key>Confused</key>
+	<string>#1a7a7a</string>
+	<key>Shame</key>
+	<string>#ce1345</string>
+	<key>Pick Your Own</key>
+	<string>#333333</string>
+</dict>
+</plist>
