@@ -336,9 +336,71 @@
     return attributedString;
 }
 
--(void)submitClicked {
-    NSLog(@"submit clicked");
+// This function is for the post button which sends data you to the website
+- (void)submitClicked {
+    
+    
+    // kill all previous timers
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    
+    // post
+    NSMutableURLRequest *request =
+    [[NSMutableURLRequest alloc] initWithURL:
+     [NSURL URLWithString:@"http://inbetwixt.com/pause/datalog.php"]];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    // non apple approved approach
+    //NSString *phoneNumb = [[NSUserDefaults standardUserDefaults] stringForKey:@"SBFormattedPhoneNumber"];
+    NSString *phoneNumb = [[UIDevice currentDevice] name];
+    
+    NSString *postString = @"postData=1";
+    NSString *bit = @"";
+    NSString *emotion;
+    
+    int data = 1;
+    // all but custom emotion
+    for (int i = 0 ; i < [self.emotions count] - 1 ; i++) {
+        if (i==5) {
+            data++;
+        }
+        emotion = [self.emotions objectAtIndex:i];
+        bit = [NSString stringWithFormat: @"&data%@%d=%@&data%@%d=%f", data<10?@"0":@"", data++, emotion, data<10?@"0":@"", data++, [(NSNumber *)[self.intensities valueForKey:emotion] floatValue]];
+        postString = [postString stringByAppendingString:bit];
+    }
+    // now for custom emotion
+    PEFeelingsCell *cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2-1 inSection:0]];
+    emotion = cell.customEmotion ? cell.customEmotion : @"No custom emotion";
+    bit = [NSString stringWithFormat: @"&data%d=%@&data%d=%f", data++, emotion, data++, 0.0];
+    postString = [postString stringByAppendingString:bit];
+    // now for comment
+    cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2+1 inSection:0]];
+    bit = [NSString stringWithFormat: @"&data%d=%@", data++, (cell.customEmotionField ? cell.customEmotionField.text : @"No comment")];
+    postString = [postString stringByAppendingString: bit];
+    
+    [request setValue:[NSString stringWithFormat:@"%d", [postString length]] forHTTPHeaderField:@"Content-length"];
+    [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSHTTPURLResponse* urlResponse = nil;
+    NSError *error = [[NSError alloc] init];
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+    NSString *result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    NSLog(@"Response Code: %d", [urlResponse statusCode]);
+    
+    if ([urlResponse statusCode] >= 200 && [urlResponse statusCode] < 300)
+    {
+        NSLog(@"Response: %@", result);
+        // do something with the result
+        //myTextField06.text = @"Data Logged";
+        //[self performSelector:@selector(timerAction:) withObject:nil afterDelay:minutesWait];
+        
+        [self refreshClicked];
+    }
+    
+    NSLog(@"Data saved");
+    
 }
+
 
 -(void)calendarClicked {
     NSLog(@"calendar clicked");
@@ -502,5 +564,7 @@
     }
     return TRUE;
 }
+
+
 
 @end
