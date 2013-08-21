@@ -39,6 +39,9 @@
 		BEC6300D17C3B18D0010B89F /* PELogFeelingsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6300C17C3B18D0010B89F /* PELogFeelingsTableView.m */; };
 		BEC6300F17C3FC4B0010B89F /* EmotionColors.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC6300E17C3FC4B0010B89F /* EmotionColors.plist */; };
 		BEC6301717C405EE0010B89F /* EmotionIntensities.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301617C405EE0010B89F /* EmotionIntensities.plist */; };
+		BEC6301917C510A40010B89F /* RefreshIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301817C510A40010B89F /* RefreshIcon.png */; };
+		BEC6301B17C546170010B89F /* SubmitIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301A17C546170010B89F /* SubmitIcon.png */; };
+		BEC6301D17C552430010B89F /* Emotions.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301C17C552430010B89F /* Emotions.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +100,9 @@
 		BEC6300C17C3B18D0010B89F /* PELogFeelingsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PELogFeelingsTableView.m; path = ../PELogFeelingsTableView.m; sourceTree = "<group>"; };
 		BEC6300E17C3FC4B0010B89F /* EmotionColors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmotionColors.plist; sourceTree = "<group>"; };
 		BEC6301617C405EE0010B89F /* EmotionIntensities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmotionIntensities.plist; sourceTree = "<group>"; };
+		BEC6301817C510A40010B89F /* RefreshIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RefreshIcon.png; sourceTree = SOURCE_ROOT; };
+		BEC6301A17C546170010B89F /* SubmitIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SubmitIcon.png; sourceTree = SOURCE_ROOT; };
+		BEC6301C17C552430010B89F /* Emotions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Emotions.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +207,8 @@
 		BEC6301017C3FE510010B89F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BEC6301A17C546170010B89F /* SubmitIcon.png */,
+				BEC6301817C510A40010B89F /* RefreshIcon.png */,
 				00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */,
 				946BA6D41669A927000D7768 /* Image View - Default-568h@2x.png */,
 				00FB1C8B16E52766009741CF /* pe logo horizontal.png */,
@@ -222,6 +230,7 @@
 				BEC6300E17C3FC4B0010B89F /* EmotionColors.plist */,
 				946BA6CA1669A927000D7768 /* Pause Emote v03.01-Info.plist */,
 				BEC6301617C405EE0010B89F /* EmotionIntensities.plist */,
+				BEC6301C17C552430010B89F /* Emotions.plist */,
 			);
 			name = "Property Lists";
 			sourceTree = "<group>";
@@ -356,6 +365,9 @@
 				BEC6300417C2BDBF0010B89F /* SettingsIcon.png in Resources */,
 				BEC6300F17C3FC4B0010B89F /* EmotionColors.plist in Resources */,
 				BEC6301717C405EE0010B89F /* EmotionIntensities.plist in Resources */,
+				BEC6301917C510A40010B89F /* RefreshIcon.png in Resources */,
+				BEC6301B17C546170010B89F /* SubmitIcon.png in Resources */,
+				BEC6301D17C552430010B89F /* Emotions.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

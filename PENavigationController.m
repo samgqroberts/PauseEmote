@@ -8,13 +8,15 @@
 
 #import "PENavigationController.h"
 
+#define NAV_BAR_HEIGHT_FACTOR (52.0/568.0)
+
 @interface UINavigationBar (myNave)
 - (CGSize)changeHeight:(CGSize)size;
 @end
 
 @implementation UINavigationBar (customNav)
 - (CGSize)sizeThatFits:(CGSize)size {
-    CGSize newSize = CGSizeMake(320,52);
+    CGSize newSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width,[[UIScreen mainScreen] bounds].size.height * NAV_BAR_HEIGHT_FACTOR);
     return newSize;
 }
 @end

@@ -20,6 +20,8 @@
 
 @implementation PEFeelingsCell
 
+@synthesize customEmotionField;
+@synthesize customEmotion;
 @synthesize emotion;
 @synthesize intensityWidth;
 @synthesize intensity;
@@ -57,6 +59,28 @@
     }
 }
 
+-(void) initCustomEmotionTextField {
+    if (!self.customEmotionField) {
+        CGRect frame;
+        if ([self.emotion isEqualToString:@"Pick Your Own"]) {
+            frame = CGRectMake(20,0,self.frame.size.width-40,self.frame.size.height);
+        }
+        else { // Comment cell
+            frame = CGRectMake(0,0,self.frame.size.width-80,self.frame.size.height);
+        }
+        self.textLabel.text = @"";
+        self.customEmotionField = [[UITextView alloc] initWithFrame:frame];
+        [self.contentView addSubview: self.customEmotionField];
+    }
+}
+
+- (void) initCustomEmotion:(NSString *)newCustomEmotion {
+    if (!self.customEmotion) {
+        self.customEmotion = [[NSString alloc] initWithString: newCustomEmotion];
+    }
+    [self.customEmotionField removeFromSuperview];
+}
+
 - (void) setIntensityFrame: (float)newIntensity {
     intensity = newIntensity;
     intensityWidth = (self.frame.size.width - INITIAL_INTENSITY_WIDTH)*intensity/10 + INITIAL_INTENSITY_WIDTH;
@@ -84,7 +108,6 @@
     for (UIView *subview in [self.contentView subviews]) {
         if (subview.tag == INTENSITY_VIEW_TAG) {
             [subview removeFromSuperview];
-            //[subview performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
         }
     }
 }

@@ -20,11 +20,11 @@
 	</array>
 	<key>Hope</key>
 	<array>
-		<string>hope1</string>
-		<string>hop2</string>
-		<string>hope3</string>
-		<string>hope4</string>
-		<string>hope5</string>
+		<string>Not feeling hope</string>
+		<string>Things are looking up</string>
+		<string>I&apos;m getting excited...</string>
+		<string>Can&apos;t wait for the future</string>
+		<string>Anything is possible!!</string>
 	</array>
 	<key>Anxious</key>
 	<array>
@@ -36,11 +36,11 @@
 	</array>
 	<key>Calm</key>
 	<array>
-		<string>calm1</string>
-		<string>calm2</string>
-		<string>calm3</string>
-		<string>calm4</string>
-		<string>calm5</string>
+		<string>Not calm</string>
+		<string>Feeling Pleasant</string>
+		<string>Chill</string>
+		<string>Very peaceful</string>
+		<string>Super relaxed</string>
 	</array>
 	<key>Pick Your Own</key>
 	<array>

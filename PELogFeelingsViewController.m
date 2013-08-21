@@ -12,20 +12,56 @@
 #import "PEFeelingsCell.h"
 #import "PELogFeelingsTableView.h"
 
+// miscellaneous macro values
 #define SEPARATOR_HEIGHT 10.0
 #define CELL_KERNING -2.8
 #define CELL_TEXT_COLOR @"#d5d5d6"
+#define CUSTOM_EMOTION_TAG 98
+#define COMMENT_TAG 99
+
+// dimensions
+#define SUBMIT_ICON_X 250.0
+#define SUBMIT_ICON_Y 447.0
+#define SUBMIT_ICON_WIDTH 45.0
+#define SUBMIT_ICON_HEIGHT 45.0
+#define RIGHT_TOOLBAR_WIDTH 100.0
+#define RIGHT_TOOLBAR_HEIGHT 32.0
+#define RIGHT_TOOLBAR_SPACER_WIDTH 50.0
+#define LEFT_TOOLBAR_WIDTH 100.0
+#define LEFT_TOOLBAR_HEIGHT 37.0
+#define LEFT_TOOLBAR_LEFT_SPACER_WIDTH -9.0
+#define LEFT_TOOLBAR_RIGHT_SPACER_WIDTH -3.0
+#define CALENDAR_ICON_WIDTH 35.0
+#define CALENDAR_ICON_HEIGHT 30.0
+#define SETTINGS_ICON_WIDTH 30.0
+#define SETTINGS_ICON_HEIGHT 27.0
+#define REFRESH_ICON_WIDTH 30.0
+#define REFRESH_ICON_HEIGHT 27.0
 
 @interface PELogFeelingsViewController ()
 
+@property CGSize screenSize;
+@property UIButton *submitButton;
 @property NSDictionary *emotionColors;
 @property UIColor *cellTextColor;
 @property NSDictionary *emotionIntensities;
+@property PEFeelingsCell *customEmotionCell;
+@property PEFeelingsCell *commentCell;
+@property NSArray *emotions;
+@property NSMutableDictionary *cells;
+@property int numberOfCells;
 
 @end
 
 @implementation PELogFeelingsViewController
 
+@synthesize screenSize;
+@synthesize numberOfCells;
+@synthesize cells;
+@synthesize emotions;
+@synthesize submitButton;
+@synthesize commentCell;
+@synthesize customEmotionCell;
 @synthesize emotionIntensities;
 @synthesize emotionColors;
 @synthesize cellHeight;
@@ -44,9 +80,16 @@
 {
     [super viewDidLoad];
     
+    //get info from plists
+    emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
+    
     emotionColors = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"EmotionColors" ofType: @"plist"]];
     
     emotionIntensities = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"EmotionIntensities" ofType: @"plist"]];
+    
+    //init cells info
+    numberOfCells = [emotions count] + 1; // +1 for comment cell
+    cells = [NSMutableDictionary dictionary];
     
     // disable scrolling
     self.tableView.scrollEnabled = NO;
@@ -54,17 +97,24 @@
     // customize separators
     self.tableView.separatorColor = [UIColor clearColor];
     
-    // initialize content cell properties
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
-    CGSize screenSize = screenBound.size;
-    // CGFloat screenWidth = screenSize.width;
-    CGFloat screenHeight = screenSize.height;
-    cellHeight = (screenHeight - self.navigationController.navigationBar.frame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height - SEPARATOR_HEIGHT*10) / 10;
+    // save screen size to global variable
+    self.screenSize = [[UIScreen mainScreen] bounds].size;
     
+    // initialize cell qualities
+    cellHeight = (self.screenSize.height - self.navigationController.navigationBar.frame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height - SEPARATOR_HEIGHT*numberOfCells) / numberOfCells;
     cellTextColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
     
+    // initialize background
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LogFeelingsBackground.png"]];
     self.tableView.backgroundView = imageView;
+    
+    // initialize submit button
+    UIImage *submitImage = [UIImage imageNamed:@"SubmitIcon.png"];
+    UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
+    submit.frame = CGRectMake( width_factor(SUBMIT_ICON_X), height_factor(SUBMIT_ICON_Y), width_factor(SUBMIT_ICON_WIDTH), height_factor(SUBMIT_ICON_HEIGHT) );
+    [submit addTarget:self action:@selector(submitClicked) forControlEvents:UIControlEventTouchUpInside];
+    [submit setImage:submitImage forState:UIControlStateNormal];
+    [self.tableView insertSubview:submit atIndex:0];
     
     [self initNavigationBar];
     
@@ -81,7 +131,7 @@
     // add buttons to navbar
     // create a toolbar where we can place some buttons
     PEToolBar* toolbar = [[PEToolBar alloc]
-                          initWithFrame:CGRectMake(0, 0, 100, 37)];
+                          initWithFrame:CGRectMake(0, 0, width_factor(RIGHT_TOOLBAR_WIDTH), height_factor(RIGHT_TOOLBAR_HEIGHT))];
     [toolbar setBarStyle:UIBarStyleBlackTranslucent];
     [toolbar setBackgroundColor: [UIColor clearColor]];
     toolbar.translucent = YES;
@@ -94,12 +144,12 @@
                                initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                target:nil
                                action:nil];
-    spacer.width = 50;
+    spacer.width = width_factor(RIGHT_TOOLBAR_SPACER_WIDTH) ;
     [buttons addObject:spacer];
     
     UIImage *calendarImage = [UIImage imageNamed:@"CalendarIcon.png"];
     UIButton *calendar = [UIButton buttonWithType:UIButtonTypeCustom];
-    calendar.bounds = CGRectMake( 0, 0, 35, 30 );
+    calendar.bounds = CGRectMake( 0, 0, width_factor(CALENDAR_ICON_WIDTH), height_factor(CALENDAR_ICON_HEIGHT) );
     [calendar addTarget:self action:@selector(calendarClicked) forControlEvents:UIControlEventTouchUpInside];
     [calendar setImage:calendarImage forState:UIControlStateNormal];
     UIBarButtonItem *calendarButton = [[UIBarButtonItem alloc] initWithCustomView:calendar];
@@ -113,7 +163,7 @@
                                               initWithCustomView:toolbar];
     
     toolbar = [[PEToolBar alloc]
-               initWithFrame:CGRectMake(0, 0, 100, 37)];
+               initWithFrame:CGRectMake(0, 0, width_factor(LEFT_TOOLBAR_WIDTH), height_factor(LEFT_TOOLBAR_HEIGHT))];
     [toolbar setBarStyle:UIBarStyleBlackTranslucent];
     [toolbar setBackgroundColor: [UIColor clearColor]];
     toolbar.translucent = YES;
@@ -124,12 +174,12 @@
               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
               target:nil
               action:nil];
-    spacer.width = -9;
+    spacer.width = width_factor(LEFT_TOOLBAR_LEFT_SPACER_WIDTH);
     [buttons addObject:spacer];
     
     UIImage *settingsImage = [UIImage imageNamed:@"SettingsIcon.png"];
     UIButton *settings = [UIButton buttonWithType:UIButtonTypeCustom];
-    settings.bounds = CGRectMake( 0, 0, 30, 27 );
+    settings.bounds = CGRectMake( 0, 0, width_factor(SETTINGS_ICON_WIDTH), height_factor(SETTINGS_ICON_HEIGHT) );
     [settings addTarget:self action:@selector(settingsClicked) forControlEvents:UIControlEventTouchUpInside];
     [settings setImage:settingsImage forState: UIControlStateNormal];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settings];
@@ -140,16 +190,16 @@
               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
               target:nil
               action:nil];
-    spacer.width = -3;
+    spacer.width = width_factor(LEFT_TOOLBAR_RIGHT_SPACER_WIDTH);
     [buttons addObject:spacer];
     
-    UIImage *addImage = [UIImage imageNamed:@"AddIcon.png"];
-    UIButton *add = [UIButton buttonWithType:UIButtonTypeCustom];
-    add.bounds = CGRectMake( 0, 0, 30, 27 );
-    [add addTarget:self action:@selector(addClicked) forControlEvents:UIControlEventTouchUpInside];
-    [add setImage:addImage forState: UIControlStateNormal];
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithCustomView:add];
-    [buttons addObject: addButton];
+    UIImage *refreshImage = [UIImage imageNamed:@"RefreshIcon.png"];
+    UIButton *refresh = [UIButton buttonWithType:UIButtonTypeCustom];
+    refresh.bounds = CGRectMake( 0, 0, width_factor(REFRESH_ICON_WIDTH), height_factor(REFRESH_ICON_HEIGHT) );
+    [refresh addTarget:self action:@selector(refreshClicked) forControlEvents:UIControlEventTouchUpInside];
+    [refresh setImage:refreshImage forState: UIControlStateNormal];
+    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithCustomView:refresh];
+    [buttons addObject: refreshButton];
     
     
     [toolbar setItems:buttons animated:NO];
@@ -174,7 +224,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 20;
+    return numberOfCells*2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -187,6 +237,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    if (indexPath.row/2 < [self.emotions count] && [self.cells objectForKey: [self.emotions objectAtIndex:indexPath.row/2]] != nil) {
+//        return [self.cells objectForKey: [self.emotions objectAtIndex:indexPath.row]];
+//    }
+    
     static NSString *CellIdentifier = @"LogFeelingsCell";
     PEFeelingsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -201,11 +255,11 @@
     cell.backgroundView = [[UIImageView alloc] initWithImage:[ [UIImage imageNamed:@"CellBackground.png"] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0] ];
     
     cell.textLabel.textColor = cellTextColor;
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:37.0];
     
     UIColor *emotionColor = [UIColor clearColor];
     NSString *cellLabel = @"";
     NSString *emotion = @"";
+    UIFont *font = [UIFont boldSystemFontOfSize:37.0];
     
     if (indexPath.row/2 == 0) {
         emotionColor = [PEUtil colorFromHexString: [emotionColors valueForKey:@"Joy"]];
@@ -253,15 +307,23 @@
         cellLabel = @"PICK YOUR OWN";
     }
     if (indexPath.row/2 == 9) {
-        cellLabel = @"inputTODO";
+        emotion = @"Comment";
+        cellLabel = @"Why are you feeling this way?";
+        font = [UIFont systemFontOfSize:20];
+        
     }
     
     [cell initForEmotion:emotion withColor:emotionColor];
     
+    cell.textLabel.font = font;
+    
     // apply kerning to cell label
     cell.textLabel.attributedText = [self attributedStringWithText:cellLabel withKerning:CELL_KERNING];
     
-    // Configure the cell...
+//    // after all this initialization, save to cells array
+//    if (indexPath.row/2 < [emotions count]) {
+//    [self.cells setValue:cell forKey: [emotions objectAtIndex:indexPath.row/2]];
+//    }
     
     return cell;
 }
@@ -275,6 +337,10 @@
     return attributedString;
 }
 
+-(void)submitClicked {
+    NSLog(@"submit clicked");
+}
+
 -(void)calendarClicked {
     NSLog(@"calendar clicked");
 }
@@ -283,50 +349,15 @@
     NSLog(@"settings clicked");
 }
 
--(void)addClicked {
-    NSLog(@"add clicked");
+-(void)refreshClicked {
+    [self.tableView reloadData];
+    self.customEmotionCell.customEmotion = nil;
+    self.customEmotionCell.customEmotionField = nil;
+    self.customEmotionCell = nil;
+    self.commentCell.customEmotion = nil;
+    self.commentCell.customEmotionField = nil;
+    self.commentCell = nil;
 }
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -340,40 +371,128 @@
 }
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchEvent:touches withEvent:event];
+    [self touchEvent:touches withEvent:event atBeginning:YES];
     [super touchesBegan:touches withEvent:event];
 }
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchEvent:touches withEvent:event];
+    [self touchEvent:touches withEvent:event atBeginning:NO];
     [super touchesMoved:touches withEvent:event];
 }
 
--(void) touchEvent:(NSSet *)touches withEvent:(UIEvent *)event {
+-(void) touchEvent:(NSSet *)touches withEvent:(UIEvent *)event atBeginning:(BOOL)atBeginning {
+    
+    // don't know if touches can be multiple here, but don't wanna deal with it if it can
     if (touches.count == 1) {
+        
         UITouch *touch = [touches anyObject];
         CGPoint touchPoint = [touch locationInView:self.tableView];\
+        
+        //check if clicking a separator cell
         if ((int)touchPoint.y % (int)(cellHeight + SEPARATOR_HEIGHT) < SEPARATOR_HEIGHT) {
             return;
         }
+        
+        // get chosen cell
         int row = 2 * touchPoint.y / (cellHeight + SEPARATOR_HEIGHT);
-        row += row%2==0?1:0;\
-        
+        row += row%2==0?1:0;
         NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:0];
-        
         PEFeelingsCell *cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:path];
         
-        float intensity = [cell newIntensityWidth:touchPoint.x];
-        if (intensity == 0) {
-            cell.textLabel.font = [UIFont boldSystemFontOfSize:37.0];
-            cell.textLabel.attributedText = [self attributedStringWithText:[cell.emotion uppercaseString] withKerning:CELL_KERNING];
-        }
-        else {
-            cell.textLabel.font = [UIFont boldSystemFontOfSize: 18.0];
-            cell.textLabel.attributedText = [self attributedStringWithText:[[emotionIntensities valueForKey:cell.emotion][((int)intensity)/2] uppercaseString] withKerning:CELL_KERNING];
+        //check if clicking 'comment' cell
+        if ([cell.emotion isEqualToString:@"Comment"]) {
+            //shouldn't bring up keyboard if just swiping over comment cell
+            if (atBeginning) {
+                [cell initCustomEmotionTextField];
+                if (!self.commentCell) {
+                    self.commentCell = cell;
+                }
+                cell.customEmotionField.delegate = self;
+                cell.customEmotionField.tag = COMMENT_TAG;
+                [cell.customEmotionField becomeFirstResponder];
+            }
+            return;
         }
         
+        //check if clicking 'pick your own' cell
+        if ([cell.emotion isEqualToString:@"Pick Your Own"]) {
+            //check if hasn't been 'picked' yet
+            if(!cell.customEmotion) {
+                // only let user pick if touch began here
+                if (atBeginning) {
+                    [cell initCustomEmotionTextField];
+                    if (!self.customEmotionCell) {
+                        self.customEmotionCell = cell;
+                    }
+                    cell.customEmotionField.delegate = self;
+                    cell.customEmotionField.tag = CUSTOM_EMOTION_TAG;
+                    
+                    [cell.customEmotionField becomeFirstResponder];
+                    return;
+                }
+                else  {
+                    return;
+                }
+            }
+        }
+        
+        //make sure the textviews give up first responder when not most recently touched. TODO: this isn't working
+        if (self.customEmotionCell) {
+            [self.customEmotionCell resignFirstResponder];
+        }
+        if (self.commentCell) {
+            [self.commentCell resignFirstResponder];
+        }
+        
+        // update intensity based on touch
+        float intensity = [cell newIntensityWidth:touchPoint.x];
+        
+        // update text based on intensity
+        float fontSize;
+        NSString *text;
+        if ([cell.emotion isEqualToString:@"Pick Your Own"]) {
+            fontSize = 18.0;
+            text = [cell.customEmotion uppercaseString];
+        }
+        else if (intensity == 0) {
+            fontSize = 37.0;
+            text = [cell.emotion uppercaseString];
+        }
+        else {
+            fontSize = 18.0;
+            text = [[emotionIntensities valueForKey:cell.emotion][((int)intensity)/2] uppercaseString];
+        }
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:fontSize];
+        cell.textLabel.attributedText = [self attributedStringWithText:text withKerning:CELL_KERNING];
     }
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        
+        if (textView.tag == CUSTOM_EMOTION_TAG) {
+            
+            // if nothing was typed, assume they'd still wanna be able to pick their own again without refreshing
+            if ([textView.text isEqualToString:@""]) {
+                textView.frame = CGRectMake(0, 0, 0, 0);
+                self.customEmotionCell.customEmotion = nil;
+                self.customEmotionCell.customEmotionField = nil;
+                self.customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:37.0];
+                self.customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.emotion uppercaseString] withKerning:CELL_KERNING];
+            }
+            else {
+                textView.frame = CGRectMake(0, 0, 0, 0); // hacky
+                [customEmotionCell initCustomEmotion:textView.text];
+                customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:18.0];
+                customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.customEmotion uppercaseString] withKerning:CELL_KERNING];
+            }
+        }
+        
+        return FALSE;
+    }
+    return TRUE;
 }
 
 @end
