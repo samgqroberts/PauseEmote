@@ -352,17 +352,22 @@
     
     // non apple approved approach
     //NSString *phoneNumb = [[NSUserDefaults standardUserDefaults] stringForKey:@"SBFormattedPhoneNumber"];
-    NSString *phoneNumb = [[UIDevice currentDevice] name];
-    
+    NSString *phoneName = [[UIDevice currentDevice] name];
+
     NSString *postString = @"postData=1";
     NSString *bit = @"";
     NSString *emotion;
     
-    int data = 1;
+    // add phone name
+    bit = [NSString stringWithFormat:@"&data01=%@", phoneName];
+    postString = [postString stringByAppendingString:bit];
+    
+    int data = 2;
+    
     // all but custom emotion
     for (int i = 0 ; i < [self.emotions count] - 1 ; i++) {
-        if (i==5) {
-            data++;
+        if (data == 10 || data == 11) {
+            data+=2;
         }
         emotion = [self.emotions objectAtIndex:i];
         bit = [NSString stringWithFormat: @"&data%@%d=%@&data%@%d=%f", data<10?@"0":@"", data++, emotion, data<10?@"0":@"", data++, [(NSNumber *)[self.intensities valueForKey:emotion] floatValue]];
@@ -371,7 +376,7 @@
     // now for custom emotion
     PEFeelingsCell *cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2-1 inSection:0]];
     emotion = cell.customEmotion ? cell.customEmotion : @"No custom emotion";
-    bit = [NSString stringWithFormat: @"&data%d=%@&data%d=%f", data++, emotion, data++, 0.0];
+    bit = [NSString stringWithFormat: @"&data%d=%@&data%d=%f", data++, emotion, data++, cell.intensity];
     postString = [postString stringByAppendingString:bit];
     // now for comment
     cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2+1 inSection:0]];
