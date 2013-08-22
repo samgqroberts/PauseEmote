@@ -11,6 +11,7 @@
 #import "PEToolBar.h"
 #import "PEFeelingsCell.h"
 #import "PELogFeelingsTableView.h"
+#import "LoggedEmotionsManager.h"
 
 // miscellaneous macro values
 #define SEPARATOR_HEIGHT 10.0
@@ -53,11 +54,13 @@
 @property NSArray *emotions;
 @property NSMutableDictionary *intensities;
 @property int numberOfCells;
+@property LoggedEmotionsManager *lem;
 
 @end
 
 @implementation PELogFeelingsViewController
 
+@synthesize lem;
 @synthesize screenSize;
 @synthesize numberOfCells;
 @synthesize intensities;
@@ -82,6 +85,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //get logged emotions singleton
+    lem = [LoggedEmotionsManager sharedSingleton];
     
     //get info from plists
     emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
@@ -390,7 +396,6 @@
     NSError *error = [[NSError alloc] init];
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
     NSString *result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    NSLog(@"Response Code: %d", [urlResponse statusCode]);
     
     if ([urlResponse statusCode] >= 200 && [urlResponse statusCode] < 300)
     {
@@ -401,8 +406,6 @@
         
         [self refreshClicked];
     }
-    
-    NSLog(@"Data saved");
     
 }
 
