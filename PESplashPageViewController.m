@@ -30,11 +30,11 @@
 {
     [super viewDidLoad];
     
-    [LoggedEmotionsManager sharedSingleton];
-    
-    PELogFeelingsViewController *lfvc = [[PELogFeelingsViewController alloc] init];
-    
-    PENavigationController *nc = [[PENavigationController alloc] initWithRootViewController:lfvc];
+//    [LoggedEmotionsManager sharedSingleton];
+//    
+//    PELogFeelingsViewController *lfvc = [[PELogFeelingsViewController alloc] init];
+//    
+//    PENavigationController *nc = [[PENavigationController alloc] initWithRootViewController:lfvc];
     
 	// Do any additional setup after loading the view.
 }

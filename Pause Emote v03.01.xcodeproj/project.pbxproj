@@ -26,6 +26,8 @@
 		946BA6F41669A927000D7768 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 946BA6F21669A927000D7768 /* InfoPlist.strings */; };
 		946BA6F71669A927000D7768 /* Pause_Emote_v03_01Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */; };
 		BEBFA3F217C66FD400640BF8 /* PESplashPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA3F117C66FD400640BF8 /* PESplashPageViewController.m */; };
+		BEBFA3F617C67D0400640BF8 /* PEEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA3F517C67D0400640BF8 /* PEEmotion.m */; };
+		BEBFA3F817C6B27700640BF8 /* Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA3F717C6B27600640BF8 /* Readme.txt */; };
 		BEC62FE217C27BE40010B89F /* PELogFeelingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */; };
 		BEC62FED17C297DE0010B89F /* NavBarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FEC17C297DE0010B89F /* NavBarBackground.png */; };
 		BEC62FF017C299C30010B89F /* PENavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC62FEF17C299C30010B89F /* PENavigationController.m */; };
@@ -86,6 +88,9 @@
 		946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pause_Emote_v03_01Tests.m; sourceTree = "<group>"; };
 		BEBFA3F017C66FD400640BF8 /* PESplashPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PESplashPageViewController.h; sourceTree = "<group>"; };
 		BEBFA3F117C66FD400640BF8 /* PESplashPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PESplashPageViewController.m; sourceTree = "<group>"; };
+		BEBFA3F417C67D0400640BF8 /* PEEmotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEEmotion.h; sourceTree = "<group>"; };
+		BEBFA3F517C67D0400640BF8 /* PEEmotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEEmotion.m; sourceTree = "<group>"; };
+		BEBFA3F717C6B27600640BF8 /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme.txt; sourceTree = "<group>"; };
 		BEC62FE017C27BE40010B89F /* PELogFeelingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PELogFeelingsViewController.h; path = ../PELogFeelingsViewController.h; sourceTree = "<group>"; };
 		BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PELogFeelingsViewController.m; path = ../PELogFeelingsViewController.m; sourceTree = "<group>"; };
 		BEC62FEC17C297DE0010B89F /* NavBarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBackground.png; sourceTree = SOURCE_ROOT; };
@@ -142,6 +147,7 @@
 		946BA6B31669A927000D7768 = {
 			isa = PBXGroup;
 			children = (
+				BEBFA3F717C6B27600640BF8 /* Readme.txt */,
 				946BA6C81669A927000D7768 /* Pause Emote v03.01 */,
 				946BA6EF1669A927000D7768 /* Pause Emote v03.01Tests */,
 				946BA6C11669A927000D7768 /* Frameworks */,
@@ -174,6 +180,7 @@
 			children = (
 				946BA6E01669A927000D7768 /* ViewController.h */,
 				946BA6E11669A927000D7768 /* ViewController.m */,
+				BEBFA3F317C67CC400640BF8 /* Objects */,
 				BEBFA3EF17C66FA400640BF8 /* Splash Page */,
 				BEC6301E17C662040010B89F /* Singletons */,
 				BEC6301517C3FEDB0010B89F /* Automatic Files */,
@@ -221,6 +228,16 @@
 				BEBFA3F117C66FD400640BF8 /* PESplashPageViewController.m */,
 			);
 			name = "Splash Page";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		BEBFA3F317C67CC400640BF8 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				BEBFA3F417C67D0400640BF8 /* PEEmotion.h */,
+				BEBFA3F517C67D0400640BF8 /* PEEmotion.m */,
+			);
+			name = Objects;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -411,6 +428,7 @@
 				BEC6301D17C552430010B89F /* Emotions.plist in Resources */,
 				BEC6302417C6686A0010B89F /* SplashScreen.png in Resources */,
 				BEC6302517C6686A0010B89F /* SplashScreen@2x.png in Resources */,
+				BEBFA3F817C6B27700640BF8 /* Readme.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +474,7 @@
 				BEC6300D17C3B18D0010B89F /* PELogFeelingsTableView.m in Sources */,
 				BEC6302117C6626B0010B89F /* LoggedEmotionsManager.m in Sources */,
 				BEBFA3F217C66FD400640BF8 /* PESplashPageViewController.m in Sources */,
+				BEBFA3F617C67D0400640BF8 /* PEEmotion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

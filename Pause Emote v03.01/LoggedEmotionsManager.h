@@ -11,5 +11,6 @@
 @interface LoggedEmotionsManager : NSObject
 
 + (LoggedEmotionsManager *) sharedSingleton;
+@property NSMutableDictionary *ownerEmotions;
 
 @end

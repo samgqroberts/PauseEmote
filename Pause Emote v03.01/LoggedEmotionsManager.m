@@ -7,8 +7,18 @@
 //
 
 #import "LoggedEmotionsManager.h"
+#import "PEEmotion.h"
+
+@interface LoggedEmotionsManager ()
+
+@property NSArray *emotions;
+
+@end
 
 @implementation LoggedEmotionsManager
+
+@synthesize emotions;
+@synthesize ownerEmotions;
 
 + (LoggedEmotionsManager *)sharedSingleton
 {
@@ -26,12 +36,180 @@
 - (id) init {
     self = [super init];
     if (self) {
-        //get info from server
-        NSURL *url = [NSURL URLWithString:@"http://betwixt.myzen.co.uk/pause/query.php"];
-        NSString *webData= [NSString stringWithContentsOfURL:url];
-        NSLog(@"%@",webData);
+        
+        self.ownerEmotions = [NSMutableDictionary dictionary];
+        
+        self.emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
+        
+        [self populateOwnerEmotions];
+        
     }
     return self;
+}
+
+// ATTN FUTURE DEVELOPERS: this is a cluster F of an html-parser
+// there are libraries out there that will achieve a similar thing better
+// and this is so specific to the current server format it's not even funny
+-(void) populateOwnerEmotions {
+    
+    //get info from server
+    NSURL *url = [NSURL URLWithString:@"http://betwixt.myzen.co.uk/pause/query.php"];
+    NSString *webData= [NSString stringWithContentsOfURL:url];
+    
+    // parse this mother (hold onto your butts...)
+    NSArray *components = [webData componentsSeparatedByString:@"tr>"];
+    NSArray *subComponents;
+    BOOL pastFirst;
+    BOOL skipSecond;
+    BOOL atOwner;
+    BOOL shouldContinue;
+    BOOL expectingIntensity;
+    NSRange tdRange = NSMakeRange(0, [@"<td>" length]);
+    NSError *error = NULL;
+    NSDataDetector *dateDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeDate error:&error];
+    NSString *newSubComponent;
+    PEEmotion *emotion;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSMutableDictionary *intensities;
+    NSString *emotionName;
+    NSDateComponents *dateComponents;
+    NSString *year;
+    NSString *month;
+    NSString *day;
+    NSString *strangeCharacters;
+    NSString *strangeCharacter;
+    NSString *phoneName = [[UIDevice currentDevice] name];
+    
+    for (NSString *component in components) {
+        //check if longer than <td>
+        if ([component length] <= [@"<td>" length]) {
+            continue;
+        }
+        //check if starts with <td>
+        if (![[component substringWithRange:tdRange] isEqualToString: @"<td>"]) {
+            continue;
+        }
+        
+        // separate by <td> tags
+        subComponents = [component componentsSeparatedByString:@"td>"];
+        
+        skipSecond = false;
+        atOwner = false;
+        pastFirst = false;
+        shouldContinue = false;
+        expectingIntensity = false;
+        emotion = nil;
+        
+        // loop over each cell in table
+        for (NSString *subComponent in subComponents) {
+            
+            if ( [subComponent length] <= [@"<" length] ) {
+                continue;
+            }
+            
+            if ( [subComponent characterAtIndex:0] == '<') {
+                continue;
+            }
+            
+            if (skipSecond) {
+                skipSecond = false;
+                atOwner = TRUE;
+                continue;
+            }
+            
+            newSubComponent = [subComponent stringByReplacingOccurrencesOfString:@"</" withString:@""];
+            
+            
+            if (atOwner) {
+                // when the apostrophe in Amy's iPhone's name gets sent to server it gets replaced with ‚Äô...
+                strangeCharacter = [phoneName substringWithRange:NSMakeRange(13, 1)];
+                strangeCharacters = [newSubComponent stringByReplacingOccurrencesOfString:@"‚Äô" withString:strangeCharacter];
+
+                if([[[UIDevice currentDevice] name] isEqualToString: newSubComponent] || [[[UIDevice currentDevice] name] isEqualToString:strangeCharacters]) {
+                    [emotion setOwner:newSubComponent];
+                    atOwner = false;
+                    continue;
+                }
+                // else, this is of no interest to us
+                atOwner = false;
+                shouldContinue = true;
+                break;
+            }
+            
+            // check if first subComponent is a date
+            if (!pastFirst) {
+                
+                if ([dateDetector numberOfMatchesInString:newSubComponent options:0 range:NSMakeRange(0, [newSubComponent length])] == 0) {
+                    shouldContinue = TRUE;
+                    break;
+                }
+                
+                emotion = [[PEEmotion alloc] init];
+                intensities = [NSMutableDictionary dictionary];
+                [emotion setDateCreated: [dateFormatter dateFromString:newSubComponent]];
+                pastFirst = TRUE;
+                skipSecond = TRUE;
+                
+                continue;
+                
+            }
+            
+            if ([self.emotions containsObject: newSubComponent]) {
+                emotionName = newSubComponent;
+                continue;
+            }
+            
+            if (emotionName != nil) {
+                if ([intensities count] == [self.emotions count] - 1) {
+                    emotion.customEmotion = emotionName;
+                }
+                [intensities setValue: [NSNumber numberWithFloat:[newSubComponent floatValue]] forKey:emotionName];
+                emotionName = nil;
+                continue;
+            }
+            
+            if ([intensities count] == [self.emotions count] - 1) {
+                emotionName = newSubComponent;
+                continue;
+            }
+            
+            if ([intensities count] == [self.emotions count]) {
+                emotion.comment = newSubComponent;
+                break;
+            }
+            
+            
+        }
+        
+        if (shouldContinue) {
+            shouldContinue = false;
+            continue;
+        }
+        
+        // make sure emotion has all necessary parts
+        if ([intensities count] != [self.emotions count] || !emotion.dateCreated|| !emotion.customEmotion || !emotion.comment) {
+            continue;
+        }
+        emotion.intensities = [NSDictionary dictionaryWithDictionary:intensities];
+        
+            dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:emotion.dateCreated];
+            year = [NSString stringWithFormat:@"%d", [dateComponents year]];
+            month = [NSString stringWithFormat:@"%d", [dateComponents month]];
+            day = [NSString stringWithFormat:@"%d", [dateComponents day]];
+            if (![self.ownerEmotions objectForKey: year]) {
+                [self.ownerEmotions setValue: [NSMutableDictionary dictionary] forKey: year ];
+            }
+            if (![(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month]) {
+                [(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] setValue:[NSMutableDictionary dictionary] forKey:month];
+            }
+            if (![(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey: day]) {
+                [(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] setValue:[NSMutableArray array] forKey:day];
+            }
+            [(NSMutableArray *)[(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey:day] addObject:emotion];
+        NSLog(@"%@", self.ownerEmotions);
+    }
+    
 }
 
 @end

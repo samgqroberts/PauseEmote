@@ -7,21 +7,18 @@
 //
 
 #import "AppDelegate.h"
+#import "PESplashPageViewController.h"
+#import "LoggedEmotionsManager.h"
+#import "PENavigationController.h"
+#import "PELogFeelingsViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    
-    [self customizeAppearance];
-    
+
     return YES;
-}
-
-// customize the appearance of the nav bar
--(void)customizeAppearance {
-
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
