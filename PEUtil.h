@@ -17,7 +17,7 @@
  * the layout was developed with screen size of 320x568
  * simply pass the desired pixel value on a 320x568 screen and get the scaled pixel value
  */
-#define width_factor(w) (self.screenSize.width*w/320.0)
-#define height_factor(h) (self.screenSize.height*h/568.0)
+#define width_factor(w) ([[UIScreen mainScreen] bounds].size.width*w/320.0)
+#define height_factor(h) ([[UIScreen mainScreen] bounds].size.height*h/568.0)
 
 @end

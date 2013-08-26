@@ -7,7 +7,7 @@
 //
 
 #import "LoggedEmotionsManager.h"
-#import "PEEmotion.h"
+
 
 @interface LoggedEmotionsManager ()
 
@@ -47,6 +47,23 @@
     return self;
 }
 
+- (void) addEmotion: (PEEmotion *)emotion {
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:emotion.dateCreated];
+    NSString *year = [NSString stringWithFormat:@"%d", [dateComponents year]];
+    NSString *month = [NSString stringWithFormat:@"%d", [dateComponents month]];
+    NSString *day = [NSString stringWithFormat:@"%d", [dateComponents day]];
+    if (![self.ownerEmotions objectForKey: year]) {
+        [self.ownerEmotions setValue: [NSMutableDictionary dictionary] forKey: year ];
+    }
+    if (![(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month]) {
+        [(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] setValue:[NSMutableDictionary dictionary] forKey:month];
+    }
+    if (![(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey: day]) {
+        [(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] setValue:[NSMutableArray array] forKey:day];
+    }
+    [(NSMutableArray *)[(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey:day] addObject:emotion];
+}
+
 // ATTN FUTURE DEVELOPERS: this is a cluster F of an html-parser
 // there are libraries out there that will achieve a similar thing better
 // and this is so specific to the current server format it's not even funny
@@ -73,10 +90,6 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSMutableDictionary *intensities;
     NSString *emotionName;
-    NSDateComponents *dateComponents;
-    NSString *year;
-    NSString *month;
-    NSString *day;
     NSString *strangeCharacters;
     NSString *strangeCharacter;
     NSString *phoneName = [[UIDevice currentDevice] name];
@@ -122,7 +135,7 @@
             
             
             if (atOwner) {
-                // when the apostrophe in Amy's iPhone's name gets sent to server it gets replaced with ‚Äô...
+                // when the apostrophe in Amy's iPhone's name gets sent to server it gets replaced with something then gets sent back as ‚Äô...
                 strangeCharacter = [phoneName substringWithRange:NSMakeRange(13, 1)];
                 strangeCharacters = [newSubComponent stringByReplacingOccurrencesOfString:@"‚Äô" withString:strangeCharacter];
 
@@ -193,23 +206,10 @@
         }
         emotion.intensities = [NSDictionary dictionaryWithDictionary:intensities];
         
-            dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:emotion.dateCreated];
-            year = [NSString stringWithFormat:@"%d", [dateComponents year]];
-            month = [NSString stringWithFormat:@"%d", [dateComponents month]];
-            day = [NSString stringWithFormat:@"%d", [dateComponents day]];
-            if (![self.ownerEmotions objectForKey: year]) {
-                [self.ownerEmotions setValue: [NSMutableDictionary dictionary] forKey: year ];
-            }
-            if (![(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month]) {
-                [(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] setValue:[NSMutableDictionary dictionary] forKey:month];
-            }
-            if (![(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey: day]) {
-                [(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] setValue:[NSMutableArray array] forKey:day];
-            }
-            [(NSMutableArray *)[(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey:day] addObject:emotion];
-        NSLog(@"%@", self.ownerEmotions);
+        [self addEmotion:emotion];
+        
     }
-    
+    NSLog(@"%@", self.ownerEmotions);
 }
 
 @end

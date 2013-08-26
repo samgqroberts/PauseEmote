@@ -28,6 +28,11 @@
 		BEBFA3F217C66FD400640BF8 /* PESplashPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA3F117C66FD400640BF8 /* PESplashPageViewController.m */; };
 		BEBFA3F617C67D0400640BF8 /* PEEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA3F517C67D0400640BF8 /* PEEmotion.m */; };
 		BEBFA3F817C6B27700640BF8 /* Readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA3F717C6B27600640BF8 /* Readme.txt */; };
+		BEBFA3FA17C7B77F00640BF8 /* WeekIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA3F917C7B77F00640BF8 /* WeekIcon.png */; };
+		BEBFA3FC17C7B78B00640BF8 /* MonthIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA3FB17C7B78A00640BF8 /* MonthIcon.png */; };
+		BEBFA3FE17C7B79300640BF8 /* DayIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA3FD17C7B79300640BF8 /* DayIcon.png */; };
+		BEBFA40017C7B79E00640BF8 /* SearchIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEBFA3FF17C7B79E00640BF8 /* SearchIcon.png */; };
+		BEBFA40417C7DE6D00640BF8 /* PEDayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA40317C7DE6D00640BF8 /* PEDayViewController.m */; };
 		BEC62FE217C27BE40010B89F /* PELogFeelingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */; };
 		BEC62FED17C297DE0010B89F /* NavBarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC62FEC17C297DE0010B89F /* NavBarBackground.png */; };
 		BEC62FF017C299C30010B89F /* PENavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC62FEF17C299C30010B89F /* PENavigationController.m */; };
@@ -63,14 +68,14 @@
 /* Begin PBXFileReference section */
 		00D9FAF716727E7800020168 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		00FB1C8B16E52766009741CF /* pe logo horizontal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pe logo horizontal.png"; sourceTree = SOURCE_ROOT; };
-		946BA6BE1669A927000D7768 /* Pause Emote v03.01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pause Emote v03.01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		946BA6BE1669A927000D7768 /* Pause Emote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pause Emote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		946BA6C21669A927000D7768 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		946BA6C41669A927000D7768 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		946BA6C61669A927000D7768 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		946BA6CA1669A927000D7768 /* Pause Emote v03.01-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pause Emote v03.01-Info.plist"; sourceTree = "<group>"; };
+		946BA6CA1669A927000D7768 /* Pause Emote-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pause Emote-Info.plist"; sourceTree = "<group>"; };
 		946BA6CC1669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		946BA6CE1669A927000D7768 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		946BA6D01669A927000D7768 /* Pause Emote v03.01-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pause Emote v03.01-Prefix.pch"; sourceTree = "<group>"; };
+		946BA6D01669A927000D7768 /* Pause Emote-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pause Emote-Prefix.pch"; sourceTree = "<group>"; };
 		946BA6D11669A927000D7768 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		946BA6D21669A927000D7768 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		946BA6D41669A927000D7768 /* Splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Splash.png; sourceTree = "<group>"; };
@@ -80,9 +85,9 @@
 		946BA6DE1669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		946BA6E01669A927000D7768 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		946BA6E11669A927000D7768 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		946BA6E81669A927000D7768 /* Pause Emote v03.01Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pause Emote v03.01Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		946BA6E81669A927000D7768 /* Pause EmoteTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pause EmoteTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		946BA6E91669A927000D7768 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		946BA6F11669A927000D7768 /* Pause Emote v03.01Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pause Emote v03.01Tests-Info.plist"; sourceTree = "<group>"; };
+		946BA6F11669A927000D7768 /* Pause EmoteTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pause EmoteTests-Info.plist"; sourceTree = "<group>"; };
 		946BA6F31669A927000D7768 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		946BA6F51669A927000D7768 /* Pause_Emote_v03_01Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pause_Emote_v03_01Tests.h; sourceTree = "<group>"; };
 		946BA6F61669A927000D7768 /* Pause_Emote_v03_01Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pause_Emote_v03_01Tests.m; sourceTree = "<group>"; };
@@ -91,6 +96,12 @@
 		BEBFA3F417C67D0400640BF8 /* PEEmotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEEmotion.h; sourceTree = "<group>"; };
 		BEBFA3F517C67D0400640BF8 /* PEEmotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEEmotion.m; sourceTree = "<group>"; };
 		BEBFA3F717C6B27600640BF8 /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme.txt; sourceTree = "<group>"; };
+		BEBFA3F917C7B77F00640BF8 /* WeekIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WeekIcon.png; sourceTree = SOURCE_ROOT; };
+		BEBFA3FB17C7B78A00640BF8 /* MonthIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MonthIcon.png; sourceTree = SOURCE_ROOT; };
+		BEBFA3FD17C7B79300640BF8 /* DayIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DayIcon.png; sourceTree = SOURCE_ROOT; };
+		BEBFA3FF17C7B79E00640BF8 /* SearchIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SearchIcon.png; sourceTree = SOURCE_ROOT; };
+		BEBFA40217C7DE6D00640BF8 /* PEDayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEDayViewController.h; sourceTree = "<group>"; };
+		BEBFA40317C7DE6D00640BF8 /* PEDayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEDayViewController.m; sourceTree = "<group>"; };
 		BEC62FE017C27BE40010B89F /* PELogFeelingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PELogFeelingsViewController.h; path = ../PELogFeelingsViewController.h; sourceTree = "<group>"; };
 		BEC62FE117C27BE40010B89F /* PELogFeelingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PELogFeelingsViewController.m; path = ../PELogFeelingsViewController.m; sourceTree = "<group>"; };
 		BEC62FEC17C297DE0010B89F /* NavBarBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarBackground.png; sourceTree = SOURCE_ROOT; };
@@ -158,8 +169,8 @@
 		946BA6BF1669A927000D7768 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				946BA6BE1669A927000D7768 /* Pause Emote v03.01.app */,
-				946BA6E81669A927000D7768 /* Pause Emote v03.01Tests.octest */,
+				946BA6BE1669A927000D7768 /* Pause Emote.app */,
+				946BA6E81669A927000D7768 /* Pause EmoteTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -178,15 +189,16 @@
 		946BA6C81669A927000D7768 /* Pause Emote v03.01 */ = {
 			isa = PBXGroup;
 			children = (
+				BEC6301217C3FE970010B89F /* Log Feelings */,
+				BEBFA40117C7DE3500640BF8 /* Day */,
 				946BA6E01669A927000D7768 /* ViewController.h */,
 				946BA6E11669A927000D7768 /* ViewController.m */,
+				BEC6301417C3FEC00010B89F /* Navigation Bar */,
 				BEBFA3F317C67CC400640BF8 /* Objects */,
 				BEBFA3EF17C66FA400640BF8 /* Splash Page */,
 				BEC6301E17C662040010B89F /* Singletons */,
 				BEC6301517C3FEDB0010B89F /* Automatic Files */,
-				BEC6301417C3FEC00010B89F /* Navigation Bar */,
 				BEC6301317C3FEAD0010B89F /* Util */,
-				BEC6301217C3FE970010B89F /* Log Feelings */,
 				946BA6C91669A927000D7768 /* Supporting Files */,
 			);
 			path = "Pause Emote v03.01";
@@ -215,7 +227,7 @@
 		946BA6F01669A927000D7768 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				946BA6F11669A927000D7768 /* Pause Emote v03.01Tests-Info.plist */,
+				946BA6F11669A927000D7768 /* Pause EmoteTests-Info.plist */,
 				946BA6F21669A927000D7768 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -241,9 +253,23 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		BEBFA40117C7DE3500640BF8 /* Day */ = {
+			isa = PBXGroup;
+			children = (
+				BEBFA40217C7DE6D00640BF8 /* PEDayViewController.h */,
+				BEBFA40317C7DE6D00640BF8 /* PEDayViewController.m */,
+			);
+			name = Day;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		BEC6301017C3FE510010B89F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BEBFA3FF17C7B79E00640BF8 /* SearchIcon.png */,
+				BEBFA3FD17C7B79300640BF8 /* DayIcon.png */,
+				BEBFA3FB17C7B78A00640BF8 /* MonthIcon.png */,
+				BEBFA3F917C7B77F00640BF8 /* WeekIcon.png */,
 				BEC6302217C6686A0010B89F /* SplashScreen.png */,
 				BEC6302317C6686A0010B89F /* SplashScreen@2x.png */,
 				BEC6301A17C546170010B89F /* SubmitIcon.png */,
@@ -329,10 +355,10 @@
 		BEC6302617C669D20010B89F /* Automatic Files */ = {
 			isa = PBXGroup;
 			children = (
-				946BA6CA1669A927000D7768 /* Pause Emote v03.01-Info.plist */,
+				946BA6CA1669A927000D7768 /* Pause Emote-Info.plist */,
 				946BA6CB1669A927000D7768 /* InfoPlist.strings */,
 				946BA6CE1669A927000D7768 /* main.m */,
-				946BA6D01669A927000D7768 /* Pause Emote v03.01-Prefix.pch */,
+				946BA6D01669A927000D7768 /* Pause Emote-Prefix.pch */,
 			);
 			name = "Automatic Files";
 			sourceTree = "<group>";
@@ -340,9 +366,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		946BA6BD1669A927000D7768 /* Pause Emote v03.01 */ = {
+		946BA6BD1669A927000D7768 /* Pause Emote */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 946BA6FA1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01" */;
+			buildConfigurationList = 946BA6FA1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote" */;
 			buildPhases = (
 				946BA6BA1669A927000D7768 /* Sources */,
 				946BA6BB1669A927000D7768 /* Frameworks */,
@@ -352,14 +378,14 @@
 			);
 			dependencies = (
 			);
-			name = "Pause Emote v03.01";
+			name = "Pause Emote";
 			productName = "Pause Emote v03.01";
-			productReference = 946BA6BE1669A927000D7768 /* Pause Emote v03.01.app */;
+			productReference = 946BA6BE1669A927000D7768 /* Pause Emote.app */;
 			productType = "com.apple.product-type.application";
 		};
-		946BA6E71669A927000D7768 /* Pause Emote v03.01Tests */ = {
+		946BA6E71669A927000D7768 /* Pause EmoteTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 946BA6FD1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01Tests" */;
+			buildConfigurationList = 946BA6FD1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause EmoteTests" */;
 			buildPhases = (
 				946BA6E31669A927000D7768 /* Sources */,
 				946BA6E41669A927000D7768 /* Frameworks */,
@@ -371,9 +397,9 @@
 			dependencies = (
 				946BA6EE1669A927000D7768 /* PBXTargetDependency */,
 			);
-			name = "Pause Emote v03.01Tests";
+			name = "Pause EmoteTests";
 			productName = "Pause Emote v03.01Tests";
-			productReference = 946BA6E81669A927000D7768 /* Pause Emote v03.01Tests.octest */;
+			productReference = 946BA6E81669A927000D7768 /* Pause EmoteTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -385,7 +411,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Pause Emote";
 			};
-			buildConfigurationList = 946BA6B81669A927000D7768 /* Build configuration list for PBXProject "Pause Emote v03.01" */;
+			buildConfigurationList = 946BA6B81669A927000D7768 /* Build configuration list for PBXProject "Pause Emote" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -397,8 +423,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				946BA6BD1669A927000D7768 /* Pause Emote v03.01 */,
-				946BA6E71669A927000D7768 /* Pause Emote v03.01Tests */,
+				946BA6BD1669A927000D7768 /* Pause Emote */,
+				946BA6E71669A927000D7768 /* Pause EmoteTests */,
 			);
 		};
 /* End PBXProject section */
@@ -429,6 +455,10 @@
 				BEC6302417C6686A0010B89F /* SplashScreen.png in Resources */,
 				BEC6302517C6686A0010B89F /* SplashScreen@2x.png in Resources */,
 				BEBFA3F817C6B27700640BF8 /* Readme.txt in Resources */,
+				BEBFA3FA17C7B77F00640BF8 /* WeekIcon.png in Resources */,
+				BEBFA3FC17C7B78B00640BF8 /* MonthIcon.png in Resources */,
+				BEBFA3FE17C7B79300640BF8 /* DayIcon.png in Resources */,
+				BEBFA40017C7B79E00640BF8 /* SearchIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +505,7 @@
 				BEC6302117C6626B0010B89F /* LoggedEmotionsManager.m in Sources */,
 				BEBFA3F217C66FD400640BF8 /* PESplashPageViewController.m in Sources */,
 				BEBFA3F617C67D0400640BF8 /* PEEmotion.m in Sources */,
+				BEBFA40417C7DE6D00640BF8 /* PEDayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,7 +522,7 @@
 /* Begin PBXTargetDependency section */
 		946BA6EE1669A927000D7768 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 946BA6BD1669A927000D7768 /* Pause Emote v03.01 */;
+			target = 946BA6BD1669A927000D7768 /* Pause Emote */;
 			targetProxy = 946BA6ED1669A927000D7768 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -596,9 +627,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
-				INFOPLIST_FILE = "Pause Emote v03.01/Pause Emote v03.01-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote-Prefix.pch";
+				INFOPLIST_FILE = "Pause Emote v03.01/Pause Emote-Info.plist";
+				PRODUCT_NAME = "Pause Emote";
 				PROVISIONING_PROFILE = "77E76354-86BB-428E-BAA2-F1845CD903F9";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E76354-86BB-428E-BAA2-F1845CD903F9";
 				WRAPPER_EXTENSION = app;
@@ -610,9 +641,9 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Amy  Goldfeder (GYAD7E2KR7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
-				INFOPLIST_FILE = "Pause Emote v03.01/Pause Emote v03.01-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote-Prefix.pch";
+				INFOPLIST_FILE = "Pause Emote v03.01/Pause Emote-Info.plist";
+				PRODUCT_NAME = "Pause Emote";
 				PROVISIONING_PROFILE = "77E76354-86BB-428E-BAA2-F1845CD903F9";
 				WRAPPER_EXTENSION = app;
 			};
@@ -628,8 +659,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
-				INFOPLIST_FILE = "Pause Emote v03.01Tests/Pause Emote v03.01Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "Pause Emote v03.01Tests/Pause EmoteTests-Info.plist";
+				PRODUCT_NAME = "Pause EmoteTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -645,8 +676,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pause Emote v03.01/Pause Emote v03.01-Prefix.pch";
-				INFOPLIST_FILE = "Pause Emote v03.01Tests/Pause Emote v03.01Tests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "Pause Emote v03.01Tests/Pause EmoteTests-Info.plist";
+				PRODUCT_NAME = "Pause EmoteTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -655,7 +686,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		946BA6B81669A927000D7768 /* Build configuration list for PBXProject "Pause Emote v03.01" */ = {
+		946BA6B81669A927000D7768 /* Build configuration list for PBXProject "Pause Emote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				946BA6F81669A927000D7768 /* Debug */,
@@ -664,7 +695,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		946BA6FA1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01" */ = {
+		946BA6FA1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				946BA6FB1669A927000D7768 /* Debug */,
@@ -673,7 +704,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		946BA6FD1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause Emote v03.01Tests" */ = {
+		946BA6FD1669A927000D7768 /* Build configuration list for PBXNativeTarget "Pause EmoteTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				946BA6FE1669A927000D7768 /* Debug */,

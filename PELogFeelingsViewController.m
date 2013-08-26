@@ -12,10 +12,13 @@
 #import "PEFeelingsCell.h"
 #import "PELogFeelingsTableView.h"
 #import "LoggedEmotionsManager.h"
+#import "PEDayViewController.h"
+#import "PENavigationController.h"
 
 // miscellaneous macro values
 #define SEPARATOR_HEIGHT 10.0
-#define CELL_KERNING -2.8
+#define EMOTION_TITLE_KERNING -2.8
+#define EMOTION_INTENSITY_KERNING -1
 #define CELL_TEXT_COLOR @"#d5d5d6"
 #define CUSTOM_EMOTION_TAG 98
 #define COMMENT_TAG 99
@@ -27,17 +30,17 @@
 #define SUBMIT_ICON_HEIGHT 45.0
 #define RIGHT_TOOLBAR_WIDTH 100.0
 #define RIGHT_TOOLBAR_HEIGHT 32.0
-#define RIGHT_TOOLBAR_SPACER_WIDTH 50.0
+#define RIGHT_TOOLBAR_SPACER_WIDTH 41.0
 #define LEFT_TOOLBAR_WIDTH 100.0
-#define LEFT_TOOLBAR_HEIGHT 37.0
+#define LEFT_TOOLBAR_HEIGHT 45.0
 #define LEFT_TOOLBAR_LEFT_SPACER_WIDTH -9.0
-#define LEFT_TOOLBAR_RIGHT_SPACER_WIDTH -3.0
-#define CALENDAR_ICON_WIDTH 35.0
-#define CALENDAR_ICON_HEIGHT 30.0
-#define SETTINGS_ICON_WIDTH 30.0
-#define SETTINGS_ICON_HEIGHT 27.0
-#define REFRESH_ICON_WIDTH 30.0
-#define REFRESH_ICON_HEIGHT 27.0
+#define LEFT_TOOLBAR_RIGHT_SPACER_WIDTH 5.0
+#define CALENDAR_ICON_WIDTH 40.0
+#define CALENDAR_ICON_HEIGHT 35.0
+#define SETTINGS_ICON_WIDTH 37.0
+#define SETTINGS_ICON_HEIGHT 33.0
+#define REFRESH_ICON_WIDTH 36.0
+#define REFRESH_ICON_HEIGHT 32.0
 #define EMOTION_TITLE_FONT_SIZE 37.0
 #define COMMENT_PROMPT_FONT_SIZE 20.0
 #define EMOTION_INTENSITY_FONT_SIZE 18.0
@@ -55,11 +58,19 @@
 @property NSMutableDictionary *intensities;
 @property int numberOfCells;
 @property LoggedEmotionsManager *lem;
+@property UIButton *searchButton;
+@property UIButton *dayButton;
+@property UIButton *weekButton;
+@property UIButton *monthButton;
 
 @end
 
 @implementation PELogFeelingsViewController
 
+@synthesize dayButton;
+@synthesize weekButton;
+@synthesize monthButton;
+@synthesize searchButton;
 @synthesize lem;
 @synthesize screenSize;
 @synthesize numberOfCells;
@@ -119,13 +130,16 @@
     
     // initialize submit button
     UIImage *submitImage = [UIImage imageNamed:@"SubmitIcon.png"];
-    UIButton *submit = [UIButton buttonWithType:UIButtonTypeCustom];
-    submit.frame = CGRectMake( width_factor(SUBMIT_ICON_X), height_factor(SUBMIT_ICON_Y), width_factor(SUBMIT_ICON_WIDTH), height_factor(SUBMIT_ICON_HEIGHT) );
-    [submit addTarget:self action:@selector(submitClicked) forControlEvents:UIControlEventTouchUpInside];
-    [submit setImage:submitImage forState:UIControlStateNormal];
-    [self.tableView insertSubview:submit atIndex:0];
+    submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    submitButton.frame = CGRectMake( width_factor(SUBMIT_ICON_X), height_factor(SUBMIT_ICON_Y), width_factor(SUBMIT_ICON_WIDTH), height_factor(SUBMIT_ICON_HEIGHT) );
+    [submitButton addTarget:self action:@selector(submitClicked) forControlEvents:UIControlEventTouchUpInside];
+    [submitButton setImage:submitImage forState:UIControlStateNormal];
+    [self.tableView insertSubview:submitButton atIndex:0];
     
     [self initNavigationBar];
+    
+    //save self to navigation controller
+    [(PENavigationController *)self.navigationController setLogFeelingsViewController:self];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -156,12 +170,7 @@
     spacer.width = width_factor(RIGHT_TOOLBAR_SPACER_WIDTH) ;
     [buttons addObject:spacer];
     
-    UIImage *calendarImage = [UIImage imageNamed:@"CalendarIcon.png"];
-    UIButton *calendar = [UIButton buttonWithType:UIButtonTypeCustom];
-    calendar.bounds = CGRectMake( 0, 0, width_factor(CALENDAR_ICON_WIDTH), height_factor(CALENDAR_ICON_HEIGHT) );
-    [calendar addTarget:self action:@selector(calendarClicked) forControlEvents:UIControlEventTouchUpInside];
-    [calendar setImage:calendarImage forState:UIControlStateNormal];
-    UIBarButtonItem *calendarButton = [[UIBarButtonItem alloc] initWithCustomView:calendar];
+    UIBarButtonItem *calendarButton = [[UIBarButtonItem alloc] initWithCustomView:[PENavigationController getButtonOfType:CALENDAR_BUTTON_TYPE forViewOfType:LOG_VIEW_TYPE withTarget:self withSelector:@selector(calendarClicked)]];
     [buttons addObject:calendarButton];
     
     // put the buttons in the toolbar and release them
@@ -186,12 +195,7 @@
     spacer.width = width_factor(LEFT_TOOLBAR_LEFT_SPACER_WIDTH);
     [buttons addObject:spacer];
     
-    UIImage *settingsImage = [UIImage imageNamed:@"SettingsIcon.png"];
-    UIButton *settings = [UIButton buttonWithType:UIButtonTypeCustom];
-    settings.bounds = CGRectMake( 0, 0, width_factor(SETTINGS_ICON_WIDTH), height_factor(SETTINGS_ICON_HEIGHT) );
-    [settings addTarget:self action:@selector(settingsClicked) forControlEvents:UIControlEventTouchUpInside];
-    [settings setImage:settingsImage forState: UIControlStateNormal];
-    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settings];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:[PENavigationController getButtonOfType:SETTINGS_BUTTON_TYPE forViewOfType:LOG_VIEW_TYPE withTarget:self withSelector:@selector(settingsClicked)]];
     [buttons addObject: settingsButton];
     
     // create a spacer between the buttons
@@ -202,18 +206,30 @@
     spacer.width = width_factor(LEFT_TOOLBAR_RIGHT_SPACER_WIDTH);
     [buttons addObject:spacer];
     
-    UIImage *refreshImage = [UIImage imageNamed:@"RefreshIcon.png"];
-    UIButton *refresh = [UIButton buttonWithType:UIButtonTypeCustom];
-    refresh.bounds = CGRectMake( 0, 0, width_factor(REFRESH_ICON_WIDTH), height_factor(REFRESH_ICON_HEIGHT) );
-    [refresh addTarget:self action:@selector(refreshClicked) forControlEvents:UIControlEventTouchUpInside];
-    [refresh setImage:refreshImage forState: UIControlStateNormal];
-    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithCustomView:refresh];
+    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithCustomView:[PENavigationController getButtonOfType:REFRESH_BUTTON_TYPE forViewOfType:LOG_VIEW_TYPE withTarget:self withSelector:@selector(refreshClicked)]];
     [buttons addObject: refreshButton];
     
     
     [toolbar setItems:buttons animated:NO];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:toolbar];
+    
+    // initialize the sub-calendar buttons
+    searchButton = [PENavigationController getButtonOfType:SEARCH_BUTTON_TYPE forViewOfType:LOG_VIEW_TYPE withTarget:self withSelector:@selector(searchClicked)];
+    [self.tableView insertSubview:searchButton atIndex:0];
+    searchButton.hidden = TRUE;
+    
+    dayButton = [PENavigationController getButtonOfType:DAY_BUTTON_TYPE forViewOfType:LOG_VIEW_TYPE withTarget:self withSelector:@selector(dayClicked)];
+    [self.tableView insertSubview:dayButton atIndex:0];
+    dayButton.hidden = TRUE;
+    
+    weekButton = [PENavigationController getButtonOfType:WEEK_BUTTON_TYPE forViewOfType:LOG_VIEW_TYPE withTarget:self withSelector:@selector(weekClicked)];
+    [self.tableView insertSubview:weekButton atIndex:0];
+    weekButton.hidden = TRUE;
+    
+    monthButton = [PENavigationController getButtonOfType:MONTH_BUTTON_TYPE forViewOfType:LOG_VIEW_TYPE withTarget:self withSelector:@selector(monthClicked)];
+    [self.tableView insertSubview:monthButton atIndex:0];
+    monthButton.hidden = TRUE;
 }
 
 - (void)didReceiveMemoryWarning
@@ -323,7 +339,7 @@
     cell.textLabel.font = font;
     
     // apply kerning to cell label
-    cell.textLabel.attributedText = [self attributedStringWithText:cellLabel withKerning:CELL_KERNING];
+    cell.textLabel.attributedText = [self attributedStringWithText:cellLabel withKerning:EMOTION_TITLE_KERNING];
     
     if (indexPath.row/2 < [self.emotions count] && [self.intensities objectForKey: [self.emotions objectAtIndex:indexPath.row/2]] != nil) {
         [cell setIntensityFrame: [(NSNumber *)[self.intensities objectForKey: [self.emotions objectAtIndex:indexPath.row/2]] floatValue]];
@@ -340,6 +356,22 @@
                              value:[NSNumber numberWithFloat:kerning]
                              range:NSMakeRange(0, [text length])];
     return attributedString;
+}
+
+- (void)searchClicked {
+    NSLog(@"search clicked");
+}
+
+- (void)dayClicked {
+    [self performSegueWithIdentifier:@"ToDayView" sender:self];
+}
+
+- (void)weekClicked {
+    NSLog(@"week clicked");
+}
+
+- (void)monthClicked {
+    NSLog(@"month clicked");
 }
 
 // This function is for the post button which sends data you to the website
@@ -359,7 +391,7 @@
     // non apple approved approach
     //NSString *phoneNumb = [[NSUserDefaults standardUserDefaults] stringForKey:@"SBFormattedPhoneNumber"];
     NSString *phoneName = [[UIDevice currentDevice] name];
-
+    
     NSString *postString = @"postData=1";
     NSString *bit = @"";
     NSString *emotion;
@@ -380,13 +412,13 @@
         postString = [postString stringByAppendingString:bit];
     }
     // now for custom emotion
-    PEFeelingsCell *cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2-1 inSection:0]];
-    emotion = cell.customEmotion ? cell.customEmotion : @"No custom emotion";
-    bit = [NSString stringWithFormat: @"&data%d=%@&data%d=%f", data++, emotion, data++, cell.intensity];
+    PEFeelingsCell *customCell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2-1 inSection:0]];
+    emotion = customCell.customEmotion ? customCell.customEmotion : @"No custom emotion";
+    bit = [NSString stringWithFormat: @"&data%d=%@&data%d=%f", data++, emotion, data++, customCell.intensity];
     postString = [postString stringByAppendingString:bit];
     // now for comment
-    cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2+1 inSection:0]];
-    bit = [NSString stringWithFormat: @"&data%d=%@", data++, (cell.customEmotionField ? cell.customEmotionField.text : @"No comment")];
+    commentCell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2+1 inSection:0]];
+    bit = [NSString stringWithFormat: @"&data%d=%@", data++, (commentCell.customEmotionField ? commentCell.customEmotionField.text : @"No comment")];
     postString = [postString stringByAppendingString: bit];
     
     [request setValue:[NSString stringWithFormat:@"%d", [postString length]] forHTTPHeaderField:@"Content-length"];
@@ -400,9 +432,25 @@
     if ([urlResponse statusCode] >= 200 && [urlResponse statusCode] < 300)
     {
         NSLog(@"Response: %@", result);
-        // do something with the result
-        //myTextField06.text = @"Data Logged";
-        //[self performSelector:@selector(timerAction:) withObject:nil afterDelay:minutesWait];
+        
+        // save the emotion on our local singleton as well (dateCreated will not be synchronized with server until next reboot)
+        
+        PEEmotion *emo = [[PEEmotion alloc] init];
+        [emo setOwner: [[UIDevice currentDevice] name]];
+        [emo setCustomEmotion: customCell.customEmotion ? customCell.customEmotion : @"No custom emotion"];
+        [emo setComment: commentCell.customEmotionField ? commentCell.customEmotionField.text : @"No comment"];
+        emo.dateCreated = [NSDate date];
+        emo.intensities = [NSMutableDictionary dictionary];
+        
+        int i = 0;
+        for ( ; i < [self.emotions count] - 1 ; i++) {
+            emotion = [self.emotions objectAtIndex:i];
+            [emo.intensities setValue: ([self.intensities objectForKey:emotion]?[self.intensities objectForKey:emotion]:[NSNumber numberWithFloat:0.0]) forKey:emotion];
+        }
+        
+        [emo.intensities setValue: [NSNumber numberWithFloat: customCell.intensity] forKey:emo.customEmotion];
+        
+        [self.lem addEmotion: emo];
         
         [self refreshClicked];
     }
@@ -411,7 +459,12 @@
 
 
 -(void)calendarClicked {
-    NSLog(@"calendar clicked");
+    
+    searchButton.hidden = !searchButton.hidden;
+    dayButton.hidden = !dayButton.hidden;
+    weekButton.hidden = !weekButton.hidden;
+    monthButton.hidden = !monthButton.hidden;
+    
 }
 
 -(void)settingsClicked {
@@ -528,21 +581,25 @@
 
 - (void) updateTextForCell:(PEFeelingsCell *)cell {
     float fontSize;
+    float kerning;
     NSString *text;
     if ([cell.emotion isEqualToString:@"Pick Your Own"]) {
+        kerning = EMOTION_INTENSITY_KERNING;
         fontSize = height_factor(EMOTION_INTENSITY_FONT_SIZE);
         text = [[[(NSString *)[emotionIntensities valueForKey:cell.emotion][((int)cell.intensity/2)] uppercaseString] stringByAppendingString: @" "] stringByAppendingString:[cell.customEmotion uppercaseString]] ;
     }
     else if (cell.intensity == 0) {
+        kerning = EMOTION_TITLE_KERNING;
         fontSize = height_factor(EMOTION_TITLE_FONT_SIZE);
         text = [cell.emotion uppercaseString];
     }
     else {
+        kerning = EMOTION_INTENSITY_KERNING;
         fontSize = height_factor(EMOTION_INTENSITY_FONT_SIZE);
         text = [[emotionIntensities valueForKey:cell.emotion][((int)cell.intensity)/2] uppercaseString];
     }
     cell.textLabel.font = [UIFont boldSystemFontOfSize:fontSize];
-    cell.textLabel.attributedText = [self attributedStringWithText:text withKerning:CELL_KERNING];
+    cell.textLabel.attributedText = [self attributedStringWithText:text withKerning:kerning];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -558,13 +615,13 @@
                 self.customEmotionCell.customEmotion = nil;
                 self.customEmotionCell.customEmotionField = nil;
                 self.customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:height_factor(EMOTION_TITLE_FONT_SIZE)];
-                self.customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.emotion uppercaseString] withKerning:CELL_KERNING];
+                self.customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.emotion uppercaseString] withKerning:EMOTION_TITLE_KERNING];
             }
             else {
                 textView.frame = CGRectMake(0, 0, 0, 0); // hacky
                 [customEmotionCell initCustomEmotion:textView.text];
                 customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:height_factor(EMOTION_INTENSITY_FONT_SIZE)];
-                customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.customEmotion uppercaseString] withKerning:CELL_KERNING];
+                customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.customEmotion uppercaseString] withKerning:EMOTION_INTENSITY_KERNING];
             }
         }
         

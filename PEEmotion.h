@@ -16,4 +16,6 @@
 @property NSString *owner;
 @property NSString *comment;
 
+-(NSString *)description;
+
 @end

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "946BA6BD1669A927000D7768"
-               BuildableName = "Pause Emote v03.01.app"
-               BlueprintName = "Pause Emote v03.01"
-               ReferencedContainer = "container:Pause Emote v03.01.xcodeproj">
+               BuildableName = "Pause Emote.app"
+               BlueprintName = "Pause Emote"
+               ReferencedContainer = "container:Pause Emote.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "946BA6E71669A927000D7768"
-               BuildableName = "Pause Emote v03.01Tests.octest"
-               BlueprintName = "Pause Emote v03.01Tests"
-               ReferencedContainer = "container:Pause Emote v03.01.xcodeproj">
+               BuildableName = "Pause EmoteTests.octest"
+               BlueprintName = "Pause EmoteTests"
+               ReferencedContainer = "container:Pause Emote.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "946BA6BD1669A927000D7768"
-            BuildableName = "Pause Emote v03.01.app"
-            BlueprintName = "Pause Emote v03.01"
-            ReferencedContainer = "container:Pause Emote v03.01.xcodeproj">
+            BuildableName = "Pause Emote.app"
+            BlueprintName = "Pause Emote"
+            ReferencedContainer = "container:Pause Emote.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "946BA6BD1669A927000D7768"
-            BuildableName = "Pause Emote v03.01.app"
-            BlueprintName = "Pause Emote v03.01"
-            ReferencedContainer = "container:Pause Emote v03.01.xcodeproj">
+            BuildableName = "Pause Emote.app"
+            BlueprintName = "Pause Emote"
+            ReferencedContainer = "container:Pause Emote.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "946BA6BD1669A927000D7768"
-            BuildableName = "Pause Emote v03.01.app"
-            BlueprintName = "Pause Emote v03.01"
-            ReferencedContainer = "container:Pause Emote v03.01.xcodeproj">
+            BuildableName = "Pause Emote.app"
+            BlueprintName = "Pause Emote"
+            ReferencedContainer = "container:Pause Emote.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

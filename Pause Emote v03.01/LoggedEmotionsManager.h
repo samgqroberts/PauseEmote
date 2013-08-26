@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PEEmotion.h"
 
 @interface LoggedEmotionsManager : NSObject
 
 + (LoggedEmotionsManager *) sharedSingleton;
+- (void) addEmotion: (PEEmotion *)emotion;
 @property NSMutableDictionary *ownerEmotions;
 
 @end

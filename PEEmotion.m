@@ -16,4 +16,8 @@
 @synthesize owner;
 @synthesize comment;
 
+-(NSString *)description {
+    return [NSString stringWithFormat:@"/nowner: %@, date created: %@, custom emotion: %@, comment: %@intensities: %@", self.owner, self.dateCreated, self.customEmotion, self.comment, self.intensities];
+}
+
 @end
