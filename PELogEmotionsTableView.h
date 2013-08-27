@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class PELogFeelingsTableView;
+@class PELogEmotionsTableView;
 
 @protocol PELogFeelingsTableViewDelegate <NSObject>
 
@@ -16,6 +16,6 @@
 
 @end
 
-@interface PELogFeelingsTableView : UITableView
+@interface PELogEmotionsTableView : UITableView
 
 @end

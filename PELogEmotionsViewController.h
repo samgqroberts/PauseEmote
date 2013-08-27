@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PELogFeelingsViewController : UITableViewController<UIGestureRecognizerDelegate, UITextViewDelegate>
+@interface PELogEmotionsViewController : UITableViewController<UIGestureRecognizerDelegate, UITextViewDelegate>
 
 @property int cellHeight;
 

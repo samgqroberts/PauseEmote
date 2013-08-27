@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PEFeelingsCell : UITableViewCell
+@interface PELogEmotionsCell : UITableViewCell
 
 @property float intensity;
 @property UIView *intensityView;

@@ -6,19 +6,19 @@
 //  Copyright (c) 2013 Pause Emote. All rights reserved.
 //
 
-#import "PEFeelingsCell.h"
+#import "PELogEmotionsCell.h"
 #define INITIAL_INTENSITY_WIDTH 17
 #define INTENSITY_VIEW_TAG 99
 #define TEXT_SPACING 1
 
 
-@interface PEFeelingsCell ()
+@interface PELogEmotionsCell ()
 
 @property float intensityWidth;
 
 @end
 
-@implementation PEFeelingsCell
+@implementation PELogEmotionsCell
 
 @synthesize customEmotionField;
 @synthesize customEmotion;

@@ -6,28 +6,28 @@
 //  Copyright (c) 2013 Pause Emote. All rights reserved.
 //
 
-#import "LoggedEmotionsManager.h"
+#import "PELoggedEmotionsManager.h"
 
 
-@interface LoggedEmotionsManager ()
+@interface PELoggedEmotionsManager ()
 
 @property NSArray *emotions;
 
 @end
 
-@implementation LoggedEmotionsManager
+@implementation PELoggedEmotionsManager
 
 @synthesize emotions;
 @synthesize ownerEmotions;
 
-+ (LoggedEmotionsManager *)sharedSingleton
++ (PELoggedEmotionsManager *)sharedSingleton
 {
-    static LoggedEmotionsManager *sharedSingleton;
+    static PELoggedEmotionsManager *sharedSingleton;
     
     @synchronized(self)
     {
         if (!sharedSingleton)
-            sharedSingleton = [[LoggedEmotionsManager alloc] init];
+            sharedSingleton = [[PELoggedEmotionsManager alloc] init];
         
         return sharedSingleton;
     }
@@ -62,6 +62,23 @@
         [(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] setValue:[NSMutableArray array] forKey:day];
     }
     [(NSMutableArray *)[(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey:day] addObject:emotion];
+}
+
+- (NSArray *) getEmotionsForDate:(NSDate *)date {
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+    NSString *year = [NSString stringWithFormat:@"%d", [dateComponents year]];
+    NSString *month = [NSString stringWithFormat:@"%d", [dateComponents month]];
+    NSString *day = [NSString stringWithFormat:@"%d", [dateComponents day]];
+    if (![self.ownerEmotions objectForKey: year]) {
+        return nil;
+    }
+    if (![(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month]) {
+        return nil;
+    }
+    if (![(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey: day]) {
+        return nil;
+    }
+    return (NSArray *)[(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey:day];
 }
 
 // ATTN FUTURE DEVELOPERS: this is a cluster F of an html-parser

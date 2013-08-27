@@ -20,4 +20,16 @@
     return [NSString stringWithFormat:@"/nowner: %@, date created: %@, custom emotion: %@, comment: %@intensities: %@", self.owner, self.dateCreated, self.customEmotion, self.comment, self.intensities];
 }
 
+-(NSString *)getDominantEmotion {
+    NSString *returnString;
+    float dominantIntensity = 0;
+    for (id key in self.intensities) { 
+        if ([(NSNumber *)[self.intensities objectForKey:key] floatValue] >= dominantIntensity) {
+            dominantIntensity = [(NSNumber *)[self.intensities objectForKey:key] floatValue];
+            returnString = (NSString *)key;
+        }
+    }
+    return returnString;
+}
+
 @end

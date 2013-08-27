@@ -7,9 +7,9 @@
 //
 
 #import "PESplashPageViewController.h"
-#import "LoggedEmotionsManager.h"
+#import "PELoggedEmotionsManager.h"
 #import "PENavigationController.h"
-#import "PELogFeelingsViewController.h"
+#import "PELogEmotionsViewController.h"
 
 @interface PESplashPageViewController ()
 

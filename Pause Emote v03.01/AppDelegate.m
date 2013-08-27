@@ -8,9 +8,9 @@
 
 #import "AppDelegate.h"
 #import "PESplashPageViewController.h"
-#import "LoggedEmotionsManager.h"
+#import "PELoggedEmotionsManager.h"
 #import "PENavigationController.h"
-#import "PELogFeelingsViewController.h"
+#import "PELogEmotionsViewController.h"
 
 @implementation AppDelegate
 

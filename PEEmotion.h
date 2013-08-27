@@ -16,6 +16,8 @@
 @property NSString *owner;
 @property NSString *comment;
 
+-(NSString *)getDominantEmotion;
+
 -(NSString *)description;
 
 @end

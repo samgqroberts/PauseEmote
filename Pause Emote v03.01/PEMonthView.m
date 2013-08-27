@@ -1,20 +1,20 @@
 //
-//  PELogFeelingsTableView.m
-//  Pause Emote v03.01
+//  PEMonthView.m
+//  Pause Emote
 //
-//  Created by Sam  Roberts on 8/20/13.
+//  Created by Sam  Roberts on 8/27/13.
 //  Copyright (c) 2013 Pause Emote. All rights reserved.
 //
 
-#import "PELogFeelingsTableView.h"
+#import "PEMonthView.h"
 
-@interface PELogFeelingsTableView ()
+@interface  PEMonthView ()
 
 @property UIViewController *parentController;
 
 @end
 
-@implementation PELogFeelingsTableView
+@implementation PEMonthView
 
 @synthesize parentController;
 
@@ -23,7 +23,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        
     }
     return self;
 }
@@ -32,7 +31,7 @@
 {
     parentController = [self firstAvailableUIViewController];
     [parentController touchesBegan:touches withEvent:event];
-    //[super touchesBegan:touches withEvent:event];
+    [super touchesBegan:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event

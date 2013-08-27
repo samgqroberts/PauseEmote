@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Pause Emote. All rights reserved.
 //
 
-#import "PELogFeelingsViewController.h"
+#import "PELogEmotionsViewController.h"
 #import "PEUtil.h"
 #import "PEToolBar.h"
-#import "PEFeelingsCell.h"
-#import "PELogFeelingsTableView.h"
-#import "LoggedEmotionsManager.h"
+#import "PELogEmotionsCell.h"
+#import "PELogEmotionsTableView.h"
+#import "PELoggedEmotionsManager.h"
 #import "PEDayViewController.h"
 #import "PENavigationController.h"
 
@@ -22,6 +22,7 @@
 #define CELL_TEXT_COLOR @"#d5d5d6"
 #define CUSTOM_EMOTION_TAG 98
 #define COMMENT_TAG 99
+#define COMMENT_CELL_TEXT_COLOR @"#999999"
 
 // dimensions
 #define SUBMIT_ICON_X 250.0
@@ -45,19 +46,19 @@
 #define COMMENT_PROMPT_FONT_SIZE 20.0
 #define EMOTION_INTENSITY_FONT_SIZE 18.0
 
-@interface PELogFeelingsViewController ()
+@interface PELogEmotionsViewController ()
 
 @property CGSize screenSize;
 @property UIButton *submitButton;
 @property NSDictionary *emotionColors;
 @property UIColor *cellTextColor;
 @property NSDictionary *emotionIntensities;
-@property PEFeelingsCell *customEmotionCell;
-@property PEFeelingsCell *commentCell;
+@property PELogEmotionsCell *customEmotionCell;
+@property PELogEmotionsCell *commentCell;
 @property NSArray *emotions;
 @property NSMutableDictionary *intensities;
 @property int numberOfCells;
-@property LoggedEmotionsManager *lem;
+@property PELoggedEmotionsManager *lem;
 @property UIButton *searchButton;
 @property UIButton *dayButton;
 @property UIButton *weekButton;
@@ -65,7 +66,7 @@
 
 @end
 
-@implementation PELogFeelingsViewController
+@implementation PELogEmotionsViewController
 
 @synthesize dayButton;
 @synthesize weekButton;
@@ -97,8 +98,10 @@
 {
     [super viewDidLoad];
     
+    NSLog(@"loading view");
+    
     //get logged emotions singleton
-    lem = [LoggedEmotionsManager sharedSingleton];
+    lem = [PELoggedEmotionsManager sharedSingleton];
     
     //get info from plists
     emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
@@ -263,7 +266,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"LogFeelingsCell";
-    PEFeelingsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    PELogEmotionsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -328,6 +331,7 @@
         cellLabel = @"PICK YOUR OWN";
     }
     if (indexPath.row/2 == 9) {
+        cell.textLabel.textColor = [PEUtil colorFromHexString:COMMENT_CELL_TEXT_COLOR];
         emotion = @"Comment";
         cellLabel = @"Why are you feeling this way?";
         font = [UIFont systemFontOfSize:height_factor(COMMENT_PROMPT_FONT_SIZE)];
@@ -359,19 +363,19 @@
 }
 
 - (void)searchClicked {
-    NSLog(@"search clicked");
+    [((PENavigationController *)self.navigationController) pushViewControllerOfType:SEARCH_VIEW_TYPE];
 }
 
 - (void)dayClicked {
-    [self performSegueWithIdentifier:@"ToDayView" sender:self];
+    [((PENavigationController *)self.navigationController) pushViewControllerOfType:DAY_VIEW_TYPE];
 }
 
 - (void)weekClicked {
-    NSLog(@"week clicked");
+    [((PENavigationController *)self.navigationController) pushViewControllerOfType:WEEK_VIEW_TYPE];
 }
 
 - (void)monthClicked {
-    NSLog(@"month clicked");
+    [((PENavigationController *)self.navigationController) pushViewControllerOfType:MONTH_VIEW_TYPE];
 }
 
 // This function is for the post button which sends data you to the website
@@ -412,12 +416,12 @@
         postString = [postString stringByAppendingString:bit];
     }
     // now for custom emotion
-    PEFeelingsCell *customCell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2-1 inSection:0]];
+    PELogEmotionsCell *customCell = (PELogEmotionsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2-1 inSection:0]];
     emotion = customCell.customEmotion ? customCell.customEmotion : @"No custom emotion";
     bit = [NSString stringWithFormat: @"&data%d=%@&data%d=%f", data++, emotion, data++, customCell.intensity];
     postString = [postString stringByAppendingString:bit];
     // now for comment
-    commentCell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2+1 inSection:0]];
+    commentCell = (PELogEmotionsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2+1 inSection:0]];
     bit = [NSString stringWithFormat: @"&data%d=%@", data++, (commentCell.customEmotionField ? commentCell.customEmotionField.text : @"No comment")];
     postString = [postString stringByAppendingString: bit];
     
@@ -520,7 +524,7 @@
         int row = 2 * touchPoint.y / (cellHeight + SEPARATOR_HEIGHT);
         row += row%2==0?1:0;
         NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:0];
-        PEFeelingsCell *cell = (PEFeelingsCell *)[self.tableView cellForRowAtIndexPath:path];
+        PELogEmotionsCell *cell = (PELogEmotionsCell *)[self.tableView cellForRowAtIndexPath:path];
         
         //check if clicking 'comment' cell
         if ([cell.emotion isEqualToString:@"Comment"]) {
@@ -579,7 +583,7 @@
     }
 }
 
-- (void) updateTextForCell:(PEFeelingsCell *)cell {
+- (void) updateTextForCell:(PELogEmotionsCell *)cell {
     float fontSize;
     float kerning;
     NSString *text;

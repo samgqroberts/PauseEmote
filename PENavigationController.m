@@ -7,6 +7,9 @@
 //
 
 #import "PENavigationController.h"
+#import "PELogEmotionsViewController.h"
+#import "PEDayViewController.h"
+#import "PEMonthViewController.h"
 #import "PEToolBar.h"
 #import "PEUtil.h"
 
@@ -140,6 +143,82 @@
     [button setImage:image forState: UIControlStateNormal];
     [button addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     return button;
+}
+
++ (NSString *)getTitleForDate:(NSDate *)date forViewType:(int)viewType {
+    NSString *returnString;
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    NSString *year = [NSString stringWithFormat:@"%d", [dateComponents year]];
+    NSString *month = [NSString stringWithFormat:@"%d", [dateComponents month]];
+    NSString *day = [NSString stringWithFormat:@"%d", [dateComponents day]];
+    
+    switch(viewType) {
+        case DAY_VIEW_TYPE:
+            returnString = [NSString stringWithFormat:@"< %@/%@/%@ >", month, day, year];
+            break;
+        case MONTH_VIEW_TYPE:
+            returnString = [NSString stringWithFormat:@"< %@ %@ >", [df.monthSymbols objectAtIndex:[dateComponents month]-1], year];
+            break;
+        default:
+            return nil;
+    }
+    
+    return returnString;
+}
+
+- (void)pushViewControllerOfType:(int)viewType {
+    /*
+     * Okay so the way this works is if the desired view type is on the stack
+     * of view controllers, then pop to that instance of it.  If it's not on
+     * the stack, make a new one and push it.
+     */
+    switch (viewType) {
+        case LOG_VIEW_TYPE:
+            for (UIViewController *vc in self.viewControllers) {
+                if ([vc class] == [PELogEmotionsViewController class]) {
+                    [self popToViewController:vc animated:YES];
+                    return;
+                }
+            }
+        {   // also, we need to switch-statement variable declarations in braces for some flippin reason
+            PELogEmotionsViewController *levc = [[PELogEmotionsViewController alloc] initWithNibName:nil bundle:nil];
+            [self pushViewController:levc animated:YES];
+        }
+            break;
+        case SEARCH_VIEW_TYPE:
+            NSLog(@"pushing search view");
+            break;
+        case DAY_VIEW_TYPE:  
+            for (UIViewController *vc in self.viewControllers) {
+                if ([vc class] == [PEDayViewController class]) {
+                    [self popToViewController:vc animated:YES];
+                    NSLog(@"yeah it popped");
+                    return;
+                }
+            }
+        {PEDayViewController *dvc = [[PEDayViewController alloc] initWithNibName:nil bundle:nil];
+            [self pushViewController:dvc animated:YES];
+        } break;
+        case WEEK_VIEW_TYPE:
+            NSLog(@"pushing week view");
+            break;
+        case MONTH_VIEW_TYPE:
+            for (UIViewController *vc in self.viewControllers) {
+                if ([vc class] == [PEMonthViewController class]) {
+                    [self popToViewController:vc animated:YES];
+                    return;
+                }
+            }
+        {
+            PEMonthViewController *mvc = [[PEMonthViewController alloc] initWithNibName:nil bundle:nil];
+            [self pushViewController:mvc animated:YES];
+        }
+            break;
+        default:
+            NSLog(@"WARNING: unknown view type sent to PENavigationController->pushViewControllerOfType");
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning

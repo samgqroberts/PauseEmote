@@ -7,10 +7,19 @@
 //
 
 #import "PEDayViewController.h"
-#import "LoggedEmotionsManager.h"
+#import "PELoggedEmotionsManager.h"
 #import "PEToolBar.h"
 #import "PEUtil.h"
 #import "PENavigationController.h"
+#import "PEEmotion.h"
+#import <QuartzCore/QuartzCore.h>
+#import "PEDayCell.h"
+#import "PEDayTableView.h"
+
+// miscellaneous
+#define TITLE_TEXT_COLOR @"#959595"
+#define CELL_TEXT_COLOR @"#d5d5d6"
+#define HORIZ_SWIPE_DRAG_MIN 50
 
 // dimensions
 #define SUBMIT_ICON_WIDTH 45.0
@@ -28,20 +37,36 @@
 #define SETTINGS_ICON_HEIGHT 33.0
 #define ADD_ICON_WIDTH 36.0
 #define ADD_ICON_HEIGHT 32.0
+#define TITLE_LABEL_FONT_SIZE 20.0
+#define CELL_FONT_SIZE_NOEMOTIONS 16.0
+#define CELL_HEIGHT 58.0
+#define CELL_SELECTED_HEIGHT 120.0
 
 @interface PEDayViewController ()
 
-@property LoggedEmotionsManager *lem;
+
+@property NSMutableArray *rowHeights;
+@property PELoggedEmotionsManager *lem;
 @property UIButton *searchButton;
 @property UIButton *weekButton;
 @property UIButton *monthButton;
-@property NSDate *date;
+@property NSArray *currentEmotions;
+@property NSArray *emotions;
+@property NSDictionary *emotionColors;
 
 @end
 
 @implementation PEDayViewController
 
-@synthesize date;
+
+CGPoint mystartTouchPosition;
+BOOL isProcessingListMove;
+
+@synthesize rowHeights;
+@synthesize emotionColors;
+@synthesize emotions;
+@synthesize currentEmotions;
+@synthesize currentDate;
 @synthesize searchButton;
 @synthesize weekButton;
 @synthesize monthButton;
@@ -60,39 +85,27 @@
 {
     [super viewDidLoad];
     
+    // register custom tableview and cell
+    self.tableView = [[PEDayTableView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - self.navigationController.navigationBar.frame.size.height)];
+    [self.tableView registerClass: [PEDayCell class] forCellReuseIdentifier:@"DayViewCell"];
+    
     // init LEM
-    lem = [LoggedEmotionsManager sharedSingleton];
+    lem = [PELoggedEmotionsManager sharedSingleton];
     
-    // initialize search button
-    UIImage *searchImage = [UIImage imageNamed:@"SearchIcon.png"];
-    searchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchButton.frame = CGRectMake( 161, 5, width_factor(SUBMIT_ICON_WIDTH), height_factor(SUBMIT_ICON_HEIGHT) );
-    [searchButton addTarget:self action:@selector(searchClicked) forControlEvents:UIControlEventTouchUpInside];
-    [searchButton setImage:searchImage forState:UIControlStateNormal];
-    [self.tableView insertSubview:searchButton atIndex:0];
-    searchButton.hidden = TRUE;
+    //get info from plists
+    emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
     
-    // initialize week button
-    UIImage *weekImage = [UIImage imageNamed:@"WeekIcon.png"];
-    weekButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    weekButton.frame = CGRectMake( 214, 5, width_factor(SUBMIT_ICON_WIDTH), height_factor(SUBMIT_ICON_HEIGHT) );
-    [weekButton addTarget:self action:@selector(weekClicked) forControlEvents:UIControlEventTouchUpInside];
-    [weekButton setImage:weekImage forState:UIControlStateNormal];
-    [self.tableView insertSubview:weekButton atIndex:0];
-    weekButton.hidden = TRUE;
+    emotionColors = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"EmotionColors" ofType: @"plist"]];
     
-    // initialize month button
-    UIImage *monthImage = [UIImage imageNamed:@"MonthIcon.png"];
-    monthButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    monthButton.frame = CGRectMake( 267, 5, width_factor(SUBMIT_ICON_WIDTH), height_factor(SUBMIT_ICON_HEIGHT) );
-    [monthButton addTarget:self action:@selector(monthClicked) forControlEvents:UIControlEventTouchUpInside];
-    [monthButton setImage:monthImage forState:UIControlStateNormal];
-    [self.tableView insertSubview:monthButton atIndex:0];
-    monthButton.hidden = TRUE;
+    // background
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LogFeelingsBackground.png"]];
+    self.tableView.backgroundView = imageView;
+    self.tableView.separatorColor = [UIColor clearColor];
     
     // initialize date
-    date = [NSDate date];
+    [self initDateInfo];
     
+    // initialize nav bar
     [self initNavigationBar];
 
     // Uncomment the following line to preserve selection between presentations.
@@ -100,6 +113,23 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)initDateInfo {
+    // if we haven't been passed the date, take today's date
+    if (!self.currentDate) {
+        self.currentDate = [NSDate date];
+    }
+    
+    self.currentEmotions = [lem getEmotionsForDate:self.currentDate];
+    if (!self.currentEmotions) {
+    }
+    else {
+        self.rowHeights = [NSMutableArray array];
+        for (int i = 0 ; i < [currentEmotions count] ; i++) {
+            [self.rowHeights addObject:[NSNumber numberWithFloat:height_factor(CELL_HEIGHT)]];
+        }
+    }
 }
 
 - (void)initNavigationBar {
@@ -122,7 +152,7 @@
     spacer.width = width_factor(RIGHT_TOOLBAR_SPACER_WIDTH) ;
     [buttons addObject:spacer];
     
-    UIBarButtonItem *calendarButton = [[UIBarButtonItem alloc] initWithCustomView:[PENavigationController getButtonOfType:CALENDAR_BUTTON_TYPE forViewOfType:DAY_BUTTON_TYPE withTarget:self withSelector:@selector(calendarClicked)]];
+    UIBarButtonItem *calendarButton = [[UIBarButtonItem alloc] initWithCustomView:[PENavigationController getButtonOfType:CALENDAR_BUTTON_TYPE forViewOfType:DAY_VIEW_TYPE withTarget:self withSelector:@selector(calendarClicked)]];
     [buttons addObject:calendarButton];
     
     // put the buttons in the toolbar and release them
@@ -138,7 +168,7 @@
     [toolbar setBackgroundColor: [UIColor clearColor]];
     toolbar.translucent = YES;
     
-    buttons = [[NSMutableArray alloc] initWithCapacity: 4];
+    buttons = [[NSMutableArray alloc] initWithCapacity: 6];
     
     spacer = [[UIBarButtonItem alloc]
               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
@@ -161,27 +191,55 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithCustomView:[PENavigationController getButtonOfType:ADD_BUTTON_TYPE forViewOfType:DAY_VIEW_TYPE withTarget:self withSelector:@selector(addClicked)]];
     [buttons addObject: addButton];
     
+    // spacer between add button and title
+    spacer = [[UIBarButtonItem alloc]
+              initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+              target:nil
+              action:nil];
+    spacer.width = width_factor(LEFT_TOOLBAR_RIGHT_SPACER_WIDTH);
+    [buttons addObject:spacer];
+
+    // title label
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 45)];
+    title.text = [PENavigationController getTitleForDate:self.currentDate forViewType:DAY_VIEW_TYPE];
+    title.font = [UIFont boldSystemFontOfSize: height_factor(TITLE_LABEL_FONT_SIZE)];
+    title.backgroundColor = [UIColor clearColor];
+    title.textColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR];
+    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithCustomView:title];
+    [buttons addObject:titleButton];
     
     [toolbar setItems:buttons animated:NO];
-    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:toolbar];
     
+    if (searchButton) {
+        searchButton.hidden = TRUE;
+    }
+    else {
     // initialize the sub-calendar buttons
     searchButton = [PENavigationController getButtonOfType:SEARCH_BUTTON_TYPE forViewOfType:DAY_VIEW_TYPE withTarget:self withSelector:@selector(searchClicked)];
     [self.tableView insertSubview:searchButton atIndex:0];
     searchButton.hidden = TRUE;
-    
+    }
+    if (weekButton) {
+        weekButton.hidden = TRUE;
+    }
+    else {
     weekButton = [PENavigationController getButtonOfType:WEEK_BUTTON_TYPE forViewOfType:DAY_VIEW_TYPE withTarget:self withSelector:@selector(weekClicked)];
     [self.tableView insertSubview:weekButton atIndex:0];
     weekButton.hidden = TRUE;
-    
+    }
+    if (monthButton) {
+        monthButton.hidden = TRUE;
+    }
+    else {
     monthButton = [PENavigationController getButtonOfType:MONTH_BUTTON_TYPE forViewOfType:DAY_VIEW_TYPE withTarget:self withSelector:@selector(monthClicked)];
     [self.tableView insertSubview:monthButton atIndex:0];
     monthButton.hidden = TRUE;
+    }
 }
 
 - (void) addClicked {
-    [self.navigationController popToRootViewControllerAnimated:((PENavigationController *)self.navigationController).logFeelingsViewController];
+    [((PENavigationController *)self.navigationController) pushViewControllerOfType:LOG_VIEW_TYPE];
 }
 
 - (void) calendarClicked {
@@ -195,17 +253,16 @@
 }
 
 - (void) searchClicked {
-    NSLog(@"searchclicked");
+    [((PENavigationController *)self.navigationController) pushViewControllerOfType:SEARCH_VIEW_TYPE];
 }
 
 - (void) weekClicked {
-    NSLog(@"weekclicked");
+        [((PENavigationController *)self.navigationController) pushViewControllerOfType:WEEK_VIEW_TYPE];
 }
 
 - (void) monthClicked {
-    NSLog(@"monthclicked");
+        [((PENavigationController *)self.navigationController) pushViewControllerOfType:MONTH_VIEW_TYPE];
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -213,24 +270,56 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    if (!self.currentEmotions) {
+        return 1;
+    }
+    return [self.currentEmotions count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [(NSNumber *)[self.rowHeights objectAtIndex:indexPath.row] floatValue];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"DayViewCell";
+    PEDayCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    [cell removeLabels];
+    
+    UIColor *cellColor;
+    
+    if (!self.currentEmotions) {
+        cellColor = [UIColor clearColor];
+        [cell.contentView setBackgroundColor:cellColor];
+        [cell.textLabel setBackgroundColor: cellColor];
+        cell.textLabel.font = [UIFont systemFontOfSize:height_factor(CELL_FONT_SIZE_NOEMOTIONS)];
+        cell.textLabel.text = @"No emotions today, friend-o";
+        cell.textLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
+        return cell;
+    }
+    
+    NSString *dominantEmotion = [(PEEmotion *)[self.currentEmotions objectAtIndex:indexPath.row] getDominantEmotion];
+    
+    if ([emotions containsObject:dominantEmotion]) {
+        cellColor = [PEUtil colorFromHexString: [self.emotionColors objectForKey:dominantEmotion]];
+    }
+    // else it's the custom emotion, so get color for emotion at last index of emotions array (corresponds to custom emotion)
+    else {
+        cellColor = [PEUtil colorFromHexString: [self.emotionColors objectForKey:[emotions objectAtIndex:[emotions count]-1]]];
+    }
+    
+    cell.textLabel.text = @"";
+    cell.contentView.backgroundColor = cellColor;
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
     
     return cell;
 }
@@ -274,17 +363,99 @@
 }
 */
 
-#pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (!self.currentEmotions) {
+        return;
+    }
+    PEDayCell *cell = (PEDayCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    if ([(NSNumber *)[self.rowHeights objectAtIndex:indexPath.row] floatValue] == CELL_HEIGHT) {
+        // change to selected
+        PEEmotion *emotion = (PEEmotion *)[self.currentEmotions objectAtIndex:indexPath.row];
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit ) fromDate:emotion.dateCreated];
+        NSString *time = [NSString stringWithFormat:@"%d:%d",[components hour],[components minute]];
+        [cell updateLabelsWithTime:time withComment:emotion.comment];
+        cell.timeLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
+        cell.commentLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
+        [self.rowHeights replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithFloat:CELL_SELECTED_HEIGHT]];
+    }
+    else {
+        // back to unselected
+        [cell removeLabels];
+        [self.rowHeights replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithFloat:CELL_HEIGHT]];
+    }
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
+	CGPoint newTouchPosition = [touch locationInView:self.tableView];
+	if(mystartTouchPosition.x != newTouchPosition.x || mystartTouchPosition.y != newTouchPosition.y) {
+		isProcessingListMove = NO;
+	}
+	mystartTouchPosition = [touch locationInView:self.view];
+	[super touchesBegan:touches withEvent:event];
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = touches.anyObject;
+	CGPoint currentTouchPosition = [touch locationInView:self.view];
+	
+	// If the swipe tracks correctly.
+	double diffx = mystartTouchPosition.x - currentTouchPosition.x + 0.1; // adding 0.1 to avoid division by zero
+	double diffy = mystartTouchPosition.y - currentTouchPosition.y + 0.1; // adding 0.1 to avoid division by zero
+	
+	if(abs(diffx / diffy) > 1 && abs(diffx) > HORIZ_SWIPE_DRAG_MIN)
+	{
+		// It appears to be a swipe.
+		if(isProcessingListMove) {
+			// ignore move, we're currently processing the swipe
+			return;
+		}
+		
+		if (mystartTouchPosition.x < currentTouchPosition.x) {
+			isProcessingListMove = YES;
+			[self moveToDay:FALSE];
+			return;
+		}
+		else {
+			isProcessingListMove = YES;
+			[self moveToDay:TRUE];
+			return;
+		}
+	}
+	else if(abs(diffy / diffx) > 1)
+	{
+		isProcessingListMove = YES;
+		[super touchesMoved:touches	withEvent:event];
+	}
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	isProcessingListMove = NO;
+	[super touchesEnded:touches withEvent:event];
+}
+
+-(void)moveToDay:(BOOL)nextDay {
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit ) fromDate:self.currentDate];
+    [components setDay:[components day] + (nextDay?1:-1)];
+    self.currentDate = [cal dateByAddingComponents:components toDate: self.currentDate options:0];
+    self.currentDate = [cal dateFromComponents:components];
+    [self refreshView];
+}
+
+-(void)refreshView {
+    [self initDateInfo];
+    [self initNavigationBar];
+    
+    [self.tableView reloadData];
 }
 
 @end

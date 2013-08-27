@@ -7,13 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PELogFeelingsViewController.h"
+#import "PELogEmotionsViewController.h"
 
 @interface PENavigationController : UINavigationController
 
-@property PELogFeelingsViewController *logFeelingsViewController;
+@property PELogEmotionsViewController *logFeelingsViewController;
 
 + (UIButton *) getButtonOfType:(int)buttonType forViewOfType:(int)viewType withTarget:(id)target withSelector:(SEL)selector;
+
++ (NSString *)getTitleForDate:(NSDate *)date forViewType:(int)viewType;
+
+- (void)pushViewControllerOfType:(int)viewType;
 
 typedef enum {
     SETTINGS_BUTTON_TYPE,
@@ -28,6 +32,7 @@ typedef enum {
 
 typedef enum {
     LOG_VIEW_TYPE,
+    SEARCH_VIEW_TYPE,
     DAY_VIEW_TYPE,
     WEEK_VIEW_TYPE,
     MONTH_VIEW_TYPE,
