@@ -15,8 +15,8 @@
 @property NSString *customEmotion;
 @property NSString *owner;
 @property NSString *comment;
-
--(NSString *)getDominantEmotion;
+@property (nonatomic)NSString *dominantEmotion;
+@property (nonatomic) float dominantIntensity;
 
 -(NSString *)description;
 

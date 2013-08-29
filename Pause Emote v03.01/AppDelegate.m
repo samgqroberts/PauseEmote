@@ -7,8 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "PESplashPageViewController.h"
-#import "PELoggedEmotionsManager.h"
+#import "PEEmotionsManager.h"
 #import "PENavigationController.h"
 #import "PELogEmotionsViewController.h"
 

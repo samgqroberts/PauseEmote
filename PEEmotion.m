@@ -10,26 +10,42 @@
 
 @implementation PEEmotion
 
+@synthesize dominantEmotion = _dominantEmotion;
+@synthesize dominantIntensity = _dominantIntensity;
 @synthesize dateCreated;
 @synthesize intensities;
 @synthesize customEmotion;
-@synthesize owner;
 @synthesize comment;
 
 -(NSString *)description {
     return [NSString stringWithFormat:@"/nowner: %@, date created: %@, custom emotion: %@, comment: %@intensities: %@", self.owner, self.dateCreated, self.customEmotion, self.comment, self.intensities];
 }
 
--(NSString *)getDominantEmotion {
-    NSString *returnString;
-    float dominantIntensity = 0;
-    for (id key in self.intensities) { 
-        if ([(NSNumber *)[self.intensities objectForKey:key] floatValue] >= dominantIntensity) {
-            dominantIntensity = [(NSNumber *)[self.intensities objectForKey:key] floatValue];
-            returnString = (NSString *)key;
+-(NSString *)dominantEmotion {
+    if (!_dominantEmotion) {
+        [self calculateDominantEmotionAndIntensity];
+    }
+    return _dominantEmotion;
+}
+
+-(float)dominantIntensity {
+    if (!_dominantEmotion) {
+        [self calculateDominantEmotionAndIntensity];
+    }
+    return _dominantIntensity;
+}
+
+-(void)calculateDominantEmotionAndIntensity {
+    NSString *domEmotion;
+    float domIntensity = 0;
+    for (id key in self.intensities) {
+        if ([(NSNumber *)[self.intensities objectForKey:key] floatValue] >= domIntensity) {
+            domIntensity = [(NSNumber *)[self.intensities objectForKey:key] floatValue];
+            domEmotion = (NSString *)key;
         }
     }
-    return returnString;
+    _dominantEmotion = domEmotion;
+    _dominantIntensity = domIntensity;
 }
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "PEDayViewController.h"
-#import "PELoggedEmotionsManager.h"
+#import "PEEmotionsManager.h"
 #import "PEToolBar.h"
 #import "PEUtil.h"
 #import "PENavigationController.h"
@@ -46,7 +46,7 @@
 
 
 @property NSMutableArray *rowHeights;
-@property PELoggedEmotionsManager *lem;
+@property PEEmotionsManager *lem;
 @property UIButton *searchButton;
 @property UIButton *weekButton;
 @property UIButton *monthButton;
@@ -61,6 +61,7 @@
 
 CGPoint mystartTouchPosition;
 BOOL isProcessingListMove;
+BOOL viewJustLoaded;
 
 @synthesize rowHeights;
 @synthesize emotionColors;
@@ -81,6 +82,10 @@ BOOL isProcessingListMove;
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self refreshView];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -90,7 +95,7 @@ BOOL isProcessingListMove;
     [self.tableView registerClass: [PEDayCell class] forCellReuseIdentifier:@"DayViewCell"];
     
     // init LEM
-    lem = [PELoggedEmotionsManager sharedSingleton];
+    lem = [PEEmotionsManager sharedSingleton];
     
     //get info from plists
     emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
@@ -303,10 +308,12 @@ BOOL isProcessingListMove;
         cell.textLabel.font = [UIFont systemFontOfSize:height_factor(CELL_FONT_SIZE_NOEMOTIONS)];
         cell.textLabel.text = @"No emotions today, friend-o";
         cell.textLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
+        [cell updateLabelsWithTime:@"" withComment:@"Sorry friend-o, No emotions today!"];
+        cell.commentLabel.textColor = [UIColor blackColor];
         return cell;
     }
     
-    NSString *dominantEmotion = [(PEEmotion *)[self.currentEmotions objectAtIndex:indexPath.row] getDominantEmotion];
+    NSString *dominantEmotion = [(PEEmotion *)[self.currentEmotions objectAtIndex:indexPath.row] dominantEmotion];
     
     if ([emotions containsObject:dominantEmotion]) {
         cellColor = [PEUtil colorFromHexString: [self.emotionColors objectForKey:dominantEmotion]];
@@ -321,7 +328,30 @@ BOOL isProcessingListMove;
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
     
+    if ([(NSNumber *)[rowHeights objectAtIndex:indexPath.row] floatValue] == height_factor(CELL_SELECTED_HEIGHT)) {
+        [self updateLabelsForCell:cell atIndexPath:indexPath];
+    }
+    
     return cell;
+}
+
+- (void) updateLabelsForCell: (PEDayCell *)cell atIndexPath: (NSIndexPath *)indexPath {
+    PEEmotion *emotion = (PEEmotion *)[self.currentEmotions objectAtIndex:indexPath.row];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit ) fromDate:emotion.dateCreated];
+    NSString *hour = [NSString stringWithFormat:@"%d", [components hour]];
+    NSString *minute = [NSString stringWithFormat:@"%d", [components minute]];
+    //the 0 will get cut off if the int was <10
+    if ([hour length] == 1) {
+        hour = [@"0" stringByAppendingString:hour];
+    }
+    if ([minute length] == 1) {
+        minute = [@"0" stringByAppendingString:minute];
+    }
+    NSString *time = [NSString stringWithFormat:@"%@:%@",hour,minute];
+    [cell updateLabelsWithTime:time withComment:emotion.comment];
+    cell.timeLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
+    cell.commentLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
 }
 
 /*
@@ -371,13 +401,7 @@ BOOL isProcessingListMove;
     PEDayCell *cell = (PEDayCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     if ([(NSNumber *)[self.rowHeights objectAtIndex:indexPath.row] floatValue] == CELL_HEIGHT) {
         // change to selected
-        PEEmotion *emotion = (PEEmotion *)[self.currentEmotions objectAtIndex:indexPath.row];
-        NSCalendar *cal = [NSCalendar currentCalendar];
-        NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit ) fromDate:emotion.dateCreated];
-        NSString *time = [NSString stringWithFormat:@"%d:%d",[components hour],[components minute]];
-        [cell updateLabelsWithTime:time withComment:emotion.comment];
-        cell.timeLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
-        cell.commentLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
+        [self updateLabelsForCell:cell atIndexPath:indexPath];
         [self.rowHeights replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithFloat:CELL_SELECTED_HEIGHT]];
     }
     else {

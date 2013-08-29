@@ -6,28 +6,31 @@
 //  Copyright (c) 2013 Pause Emote. All rights reserved.
 //
 
-#import "PELoggedEmotionsManager.h"
+#import "PEEmotionsManager.h"
+#import "PEUtil.h"
 
 
-@interface PELoggedEmotionsManager ()
+@interface PEEmotionsManager ()
 
 @property NSArray *emotions;
+@property NSDictionary *emotionColors;
 
 @end
 
-@implementation PELoggedEmotionsManager
+@implementation PEEmotionsManager
 
+@synthesize emotionColors;
 @synthesize emotions;
 @synthesize ownerEmotions;
 
-+ (PELoggedEmotionsManager *)sharedSingleton
++ (PEEmotionsManager *)sharedSingleton
 {
-    static PELoggedEmotionsManager *sharedSingleton;
+    static PEEmotionsManager *sharedSingleton;
     
     @synchronized(self)
     {
         if (!sharedSingleton)
-            sharedSingleton = [[PELoggedEmotionsManager alloc] init];
+            sharedSingleton = [[PEEmotionsManager alloc] init];
         
         return sharedSingleton;
     }
@@ -41,10 +44,56 @@
         
         self.emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
         
+        self.emotionColors = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"EmotionColors" ofType:@"plist"]];
+        
         [self populateOwnerEmotions];
         
     }
     return self;
+}
+
+- (UIColor *)getColorForEmotionNamed:(NSString *)emotionName {
+    if ([self.emotions containsObject:emotionName]) {
+        // it's either not custom or it's called @"Pick Your Own"
+        return [PEUtil colorFromHexString:[self.emotionColors objectForKey:emotionName]];
+    }
+    else {
+        // it's dat custom color
+        return [PEUtil colorFromHexString:[self.emotionColors objectForKey:@"Pick Your Own"]];
+    }
+}
+
+- (NSString *) getDominantEmotionForEmotions:(NSArray *)emotionsArray {
+    NSString *returnString;
+    int highestIntensity = 0;
+    NSMutableDictionary *intensities = [NSMutableDictionary dictionary];
+    for (NSString *name in self.emotions) {
+        [intensities setValue:[NSNumber numberWithFloat:0.0] forKey:name];
+    }
+    for (PEEmotion *emotion in emotionsArray) {
+        for (id key in emotion.intensities) {
+            if ([intensities objectForKey:key]) {
+                NSNumber *one = [intensities objectForKey:key];
+                NSNumber *two = [emotion.intensities objectForKey:key];
+                NSNumber *sum = [NSNumber numberWithFloat:([one floatValue] + [two floatValue])];
+                [intensities setObject:sum forKey:key];
+            }
+            // custom emotion
+            else {
+                NSNumber *one = [intensities objectForKey:[self.emotions objectAtIndex:[self.emotions count]-1 ]];
+                NSNumber *two = [emotion.intensities objectForKey:key];
+                NSNumber *sum = [NSNumber numberWithFloat:([one floatValue] + [two floatValue])];
+                [intensities setObject:sum forKey:[self.emotions objectAtIndex:[self.emotions count]-1 ]];
+            }
+        }
+    }
+    for (id key in intensities) {
+        if ( [(NSNumber *)[intensities objectForKey:key] floatValue] >= highestIntensity ) {
+            returnString = (NSString *)key;
+            highestIntensity = [(NSNumber *)[intensities objectForKey:key] floatValue];
+        }
+    }
+    return returnString;
 }
 
 - (void) addEmotion: (PEEmotion *)emotion {
@@ -110,6 +159,7 @@
     NSString *strangeCharacters;
     NSString *strangeCharacter;
     NSString *phoneName = [[UIDevice currentDevice] name];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     
     for (NSString *component in components) {
         //check if longer than <td>

@@ -168,6 +168,10 @@
 }
 
 - (void)pushViewControllerOfType:(int)viewType {
+    [self pushViewControllerOfType:viewType withArgument:nil];
+}
+
+- (void)pushViewControllerOfType:(int)viewType withArgument:(id)arg{
     /*
      * Okay so the way this works is if the desired view type is on the stack
      * of view controllers, then pop to that instance of it.  If it's not on
@@ -192,12 +196,17 @@
         case DAY_VIEW_TYPE:  
             for (UIViewController *vc in self.viewControllers) {
                 if ([vc class] == [PEDayViewController class]) {
+                    if (arg) {
+                        ((PEDayViewController *)vc).currentDate = (NSDate *)arg;
+                    }
                     [self popToViewController:vc animated:YES];
-                    NSLog(@"yeah it popped");
                     return;
                 }
             }
         {PEDayViewController *dvc = [[PEDayViewController alloc] initWithNibName:nil bundle:nil];
+            if (arg) {
+                dvc.currentDate = arg;
+            }
             [self pushViewController:dvc animated:YES];
         } break;
         case WEEK_VIEW_TYPE:

@@ -17,7 +17,9 @@
 
 + (NSString *)getTitleForDate:(NSDate *)date forViewType:(int)viewType;
 
-- (void)pushViewControllerOfType:(int)viewType;
+- (void)pushViewControllerOfType:(int)viewType withArgument:(id)arg;
+
+-(void)pushViewControllerOfType:(int)viewType;
 
 typedef enum {
     SETTINGS_BUTTON_TYPE,

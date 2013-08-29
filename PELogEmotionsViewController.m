@@ -11,7 +11,7 @@
 #import "PEToolBar.h"
 #import "PELogEmotionsCell.h"
 #import "PELogEmotionsTableView.h"
-#import "PELoggedEmotionsManager.h"
+#import "PEEmotionsManager.h"
 #import "PEDayViewController.h"
 #import "PENavigationController.h"
 
@@ -58,7 +58,7 @@
 @property NSArray *emotions;
 @property NSMutableDictionary *intensities;
 @property int numberOfCells;
-@property PELoggedEmotionsManager *lem;
+@property PEEmotionsManager *lem;
 @property UIButton *searchButton;
 @property UIButton *dayButton;
 @property UIButton *weekButton;
@@ -94,14 +94,19 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.searchButton.hidden = YES;
+    self.dayButton.hidden = YES;
+    self.weekButton.hidden = YES;
+    self.monthButton.hidden = YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    NSLog(@"loading view");
-    
     //get logged emotions singleton
-    lem = [PELoggedEmotionsManager sharedSingleton];
+    lem = [PEEmotionsManager sharedSingleton];
     
     //get info from plists
     emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];

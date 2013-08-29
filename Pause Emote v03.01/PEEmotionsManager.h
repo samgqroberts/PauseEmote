@@ -9,11 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "PEEmotion.h"
 
-@interface PELoggedEmotionsManager : NSObject
+@interface PEEmotionsManager : NSObject
 
-+ (PELoggedEmotionsManager *) sharedSingleton;
++ (PEEmotionsManager *) sharedSingleton;
 - (void) addEmotion: (PEEmotion *)emotion;
 - (NSArray *) getEmotionsForDate:(NSDate *)date;
+- (NSString *) getDominantEmotionForEmotions:(NSArray *)emotionsArray;
+- (UIColor *)getColorForEmotionNamed:(NSString *)emotionName;
+
+
 @property NSMutableDictionary *ownerEmotions;
 
 @end
