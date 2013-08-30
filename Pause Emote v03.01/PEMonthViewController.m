@@ -105,6 +105,12 @@ BOOL isProcessingListMove;
     
 }
 
+- (void) initView {
+    self.view = [[PEMonthView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - self.navigationController.navigationBar.frame.size.height)];
+    
+    self.view.backgroundColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR];
+}
+
 - (void)initDateInfo {
     // if we haven't been passed the date, take today's date
     if (!self.currentDate) {
@@ -448,12 +454,6 @@ BOOL isProcessingListMove;
     self.currentDate = [cal dateByAddingComponents:components toDate: self.currentDate options:0];
     self.currentDate = [cal dateFromComponents:components];
     [self refreshView];
-}
-
-- (void) initView {
-    self.view = [[PEMonthView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - self.navigationController.navigationBar.frame.size.height)];
-    
-    self.view.backgroundColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR];
 }
 
 -(void) refreshView {

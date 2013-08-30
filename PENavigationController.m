@@ -9,6 +9,7 @@
 #import "PENavigationController.h"
 #import "PELogEmotionsViewController.h"
 #import "PEDayViewController.h"
+#import "PEWeekViewController.h"
 #import "PEMonthViewController.h"
 #import "PEToolBar.h"
 #import "PEUtil.h"
@@ -210,8 +211,21 @@
             [self pushViewController:dvc animated:YES];
         } break;
         case WEEK_VIEW_TYPE:
-            NSLog(@"pushing week view");
-            break;
+            for (UIViewController *vc in self.viewControllers) {
+                if ([vc class] == [PEWeekViewController class]) {
+                    if (arg) {
+                        ((PEWeekViewController *)vc).currentDate = (NSDate *)arg;
+                    }
+                    [self popToViewController:vc animated:YES];
+                    return;
+                }
+            }
+        {PEWeekViewController *wvc = [[PEWeekViewController alloc] initWithNibName:nil bundle:nil];
+            if (arg) {
+                wvc.currentDate = arg;
+            }
+            [self pushViewController:wvc animated:YES];
+        } break;
         case MONTH_VIEW_TYPE:
             for (UIViewController *vc in self.viewControllers) {
                 if ([vc class] == [PEMonthViewController class]) {

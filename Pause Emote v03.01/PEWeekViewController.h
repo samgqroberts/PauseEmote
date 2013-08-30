@@ -10,4 +10,6 @@
 
 @interface PEWeekViewController : UIViewController
 
+@property NSDate *currentDate;
+
 @end

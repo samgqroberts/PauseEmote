@@ -61,6 +61,8 @@
 		BED2959C17CD0CC800264ED1 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BED2959917CD0CC800264ED1 /* Icon@2x.png */; };
 		BED2959F17CD191700264ED1 /* PEMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = BED2959E17CD191700264ED1 /* PEMonthView.m */; };
 		BED295A217CE36AD00264ED1 /* PEMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BED295A117CE36AD00264ED1 /* PEMonthCell.m */; };
+		BED295A517CFA69100264ED1 /* PEWeekColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = BED295A417CFA69100264ED1 /* PEWeekColumn.m */; };
+		BED295AB17CFB83C00264ED1 /* PEWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = BED295AA17CFB83C00264ED1 /* PEWeekView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +152,10 @@
 		BED2959E17CD191700264ED1 /* PEMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEMonthView.m; sourceTree = "<group>"; };
 		BED295A017CE36AD00264ED1 /* PEMonthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEMonthCell.h; sourceTree = "<group>"; };
 		BED295A117CE36AD00264ED1 /* PEMonthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEMonthCell.m; sourceTree = "<group>"; };
+		BED295A317CFA69100264ED1 /* PEWeekColumn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEWeekColumn.h; sourceTree = "<group>"; };
+		BED295A417CFA69100264ED1 /* PEWeekColumn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEWeekColumn.m; sourceTree = "<group>"; };
+		BED295A917CFB83C00264ED1 /* PEWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEWeekView.h; sourceTree = "<group>"; };
+		BED295AA17CFB83C00264ED1 /* PEWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEWeekView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,8 +221,8 @@
 				BED2958E17CD09C900264ED1 /* Month */,
 				BED2959217CD0A0B00264ED1 /* Week */,
 				BEC6301417C3FEC00010B89F /* Navigation */,
-				BEBFA3F317C67CC400640BF8 /* Objects */,
 				BEC6301E17C662040010B89F /* Singletons */,
+				BEBFA3F317C67CC400640BF8 /* Objects */,
 				BEC6301517C3FEDB0010B89F /* Automatic Files */,
 				BEBFA40517CBAD1400640BF8 /* Inherited from previous version */,
 				BEC6301317C3FEAD0010B89F /* Util */,
@@ -409,6 +415,10 @@
 			children = (
 				BED2959317CD0A1C00264ED1 /* PEWeekViewController.h */,
 				BED2959417CD0A1C00264ED1 /* PEWeekViewController.m */,
+				BED295A917CFB83C00264ED1 /* PEWeekView.h */,
+				BED295AA17CFB83C00264ED1 /* PEWeekView.m */,
+				BED295A317CFA69100264ED1 /* PEWeekColumn.h */,
+				BED295A417CFA69100264ED1 /* PEWeekColumn.m */,
 			);
 			name = Week;
 			sourceTree = "<group>";
@@ -564,6 +574,8 @@
 				BED2959517CD0A1C00264ED1 /* PEWeekViewController.m in Sources */,
 				BED2959F17CD191700264ED1 /* PEMonthView.m in Sources */,
 				BED295A217CE36AD00264ED1 /* PEMonthCell.m in Sources */,
+				BED295A517CFA69100264ED1 /* PEWeekColumn.m in Sources */,
+				BED295AB17CFB83C00264ED1 /* PEWeekView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
