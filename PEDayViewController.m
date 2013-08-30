@@ -52,8 +52,6 @@
 @property UIButton *weekButton;
 @property UIButton *monthButton;
 @property NSArray *currentEmotions;
-@property NSArray *emotions;
-@property NSDictionary *emotionColors;
 
 @end
 
@@ -66,8 +64,6 @@ BOOL viewJustLoaded;
 
 @synthesize calendarSubIconY;
 @synthesize rowHeights;
-@synthesize emotionColors;
-@synthesize emotions;
 @synthesize currentEmotions;
 @synthesize currentDate;
 @synthesize searchButton;
@@ -98,11 +94,6 @@ BOOL viewJustLoaded;
     
     // init LEM
     lem = [PEEmotionsManager sharedSingleton];
-    
-    //get info from plists
-    emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
-    
-    emotionColors = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"EmotionColors" ofType: @"plist"]];
     
     // background
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LogFeelingsBackground.png"]];

@@ -9,16 +9,6 @@
 #import "PEWeekColumn.h"
 #import "PEUtil.h"
 
-//miscellaneous
-#define DAY_LABEL_TEXT_COLOR @"#d5d5d6"
-
-//dimensions
-#define DAY_LABEL_X 5.0
-#define DAY_LABEL_Y 1.0
-#define DAY_LABEL_WIDTH 30.0
-#define DAY_LABEL_HEIGHT 20.0
-#define DAY_LABEL_FONT_SIZE 12.0
-
 @interface PEWeekColumn ()
 
 @property UIView *parentView;
