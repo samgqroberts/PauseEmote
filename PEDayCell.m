@@ -18,10 +18,12 @@
 //dimensions
 #define COMMENT_LABEL_X 60.0
 #define COMMENT_LABEL_WIDTH 250.0
+#define COMMENT_LABEL_FONT_SIZE 16.0
 #define TIME_LABEL_X 8.0
 #define TIME_LABEL_Y 10.0
 #define TIME_LABEL_WIDTH 50.0
 #define TIME_LABEL_HEIGHT 20.0
+#define TIME_LABEL_FONT_SIZE 16.0
 
 @synthesize timeLabel;
 
@@ -54,7 +56,9 @@
     self.timeLabel.text = time;
     self.timeLabel.tag = TIME_LABEL_TAG;
     self.timeLabel.backgroundColor = [UIColor clearColor];
+    self.timeLabel.font = [UIFont systemFontOfSize:height_factor(TIME_LABEL_FONT_SIZE)];
     [self.contentView insertSubview:self.timeLabel atIndex:0];
+    self.commentLabel.font = [UIFont systemFontOfSize:height_factor(COMMENT_LABEL_FONT_SIZE)];
     self.commentLabel.tag = COMMENT_LABEL_TAG;
     self.commentLabel.frame = CGRectMake(width_factor(COMMENT_LABEL_X), 0, width_factor(COMMENT_LABEL_WIDTH), self.frame.size.height);
     self.commentLabel.text = comment;

@@ -66,6 +66,7 @@
 		BED295AD17D0EE6F00264ED1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED295AC17D0EE6E00264ED1 /* QuartzCore.framework */; };
 		BED295AF17D0F6A500264ED1 /* Trends.png in Resources */ = {isa = PBXBuildFile; fileRef = BED295AE17D0F6A500264ED1 /* Trends.png */; };
 		BED295B117D0F6AE00264ED1 /* MonthSearchDrinking.png in Resources */ = {isa = PBXBuildFile; fileRef = BED295B017D0F6AE00264ED1 /* MonthSearchDrinking.png */; };
+		BED295B317D1210000264ED1 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = BED295B217D1210000264ED1 /* Icon-72.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,7 @@
 		BED295AC17D0EE6E00264ED1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BED295AE17D0F6A500264ED1 /* Trends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Trends.png; sourceTree = SOURCE_ROOT; };
 		BED295B017D0F6AE00264ED1 /* MonthSearchDrinking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MonthSearchDrinking.png; sourceTree = SOURCE_ROOT; };
+		BED295B217D1210000264ED1 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +309,7 @@
 			children = (
 				BED295B017D0F6AE00264ED1 /* MonthSearchDrinking.png */,
 				BED295AE17D0F6A500264ED1 /* Trends.png */,
+				BED295B217D1210000264ED1 /* Icon-72.png */,
 				BED2959717CD0CC800264ED1 /* Icon-72@2x.png */,
 				BED2959817CD0CC800264ED1 /* Icon.png */,
 				BED2959917CD0CC800264ED1 /* Icon@2x.png */,
@@ -534,6 +537,7 @@
 				BED2959C17CD0CC800264ED1 /* Icon@2x.png in Resources */,
 				BED295AF17D0F6A500264ED1 /* Trends.png in Resources */,
 				BED295B117D0F6AE00264ED1 /* MonthSearchDrinking.png in Resources */,
+				BED295B317D1210000264ED1 /* Icon-72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

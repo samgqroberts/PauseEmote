@@ -68,6 +68,8 @@
 
 @implementation PELogEmotionsViewController
 
+BOOL editingCustomCell;
+
 @synthesize dayButton;
 @synthesize weekButton;
 @synthesize monthButton;
@@ -104,6 +106,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    editingCustomCell = NO;
     
     //get logged emotions singleton
     lem = [PEEmotionsManager sharedSingleton];
@@ -553,6 +557,7 @@
             if(!cell.customEmotion) {
                 // only let user pick if touch began here
                 if (atBeginning) {
+                    editingCustomCell = YES;
                     [cell initCustomEmotionTextField];
                     if (!self.customEmotionCell) {
                         self.customEmotionCell = cell;
@@ -567,6 +572,17 @@
                     return;
                 }
             }
+
+        }
+        
+        
+        if (editingCustomCell) {
+            return;
+        }
+        
+        
+        if ([cell.customEmotionField isFirstResponder]) {
+            return;
         }
         
         //make sure the textviews give up first responder when not most recently touched. TODO: this isn't working
@@ -615,6 +631,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"]) {
+        editingCustomCell = NO;
         [textView resignFirstResponder];
         
         if (textView.tag == CUSTOM_EMOTION_TAG) {
@@ -632,6 +649,17 @@
                 [customEmotionCell initCustomEmotion:textView.text];
                 customEmotionCell.textLabel.font = [UIFont boldSystemFontOfSize:height_factor(EMOTION_INTENSITY_FONT_SIZE)];
                 customEmotionCell.textLabel.attributedText = [self attributedStringWithText:[customEmotionCell.customEmotion uppercaseString] withKerning:EMOTION_INTENSITY_KERNING];
+            }
+        }
+        
+        if(textView.tag == COMMENT_TAG) {
+            // if nothing was typed, make the default comment message reappear
+            if ([textView.text isEqualToString:@""]) {
+                textView.frame = CGRectMake(0, 0, 0, 0); // hacky
+                self.commentCell.customEmotion = nil;
+                self.commentCell.customEmotionField = nil;
+                self.commentCell.textLabel.font = [UIFont systemFontOfSize:height_factor(COMMENT_PROMPT_FONT_SIZE)];
+                self.commentCell.textLabel.attributedText = [self attributedStringWithText:@"Why are you feeling this way?" withKerning:EMOTION_TITLE_KERNING];
             }
         }
         
