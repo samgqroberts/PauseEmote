@@ -304,24 +304,14 @@ BOOL viewJustLoaded;
     if (!self.currentEmotions) {
         cellColor = [UIColor clearColor];
         [cell.contentView setBackgroundColor:cellColor];
-        [cell.textLabel setBackgroundColor: cellColor];
-        cell.textLabel.font = [UIFont systemFontOfSize:height_factor(CELL_FONT_SIZE_NOEMOTIONS)];
-        cell.textLabel.text = @"No emotions today, friend-o";
-        cell.textLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
         [cell updateLabelsWithTime:@"" withComment:@"Sorry friend-o, No emotions today!"];
         cell.commentLabel.textColor = [UIColor blackColor];
         return cell;
     }
     
-    NSString *dominantEmotion = [(PEEmotion *)[self.currentEmotions objectAtIndex:indexPath.row] dominantEmotion];
+    PEEmotion *emotion = (PEEmotion *)[self.currentEmotions objectAtIndex:indexPath.row];
     
-    if ([emotions containsObject:dominantEmotion]) {
-        cellColor = [PEUtil colorFromHexString: [self.emotionColors objectForKey:dominantEmotion]];
-    }
-    // else it's the custom emotion, so get color for emotion at last index of emotions array (corresponds to custom emotion)
-    else {
-        cellColor = [PEUtil colorFromHexString: [self.emotionColors objectForKey:[emotions objectAtIndex:[emotions count]-1]]];
-    }
+    cellColor = [lem getColorForEmotionNamed:[emotion dominantEmotion]];
     
     cell.textLabel.text = @"";
     cell.contentView.backgroundColor = cellColor;

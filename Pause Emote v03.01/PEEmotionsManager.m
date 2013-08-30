@@ -9,6 +9,7 @@
 #import "PEEmotionsManager.h"
 #import "PEUtil.h"
 
+#define DEFAULT_EMOTION_COLOR @"#959595"
 
 @interface PEEmotionsManager ()
 
@@ -53,6 +54,9 @@
 }
 
 - (UIColor *)getColorForEmotionNamed:(NSString *)emotionName {
+    if (!emotionName) { // no intensities for any emotion logged
+        return [PEUtil colorFromHexString:DEFAULT_EMOTION_COLOR];
+    }
     if ([self.emotions containsObject:emotionName]) {
         // it's either not custom or it's called @"Pick Your Own"
         return [PEUtil colorFromHexString:[self.emotionColors objectForKey:emotionName]];

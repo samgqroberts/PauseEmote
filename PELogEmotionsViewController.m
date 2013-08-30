@@ -478,6 +478,7 @@
 
 -(void)settingsClicked {
     NSLog(@"settings clicked");
+    [((PENavigationController *)self.navigationController) pushViewControllerOfType:TRENDS_VIEW_TYPE];
 }
 
 -(void)refreshClicked {

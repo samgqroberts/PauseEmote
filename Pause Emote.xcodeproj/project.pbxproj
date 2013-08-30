@@ -64,6 +64,8 @@
 		BED295A517CFA69100264ED1 /* PEWeekColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = BED295A417CFA69100264ED1 /* PEWeekColumn.m */; };
 		BED295AB17CFB83C00264ED1 /* PEWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = BED295AA17CFB83C00264ED1 /* PEWeekView.m */; };
 		BED295AD17D0EE6F00264ED1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED295AC17D0EE6E00264ED1 /* QuartzCore.framework */; };
+		BED295AF17D0F6A500264ED1 /* Trends.png in Resources */ = {isa = PBXBuildFile; fileRef = BED295AE17D0F6A500264ED1 /* Trends.png */; };
+		BED295B117D0F6AE00264ED1 /* MonthSearchDrinking.png in Resources */ = {isa = PBXBuildFile; fileRef = BED295B017D0F6AE00264ED1 /* MonthSearchDrinking.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +160,8 @@
 		BED295A917CFB83C00264ED1 /* PEWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEWeekView.h; sourceTree = "<group>"; };
 		BED295AA17CFB83C00264ED1 /* PEWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEWeekView.m; sourceTree = "<group>"; };
 		BED295AC17D0EE6E00264ED1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BED295AE17D0F6A500264ED1 /* Trends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Trends.png; sourceTree = SOURCE_ROOT; };
+		BED295B017D0F6AE00264ED1 /* MonthSearchDrinking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MonthSearchDrinking.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +305,8 @@
 		BEC6301017C3FE510010B89F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BED295B017D0F6AE00264ED1 /* MonthSearchDrinking.png */,
+				BED295AE17D0F6A500264ED1 /* Trends.png */,
 				BED2959717CD0CC800264ED1 /* Icon-72@2x.png */,
 				BED2959817CD0CC800264ED1 /* Icon.png */,
 				BED2959917CD0CC800264ED1 /* Icon@2x.png */,
@@ -526,6 +532,8 @@
 				BED2959A17CD0CC800264ED1 /* Icon-72@2x.png in Resources */,
 				BED2959B17CD0CC800264ED1 /* Icon.png in Resources */,
 				BED2959C17CD0CC800264ED1 /* Icon@2x.png in Resources */,
+				BED295AF17D0F6A500264ED1 /* Trends.png in Resources */,
+				BED295B117D0F6AE00264ED1 /* MonthSearchDrinking.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

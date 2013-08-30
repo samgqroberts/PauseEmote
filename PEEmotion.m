@@ -44,6 +44,9 @@
             domEmotion = (NSString *)key;
         }
     }
+    if (domIntensity==0) {
+        domEmotion = nil;
+    }
     _dominantEmotion = domEmotion;
     _dominantIntensity = domIntensity;
 }

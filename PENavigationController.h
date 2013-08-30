@@ -38,6 +38,7 @@ typedef enum {
     DAY_VIEW_TYPE,
     WEEK_VIEW_TYPE,
     MONTH_VIEW_TYPE,
+    TRENDS_VIEW_TYPE,
 } ViewTypes;
 
 @end

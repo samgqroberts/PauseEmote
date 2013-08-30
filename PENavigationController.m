@@ -49,9 +49,13 @@
 
 @interface PENavigationController ()
 
+@property CGRect properFrame; //this is hacky way to hide nav bar while showing dummy images (month search, trends)
+
 @end
 
 @implementation PENavigationController
+
+@synthesize properFrame;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -76,6 +80,8 @@
     
     // set navbar background image to scaled image
     [self.navigationBar setBackgroundImage: newImage forBarMetrics: UIBarMetricsDefault];
+    
+    self.properFrame = self.navigationBar.frame;
     
 }
 
@@ -193,6 +199,7 @@
      * of view controllers, then pop to that instance of it.  If it's not on
      * the stack, make a new one and push it.
      */
+    self.navigationBar.frame = self.properFrame;
     switch (viewType) {
         case LOG_VIEW_TYPE:
             for (UIViewController *vc in self.viewControllers) {
@@ -206,9 +213,17 @@
             [self pushViewController:levc animated:YES];
         }
             break;
-        case SEARCH_VIEW_TYPE:
-            NSLog(@"pushing search view");
-            break;
+        case SEARCH_VIEW_TYPE: {
+            UIViewController *vc = [[UIViewController alloc] init];
+            self.properFrame = self.navigationBar.frame;
+            vc.view.frame = CGRectMake(vc.view.frame.origin.x, -50, vc.view.frame.size.width, vc.view.frame.size.height);
+            [self.navigationBar setFrame:CGRectMake(0, 0, 0, 0)];
+            UIButton *button = [[UIButton alloc] initWithFrame:vc.view.frame];
+            [button addTarget:self action:@selector(dummyClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [button setImage:[UIImage imageNamed:@"MonthSearchDrinking.png"] forState:UIControlStateNormal];
+            [vc.view addSubview:button];
+            [self pushViewController:vc animated:YES];
+        }break;
         case DAY_VIEW_TYPE:  
             for (UIViewController *vc in self.viewControllers) {
                 if ([vc class] == [PEDayViewController class]) {
@@ -253,10 +268,26 @@
             [self pushViewController:mvc animated:YES];
         }
             break;
+        case TRENDS_VIEW_TYPE:
+        {
+            UIViewController *vc = [[UIViewController alloc] init];
+            self.properFrame = self.navigationBar.frame;
+            vc.view.frame = CGRectMake(vc.view.frame.origin.x, -50, vc.view.frame.size.width, vc.view.frame.size.height);
+            [self.navigationBar setFrame:CGRectMake(0, 0, 0, 0)];
+            UIButton *button = [[UIButton alloc] initWithFrame:vc.view.frame];
+            [button addTarget:self action:@selector(dummyClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [button setImage:[UIImage imageNamed:@"Trends.png"] forState:UIControlStateNormal];
+            [vc.view addSubview:button];
+            [self pushViewController:vc animated:YES];
+        }   break;
         default:
             NSLog(@"WARNING: unknown view type sent to PENavigationController->pushViewControllerOfType");
             break;
     }
+}
+
+- (void) dummyClicked:(id)sender {
+    [self pushViewControllerOfType:LOG_VIEW_TYPE];
 }
 
 - (void)didReceiveMemoryWarning

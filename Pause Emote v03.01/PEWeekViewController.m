@@ -193,7 +193,7 @@ BOOL isProcessingListMove;
             //create a view befitting the type and quantity of emotions in this section
             for (int i = 0 ; i < [sectionEmotions count] ; i++) {
                 PEEmotion *emotion = [sectionEmotions objectAtIndex:i];
-                int width = currentColumn.frame.size.width/[sectionEmotions count];
+                float width = currentColumn.frame.size.width/[sectionEmotions count];
                 UIView *emotionView = [[UIView alloc] initWithFrame:CGRectMake(i*width, SECTION_HEIGHT*section, width, SECTION_HEIGHT)];
                 emotionView.backgroundColor = [lem getColorForEmotionNamed: emotion.dominantEmotion];
                 [emotionView setUserInteractionEnabled:NO];

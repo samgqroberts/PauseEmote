@@ -46,7 +46,6 @@
 @property int numberOfRows;
 @property int cellHeight;
 @property int cellWidth;
-@property NSMutableArray *emotionColorArray;
 @property PEEmotionsManager *lem;
 @property int lastDayWeekday;
 @property int firstDayWeekday;
@@ -63,7 +62,6 @@ BOOL isProcessingListMove;
 @synthesize firstDayWeekday;
 @synthesize lastDayWeekday;
 @synthesize lem;
-@synthesize emotionColorArray;
 @synthesize numberOfRows;
 @synthesize currentDateComponents;
 @synthesize cellHeight;
@@ -180,10 +178,6 @@ BOOL isProcessingListMove;
     NSDate *currentDay = [calendar dateFromComponents:comps];
     
     //iterate over every day in calendar and get the dominant emotion color
-    if (!self.emotionColorArray) {
-        self.emotionColorArray = [NSMutableArray array];
-    }
-    NSMutableArray *currentRow;
     UIColor *currentColor;
     NSArray *emotionsForCurrentDay;
     PEMonthCell *currentCell;
@@ -191,8 +185,6 @@ BOOL isProcessingListMove;
     NSDateComponents *secondComps;
     
     for (int row = 0; row < self.numberOfRows; row++) {
-        currentRow = [NSMutableArray arrayWithCapacity:NUM_WEEKDAYS];
-        [self.emotionColorArray insertObject:currentRow atIndex:row];
         
         for (int column = 0; column < NUM_WEEKDAYS; column++) {
             emotionsForCurrentDay = [lem getEmotionsForDate:currentDay];
@@ -205,11 +197,9 @@ BOOL isProcessingListMove;
             currentCell.day = [secondComps day];
             if (emotionsForCurrentDay) {
                 currentColor = [lem getColorForEmotionNamed:[lem getDominantEmotionForEmotions:emotionsForCurrentDay]];
-                [currentRow insertObject:[lem getColorForEmotionNamed:[lem getDominantEmotionForEmotions:emotionsForCurrentDay]] atIndex:column];
             }
             else {
                 currentColor = [UIColor whiteColor];
-                [currentRow insertObject:[NSNull null] atIndex:column];
             }
             currentCell.backgroundColor = currentColor;
             [self.view addSubview:currentCell];
