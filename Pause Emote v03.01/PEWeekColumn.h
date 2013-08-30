@@ -11,6 +11,5 @@
 @interface PEWeekColumn : UIButton
 
 @property NSDate *date;
-@property (nonatomic) NSInteger *day;
 
 @end

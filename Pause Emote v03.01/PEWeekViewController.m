@@ -32,7 +32,7 @@
 #define LEFT_TOOLBAR_HEIGHT 45.0
 #define LEFT_TOOLBAR_LEFT_SPACER_WIDTH -9.0
 #define LEFT_TOOLBAR_RIGHT_SPACER_WIDTH 5.0
-#define TITLE_LABEL_FONT_SIZE 15.0
+#define TITLE_LABEL_FONT_SIZE 12.0
 #define HEADER_BAR_HEIGHT 30.0
 #define HEADER_LABEL_Y 9.0
 #define HEADER_LABEL_FONT_SIZE 11.0
@@ -46,6 +46,7 @@
 @interface PEWeekViewController ()
 
 @property NSDate *firstWeekday;
+@property NSDate *lastWeekday;
 @property NSDateComponents *firstWeekdayComps;
 @property UIView *headerBar;
 @property UIView *leftSidebar;
@@ -70,6 +71,7 @@
 CGPoint mystartTouchPosition;
 BOOL isProcessingListMove;
 
+@synthesize lastWeekday;
 @synthesize firstWeekday;
 @synthesize firstWeekdayComps;
 @synthesize scrollView;
@@ -148,6 +150,11 @@ BOOL isProcessingListMove;
     NSDateComponents *comps = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit fromDate:self.currentDate];
     [comps setDay: [comps day] - ([comps weekday]-1)];
     self.firstWeekday = [calendar dateFromComponents:comps];
+    
+    // get last weekday of week
+    [comps setDay: [comps day] + 6];
+    self.lastWeekday = [calendar dateFromComponents:comps];
+    
     self.firstWeekdayComps = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit fromDate:self.firstWeekday];
     
     // Now figure out dimensions
@@ -161,10 +168,13 @@ BOOL isProcessingListMove;
     NSDate *nextTime = [currentTime dateByAddingTimeInterval:900]; //900s = 15m
     for (int day = 0; day < NUM_WEEKDAYS; day++) {
         
-        UIView *currentColumn = [[PEWeekColumn alloc] initWithFrame:CGRectMake(self.leftSidebar.frame.size.width + day*((self.scrollView.frame.size.width - self.leftSidebar.frame.size.width)/NUM_WEEKDAYS), 0, ((self.scrollView.frame.size.width - self.leftSidebar.frame.size.width)/NUM_WEEKDAYS), self.scrollView.contentSize.height)];
+        PEWeekColumn *currentColumn = [[PEWeekColumn alloc] initWithFrame:CGRectMake(self.leftSidebar.frame.size.width + day*((self.scrollView.frame.size.width - self.leftSidebar.frame.size.width)/NUM_WEEKDAYS), 0, ((self.scrollView.frame.size.width - self.leftSidebar.frame.size.width)/NUM_WEEKDAYS), self.scrollView.contentSize.height)];
         
         currentColumn.layer.borderColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR].CGColor;
         currentColumn.layer.borderWidth = 0.6f;
+        
+        currentColumn.date = [currentTime dateByAddingTimeInterval:0];
+        [currentColumn addTarget:self action:@selector(columnClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         NSArray *dayEmotions = [lem getEmotionsForDate:currentTime];
         
@@ -186,6 +196,7 @@ BOOL isProcessingListMove;
                 int width = currentColumn.frame.size.width/[sectionEmotions count];
                 UIView *emotionView = [[UIView alloc] initWithFrame:CGRectMake(i*width, SECTION_HEIGHT*section, width, SECTION_HEIGHT)];
                 emotionView.backgroundColor = [lem getColorForEmotionNamed: emotion.dominantEmotion];
+                [emotionView setUserInteractionEnabled:NO];
                 [currentColumn addSubview:emotionView];
             }
             
@@ -226,23 +237,18 @@ BOOL isProcessingListMove;
 
 - (void)loadHeaderBar {
     CGRect frame = CGRectMake(width_factor(LEFT_SIDEBAR_WIDTH), 0, [[UIScreen mainScreen] bounds].size.width - width_factor(LEFT_SIDEBAR_WIDTH), height_factor(HEADER_BAR_HEIGHT));
-    if (!self.headerBar) {
-        self.headerBar = [[UIView alloc] init];
-    }
-    else {
-        [self.headerBar removeFromSuperview];
-    }
+    self.headerBar = [[UIView alloc] init];
     self.headerBar.frame = frame;
     self.headerBar.backgroundColor = [UIColor whiteColor];
     
-//    // Add a bottomBorder.
-//    CALayer *bottomBorder = [CALayer layer];
-//    
-//    bottomBorder.frame = CGRectMake(0.0f, 43.0f, self.headerBar.frame.size.width, 1.0f);
-//    
-//    bottomBorder.backgroundColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR].CGColor;
-//    
-//    [self.headerBar.layer addSublayer:bottomBorder];
+    // Add a bottomBorder.
+    CALayer *bottomBorder = [CALayer layer];
+    
+    bottomBorder.frame = CGRectMake(0.0f, frame.size.height, self.headerBar.frame.size.width, 1.0f);
+    
+    bottomBorder.backgroundColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR].CGColor;
+    
+    [self.headerBar.layer addSublayer:bottomBorder];
     
     [self.view addSubview:self.headerBar];
     NSArray *weekdays = [NSArray arrayWithObjects:@"sun",@"mon",@"tue",@"wed",@"thu",@"fri",@"sat",nil];
@@ -331,7 +337,7 @@ BOOL isProcessingListMove;
     
     // title label
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 160, 45)];
-    title.text = [PENavigationController getTitleForDate:self.currentDate forViewType:MONTH_VIEW_TYPE];
+    title.text = [PENavigationController getTitleForDate:self.currentDate forViewType:WEEK_VIEW_TYPE];
     title.font = [UIFont boldSystemFontOfSize: height_factor(TITLE_LABEL_FONT_SIZE)];
     title.backgroundColor = [UIColor clearColor];
     title.textColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR];
@@ -377,13 +383,13 @@ BOOL isProcessingListMove;
     
 }
 
-- (void)cellClicked:(id)sender {
+- (void)columnClicked:(id)sender {
     if ([sender class] != [PEWeekColumn class]) {
-        NSLog(@"WARNING: non-PEMonthCell sent to cellClicked action");
+        NSLog(@"WARNING: non-PEWeekColumn sent to columnClicked action");
         return;
     }
-    PEWeekColumn *cell = (PEWeekColumn *)sender;
-    [((PENavigationController *)self.navigationController) pushViewControllerOfType:DAY_VIEW_TYPE withArgument:cell.date];
+    PEWeekColumn *column = (PEWeekColumn *)sender;
+    [((PENavigationController *)self.navigationController) pushViewControllerOfType:DAY_VIEW_TYPE withArgument:column.date];
 }
 
 - (void)settingsClicked {
@@ -466,14 +472,16 @@ BOOL isProcessingListMove;
 
 -(void)moveToDay:(BOOL)nextDay {
     NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit ) fromDate:self.currentDate];
-    [components setMonth:[components month] + (nextDay?1:-1)];
+    NSDateComponents *components = [cal components:( NSYearCalendarUnit | NSMonthCalendarUnit|NSDayCalendarUnit ) fromDate:self.currentDate];
+    [components setDay:[components day] + (nextDay?7:-7)];
     self.currentDate = [cal dateByAddingComponents:components toDate: self.currentDate options:0];
     self.currentDate = [cal dateFromComponents:components];
     [self refreshView];
 }
 
 -(void) refreshView {
+    [self.scrollView removeFromSuperview];
+    [self.headerBar removeFromSuperview];
     [self initView];
     [self initDateInfo];
     [self initNavigationBar];

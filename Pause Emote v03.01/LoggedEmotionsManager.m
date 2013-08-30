@@ -6,31 +6,28 @@
 //  Copyright (c) 2013 Pause Emote. All rights reserved.
 //
 
-#import "PEEmotionsManager.h"
-#import "PEUtil.h"
+#import "LoggedEmotionsManager.h"
 
 
-@interface PEEmotionsManager ()
+@interface LoggedEmotionsManager ()
 
 @property NSArray *emotions;
-@property NSDictionary *emotionColors;
 
 @end
 
-@implementation PEEmotionsManager
+@implementation LoggedEmotionsManager
 
-@synthesize emotionColors;
 @synthesize emotions;
 @synthesize ownerEmotions;
 
-+ (PEEmotionsManager *)sharedSingleton
++ (LoggedEmotionsManager *)sharedSingleton
 {
-    static PEEmotionsManager *sharedSingleton;
+    static LoggedEmotionsManager *sharedSingleton;
     
     @synchronized(self)
     {
         if (!sharedSingleton)
-            sharedSingleton = [[PEEmotionsManager alloc] init];
+            sharedSingleton = [[LoggedEmotionsManager alloc] init];
         
         return sharedSingleton;
     }
@@ -44,56 +41,10 @@
         
         self.emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
         
-        self.emotionColors = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"EmotionColors" ofType:@"plist"]];
-        
         [self populateOwnerEmotions];
         
     }
     return self;
-}
-
-- (UIColor *)getColorForEmotionNamed:(NSString *)emotionName {
-    if ([self.emotions containsObject:emotionName]) {
-        // it's either not custom or it's called @"Pick Your Own"
-        return [PEUtil colorFromHexString:[self.emotionColors objectForKey:emotionName]];
-    }
-    else {
-        // it's dat custom color
-        return [PEUtil colorFromHexString:[self.emotionColors objectForKey:@"Pick Your Own"]];
-    }
-}
-
-- (NSString *) getDominantEmotionForEmotions:(NSArray *)emotionsArray {
-    NSString *returnString;
-    int highestIntensity = 0;
-    NSMutableDictionary *intensities = [NSMutableDictionary dictionary];
-    for (NSString *name in self.emotions) {
-        [intensities setValue:[NSNumber numberWithFloat:0.0] forKey:name];
-    }
-    for (PEEmotion *emotion in emotionsArray) {
-        for (id key in emotion.intensities) {
-            if ([intensities objectForKey:key]) {
-                NSNumber *one = [intensities objectForKey:key];
-                NSNumber *two = [emotion.intensities objectForKey:key];
-                NSNumber *sum = [NSNumber numberWithFloat:([one floatValue] + [two floatValue])];
-                [intensities setObject:sum forKey:key];
-            }
-            // custom emotion
-            else {
-                NSNumber *one = [intensities objectForKey:[self.emotions objectAtIndex:[self.emotions count]-1 ]];
-                NSNumber *two = [emotion.intensities objectForKey:key];
-                NSNumber *sum = [NSNumber numberWithFloat:([one floatValue] + [two floatValue])];
-                [intensities setObject:sum forKey:[self.emotions objectAtIndex:[self.emotions count]-1 ]];
-            }
-        }
-    }
-    for (id key in intensities) {
-        if ( [(NSNumber *)[intensities objectForKey:key] floatValue] >= highestIntensity ) {
-            returnString = (NSString *)key;
-            highestIntensity = [(NSNumber *)[intensities objectForKey:key] floatValue];
-        }
-    }
-    return returnString;
 }
 
 - (void) addEmotion: (PEEmotion *)emotion {
@@ -111,23 +62,6 @@
         [(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] setValue:[NSMutableArray array] forKey:day];
     }
     [(NSMutableArray *)[(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey:day] addObject:emotion];
-}
-
-- (NSArray *) getEmotionsForDate:(NSDate *)date {
-    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
-    NSString *year = [NSString stringWithFormat:@"%d", [dateComponents year]];
-    NSString *month = [NSString stringWithFormat:@"%d", [dateComponents month]];
-    NSString *day = [NSString stringWithFormat:@"%d", [dateComponents day]];
-    if (![self.ownerEmotions objectForKey: year]) {
-        return nil;
-    }
-    if (![(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month]) {
-        return nil;
-    }
-    if (![(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey: day]) {
-        return nil;
-    }
-    return (NSArray *)[(NSMutableDictionary *)[(NSMutableDictionary *)[self.ownerEmotions objectForKey: year] objectForKey: month] objectForKey:day];
 }
 
 // ATTN FUTURE DEVELOPERS: this is a cluster F of an html-parser
@@ -159,7 +93,6 @@
     NSString *strangeCharacters;
     NSString *strangeCharacter;
     NSString *phoneName = [[UIDevice currentDevice] name];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     
     for (NSString *component in components) {
         //check if longer than <td>
@@ -228,7 +161,6 @@
                 emotion = [[PEEmotion alloc] init];
                 intensities = [NSMutableDictionary dictionary];
                 [emotion setDateCreated: [dateFormatter dateFromString:newSubComponent]];
-                [emotion setDateCreated:[emotion.dateCreated dateByAddingTimeInterval:-3600]]; //THIS IS A HACKY WAY TO RESOLVE THE TIME BEING +1 HOUR FROM THE SERVER
                 pastFirst = TRUE;
                 skipSecond = TRUE;
                 

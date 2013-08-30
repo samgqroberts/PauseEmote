@@ -26,28 +26,28 @@
     return self;
 }
 
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    [parentController touchesBegan:touches withEvent:event];
-//    [super touchesBegan:touches withEvent:event];
-//}
-//
-//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    [parentController touchesMoved:touches withEvent:event];
-//    [super touchesMoved:touches withEvent:event];
-//}
-//
-//- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
-//{
-//    [parentController touchesEnded:touches withEvent:event];
-//    [super touchesEnded:touches withEvent:event];
-//}
-//
-//- (void)touchesCancelled:(NSSet*)touches withEvent:(UIEvent*)event
-//{
-//    [parentController touchesEnded:touches withEvent:event];
-//    [super touchesCancelled:touches withEvent:event];
-//}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [parentController touchesBegan:touches withEvent:event];
+    [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [parentController touchesMoved:touches withEvent:event];
+    [super touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    [parentController touchesEnded:touches withEvent:event];
+    [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    [parentController touchesEnded:touches withEvent:event];
+    [super touchesCancelled:touches withEvent:event];
+}
 
 @end

@@ -21,7 +21,6 @@
 
 @interface PEWeekColumn ()
 
-@property UILabel *dayLabel;
 @property UIView *parentView;
 
 @end
@@ -30,8 +29,6 @@
 
 @synthesize parentView;
 @synthesize date;
-@synthesize dayLabel;
-@synthesize day = _day;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -40,19 +37,6 @@
         // Initialization code
     }
     return self;
-}
-
--(void) setDay:(NSInteger *)day {
-    _day = day;
-    if (!self.dayLabel) {
-        self.dayLabel = [[UILabel alloc] initWithFrame:CGRectMake(width_factor(DAY_LABEL_X), height_factor(DAY_LABEL_Y), width_factor(DAY_LABEL_WIDTH), height_factor(DAY_LABEL_HEIGHT))];
-        [self addSubview:self.dayLabel];
-        self.dayLabel.backgroundColor = [UIColor clearColor];
-        self.dayLabel.font = [UIFont systemFontOfSize:height_factor(DAY_LABEL_FONT_SIZE)];
-        self.dayLabel.textColor = [PEUtil colorFromHexString:DAY_LABEL_TEXT_COLOR];
-    }
-    self.dayLabel.text = [NSString stringWithFormat:@"%d", (int)day];
-    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

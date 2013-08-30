@@ -63,6 +63,7 @@
 		BED295A217CE36AD00264ED1 /* PEMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BED295A117CE36AD00264ED1 /* PEMonthCell.m */; };
 		BED295A517CFA69100264ED1 /* PEWeekColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = BED295A417CFA69100264ED1 /* PEWeekColumn.m */; };
 		BED295AB17CFB83C00264ED1 /* PEWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = BED295AA17CFB83C00264ED1 /* PEWeekView.m */; };
+		BED295AD17D0EE6F00264ED1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED295AC17D0EE6E00264ED1 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,7 @@
 		BED295A417CFA69100264ED1 /* PEWeekColumn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEWeekColumn.m; sourceTree = "<group>"; };
 		BED295A917CFB83C00264ED1 /* PEWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEWeekView.h; sourceTree = "<group>"; };
 		BED295AA17CFB83C00264ED1 /* PEWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEWeekView.m; sourceTree = "<group>"; };
+		BED295AC17D0EE6E00264ED1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BED295AD17D0EE6F00264ED1 /* QuartzCore.framework in Frameworks */,
 				946BA6C31669A927000D7768 /* UIKit.framework in Frameworks */,
 				946BA6C51669A927000D7768 /* Foundation.framework in Frameworks */,
 				946BA6C71669A927000D7768 /* CoreGraphics.framework in Frameworks */,
@@ -185,6 +188,7 @@
 		946BA6B31669A927000D7768 = {
 			isa = PBXGroup;
 			children = (
+				BED295AC17D0EE6E00264ED1 /* QuartzCore.framework */,
 				BEBFA3F717C6B27600640BF8 /* Readme.txt */,
 				946BA6C81669A927000D7768 /* Pause Emote v03.01 */,
 				946BA6EF1669A927000D7768 /* Pause Emote v03.01Tests */,

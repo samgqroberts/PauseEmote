@@ -150,6 +150,7 @@
     NSString *returnString;
     NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
     NSString *year = [NSString stringWithFormat:@"%d", [dateComponents year]];
     NSString *month = [NSString stringWithFormat:@"%d", [dateComponents month]];
     NSString *day = [NSString stringWithFormat:@"%d", [dateComponents day]];
@@ -158,6 +159,20 @@
         case DAY_VIEW_TYPE:
             returnString = [NSString stringWithFormat:@"< %@/%@/%@ >", month, day, year];
             break;
+        case WEEK_VIEW_TYPE:{
+            NSDateComponents *comps = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit fromDate:date];
+            [comps setDay: [comps day] - ([comps weekday]-1)];
+            NSDate *firstWeekday = [calendar dateFromComponents:comps];
+            
+            // get last weekday of week
+            [comps setDay: [comps day] + 6];
+            NSDate *lastWeekday = [calendar dateFromComponents:comps];
+            comps = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:firstWeekday];
+            NSString *first = [NSString stringWithFormat:@"%d/%d/%d", [comps month], [comps day], [comps year]];
+            comps = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:lastWeekday];
+            NSString *last = [NSString stringWithFormat:@"%d/%d/%d", [comps month], [comps day], [comps year]];
+            returnString = [NSString stringWithFormat:@"< %@ - %@ >", first, last];
+        } break;
         case MONTH_VIEW_TYPE:
             returnString = [NSString stringWithFormat:@"< %@ %@ >", [df.monthSymbols objectAtIndex:[dateComponents month]-1], year];
             break;
