@@ -304,7 +304,7 @@ BOOL viewJustLoaded;
     if (!self.currentEmotions) {
         cellColor = [UIColor clearColor];
         [cell.contentView setBackgroundColor:cellColor];
-        [cell updateLabelsWithTime:@"" withComment:@"Sorry friend-o, No emotions today!"];
+        [cell updateLabelsWithTime:@"" withComment:@"No emotions today!"];
         cell.commentLabel.textColor = [UIColor blackColor];
         return cell;
     }
@@ -342,6 +342,10 @@ BOOL viewJustLoaded;
     [cell updateLabelsWithTime:time withComment:emotion.comment];
     cell.timeLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
     cell.commentLabel.textColor = [PEUtil colorFromHexString:CELL_TEXT_COLOR];
+    if ([emotion.dominantEmotion isEqualToString:@"Joy"]) {
+        cell.timeLabel.textColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR];
+        cell.commentLabel.textColor = [PEUtil colorFromHexString:TITLE_TEXT_COLOR];
+    }
 }
 
 /*
