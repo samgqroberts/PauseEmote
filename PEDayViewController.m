@@ -45,6 +45,7 @@
 @interface PEDayViewController ()
 
 
+@property int calendarSubIconY;
 @property NSMutableArray *rowHeights;
 @property PEEmotionsManager *lem;
 @property UIButton *searchButton;
@@ -63,6 +64,7 @@ CGPoint mystartTouchPosition;
 BOOL isProcessingListMove;
 BOOL viewJustLoaded;
 
+@synthesize calendarSubIconY;
 @synthesize rowHeights;
 @synthesize emotionColors;
 @synthesize emotions;
@@ -224,6 +226,7 @@ BOOL viewJustLoaded;
     searchButton = [PENavigationController getButtonOfType:SEARCH_BUTTON_TYPE forViewOfType:DAY_VIEW_TYPE withTarget:self withSelector:@selector(searchClicked)];
     [self.tableView insertSubview:searchButton atIndex:0];
     searchButton.hidden = TRUE;
+    self.calendarSubIconY = searchButton.frame.origin.y;
     }
     if (weekButton) {
         weekButton.hidden = TRUE;
@@ -241,6 +244,7 @@ BOOL viewJustLoaded;
     [self.tableView insertSubview:monthButton atIndex:0];
     monthButton.hidden = TRUE;
     }
+    
 }
 
 - (void) addClicked {
@@ -267,6 +271,12 @@ BOOL viewJustLoaded;
 
 - (void) monthClicked {
         [((PENavigationController *)self.navigationController) pushViewControllerOfType:MONTH_VIEW_TYPE];
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.searchButton.frame = CGRectMake(self.searchButton.frame.origin.x, self.calendarSubIconY + scrollView.contentOffset.y, self.searchButton.frame.size.width, self.searchButton.frame.size.height);
+    self.weekButton.frame = CGRectMake(self.weekButton.frame.origin.x, self.calendarSubIconY + scrollView.contentOffset.y, self.weekButton.frame.size.width, self.weekButton.frame.size.height);
+    self.monthButton.frame = CGRectMake(self.monthButton.frame.origin.x, self.calendarSubIconY + scrollView.contentOffset.y, self.monthButton.frame.size.width, self.monthButton.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning
