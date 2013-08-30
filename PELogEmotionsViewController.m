@@ -466,6 +466,8 @@ BOOL editingCustomCell;
         [self.lem addEmotion: emo];
         
         [self refreshClicked];
+        
+        [((PENavigationController *)self.navigationController) pushViewControllerOfType:DAY_VIEW_TYPE withArgument:[NSDate date]];
     }
     
 }
