@@ -16,7 +16,9 @@
 - (NSArray *) getEmotionsForDate:(NSDate *)date;
 - (NSString *) getDominantEmotionForEmotions:(NSArray *)emotionsArray;
 - (UIColor *)getColorForEmotionNamed:(NSString *)emotionName;
-
+- (NSString *)getEmotionNameAtIndex:(int)index;
+- (NSString *)getTextForEmotionNamed:(NSString *)emotionName atIntensity:(float)intensity;
+- (int)getEmotionNameCount;
 
 @property NSMutableDictionary *ownerEmotions;
 

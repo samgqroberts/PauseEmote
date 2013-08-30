@@ -49,7 +49,7 @@
 		BEC6301717C405EE0010B89F /* EmotionIntensities.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301617C405EE0010B89F /* EmotionIntensities.plist */; };
 		BEC6301917C510A40010B89F /* RefreshIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301817C510A40010B89F /* RefreshIcon.png */; };
 		BEC6301B17C546170010B89F /* SubmitIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301A17C546170010B89F /* SubmitIcon.png */; };
-		BEC6301D17C552430010B89F /* Emotions.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301C17C552430010B89F /* Emotions.plist */; };
+		BEC6301D17C552430010B89F /* EmotionNames.plist in Resources */ = {isa = PBXBuildFile; fileRef = BEC6301C17C552430010B89F /* EmotionNames.plist */; };
 		BEC6302117C6626B0010B89F /* PEEmotionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC6302017C6626B0010B89F /* PEEmotionsManager.m */; };
 		BEC6302417C6686A0010B89F /* SplashScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6302217C6686A0010B89F /* SplashScreen.png */; };
 		BEC6302517C6686A0010B89F /* SplashScreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEC6302317C6686A0010B89F /* SplashScreen@2x.png */; };
@@ -138,7 +138,7 @@
 		BEC6301617C405EE0010B89F /* EmotionIntensities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmotionIntensities.plist; sourceTree = "<group>"; };
 		BEC6301817C510A40010B89F /* RefreshIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RefreshIcon.png; sourceTree = SOURCE_ROOT; };
 		BEC6301A17C546170010B89F /* SubmitIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SubmitIcon.png; sourceTree = SOURCE_ROOT; };
-		BEC6301C17C552430010B89F /* Emotions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Emotions.plist; sourceTree = "<group>"; };
+		BEC6301C17C552430010B89F /* EmotionNames.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmotionNames.plist; sourceTree = "<group>"; };
 		BEC6301F17C6626B0010B89F /* PEEmotionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEEmotionsManager.h; sourceTree = "<group>"; };
 		BEC6302017C6626B0010B89F /* PEEmotionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEEmotionsManager.m; sourceTree = "<group>"; };
 		BEC6302217C6686A0010B89F /* SplashScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashScreen.png; sourceTree = SOURCE_ROOT; };
@@ -341,7 +341,7 @@
 			children = (
 				BEC6300E17C3FC4B0010B89F /* EmotionColors.plist */,
 				BEC6301617C405EE0010B89F /* EmotionIntensities.plist */,
-				BEC6301C17C552430010B89F /* Emotions.plist */,
+				BEC6301C17C552430010B89F /* EmotionNames.plist */,
 			);
 			name = "Property Lists";
 			sourceTree = "<group>";
@@ -524,7 +524,7 @@
 				BEC6301717C405EE0010B89F /* EmotionIntensities.plist in Resources */,
 				BEC6301917C510A40010B89F /* RefreshIcon.png in Resources */,
 				BEC6301B17C546170010B89F /* SubmitIcon.png in Resources */,
-				BEC6301D17C552430010B89F /* Emotions.plist in Resources */,
+				BEC6301D17C552430010B89F /* EmotionNames.plist in Resources */,
 				BEC6302417C6686A0010B89F /* SplashScreen.png in Resources */,
 				BEC6302517C6686A0010B89F /* SplashScreen@2x.png in Resources */,
 				BEBFA3F817C6B27700640BF8 /* Readme.txt in Resources */,

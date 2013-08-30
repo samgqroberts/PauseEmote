@@ -13,15 +13,17 @@
 
 @interface PEEmotionsManager ()
 
-@property NSArray *emotions;
+@property NSArray *emotionNames;
 @property NSDictionary *emotionColors;
+@property NSDictionary *emotionIntensities;
 
 @end
 
 @implementation PEEmotionsManager
 
+@synthesize emotionIntensities;
 @synthesize emotionColors;
-@synthesize emotions;
+@synthesize emotionNames;
 @synthesize ownerEmotions;
 
 + (PEEmotionsManager *)sharedSingleton
@@ -43,9 +45,11 @@
         
         self.ownerEmotions = [NSMutableDictionary dictionary];
         
-        self.emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
+        self.emotionNames = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
         
         self.emotionColors = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"EmotionColors" ofType:@"plist"]];
+        
+        self.emotionIntensities = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"EmotionIntensities" ofType:@"plist"]];
         
         [self populateOwnerEmotions];
         
@@ -53,11 +57,27 @@
     return self;
 }
 
+- (NSString *)getEmotionNameAtIndex:(int)index {
+    return [self.emotionNames objectAtIndex:index];
+}
+
+- (int)getEmotionNameCount {
+    return [self.emotionNames count];
+}
+
+- (NSString *)getTextForEmotionNamed:(NSString *)emotionName atIntensity:(float)intensity {
+    if ([self.emotionNames containsObject:emotionName]) {
+        return [((NSArray *)[self.emotionIntensities objectForKey:emotionName]) objectAtIndex:intensity/2];
+    }
+    //else it's custom
+    return [NSString stringWithFormat:@"%@ %@", [((NSArray *)[self.emotionIntensities objectForKey:[self.emotionNames objectAtIndex:[self.emotionNames count]-1]]) objectAtIndex:intensity/2], emotionName ];
+}
+
 - (UIColor *)getColorForEmotionNamed:(NSString *)emotionName {
     if (!emotionName) { // no intensities for any emotion logged
         return [PEUtil colorFromHexString:DEFAULT_EMOTION_COLOR];
     }
-    if ([self.emotions containsObject:emotionName]) {
+    if ([self.emotionNames containsObject:emotionName]) {
         // it's either not custom or it's called @"Pick Your Own"
         return [PEUtil colorFromHexString:[self.emotionColors objectForKey:emotionName]];
     }
@@ -71,7 +91,7 @@
     NSString *returnString;
     int highestIntensity = 0;
     NSMutableDictionary *intensities = [NSMutableDictionary dictionary];
-    for (NSString *name in self.emotions) {
+    for (NSString *name in self.emotionNames) {
         [intensities setValue:[NSNumber numberWithFloat:0.0] forKey:name];
     }
     for (PEEmotion *emotion in emotionsArray) {
@@ -84,10 +104,10 @@
             }
             // custom emotion
             else {
-                NSNumber *one = [intensities objectForKey:[self.emotions objectAtIndex:[self.emotions count]-1 ]];
+                NSNumber *one = [intensities objectForKey:[self.emotionNames objectAtIndex:[self.emotionNames count]-1 ]];
                 NSNumber *two = [emotion.intensities objectForKey:key];
                 NSNumber *sum = [NSNumber numberWithFloat:([one floatValue] + [two floatValue])];
-                [intensities setObject:sum forKey:[self.emotions objectAtIndex:[self.emotions count]-1 ]];
+                [intensities setObject:sum forKey:[self.emotionNames objectAtIndex:[self.emotionNames count]-1 ]];
             }
         }
     }
@@ -240,13 +260,13 @@
                 
             }
             
-            if ([self.emotions containsObject: newSubComponent]) {
+            if ([self.emotionNames containsObject: newSubComponent]) {
                 emotionName = newSubComponent;
                 continue;
             }
             
             if (emotionName != nil) {
-                if ([intensities count] == [self.emotions count] - 1) {
+                if ([intensities count] == [self.emotionNames count] - 1) {
                     emotion.customEmotion = emotionName;
                 }
                 [intensities setValue: [NSNumber numberWithFloat:[newSubComponent floatValue]] forKey:emotionName];
@@ -254,12 +274,12 @@
                 continue;
             }
             
-            if ([intensities count] == [self.emotions count] - 1) {
+            if ([intensities count] == [self.emotionNames count] - 1) {
                 emotionName = newSubComponent;
                 continue;
             }
             
-            if ([intensities count] == [self.emotions count]) {
+            if ([intensities count] == [self.emotionNames count]) {
                 emotion.comment = newSubComponent;
                 break;
             }
@@ -273,7 +293,7 @@
         }
         
         // make sure emotion has all necessary parts
-        if ([intensities count] != [self.emotions count] || !emotion.dateCreated|| !emotion.customEmotion || !emotion.comment) {
+        if ([intensities count] != [self.emotionNames count] || !emotion.dateCreated|| !emotion.customEmotion || !emotion.comment) {
             continue;
         }
         emotion.intensities = [NSDictionary dictionaryWithDictionary:intensities];

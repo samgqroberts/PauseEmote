@@ -50,12 +50,9 @@
 
 @property CGSize screenSize;
 @property UIButton *submitButton;
-@property NSDictionary *emotionColors;
 @property UIColor *cellTextColor;
-@property NSDictionary *emotionIntensities;
 @property PELogEmotionsCell *customEmotionCell;
 @property PELogEmotionsCell *commentCell;
-@property NSArray *emotions;
 @property NSMutableDictionary *intensities;
 @property int numberOfCells;
 @property PEEmotionsManager *lem;
@@ -78,12 +75,9 @@ BOOL editingCustomCell;
 @synthesize screenSize;
 @synthesize numberOfCells;
 @synthesize intensities;
-@synthesize emotions;
 @synthesize submitButton;
 @synthesize commentCell;
 @synthesize customEmotionCell;
-@synthesize emotionIntensities;
-@synthesize emotionColors;
 @synthesize cellHeight;
 @synthesize cellTextColor;
 
@@ -112,15 +106,8 @@ BOOL editingCustomCell;
     //get logged emotions singleton
     lem = [PEEmotionsManager sharedSingleton];
     
-    //get info from plists
-    emotions = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Emotions" ofType:@"plist"]];
-    
-    emotionColors = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"EmotionColors" ofType: @"plist"]];
-    
-    emotionIntensities = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource: @"EmotionIntensities" ofType: @"plist"]];
-    
     //init cells info
-    numberOfCells = [emotions count] + 1; // +1 for comment cell
+    numberOfCells = [lem getEmotionNameCount] + 1; // +1 for comment cell
     intensities = [NSMutableDictionary dictionary];
     
     // disable scrolling
@@ -152,13 +139,6 @@ BOOL editingCustomCell;
     
     //save self to navigation controller
     [(PENavigationController *)self.navigationController setLogFeelingsViewController:self];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     
 }
 
@@ -250,8 +230,6 @@ BOOL editingCustomCell;
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -294,57 +272,16 @@ BOOL editingCustomCell;
     NSString *emotion = @"";
     UIFont *font = [UIFont boldSystemFontOfSize:height_factor(EMOTION_TITLE_FONT_SIZE)];
     
-    if (indexPath.row/2 == 0) {
-        emotionColor = [PEUtil colorFromHexString: [emotionColors valueForKey:@"Joy"]];
-        emotion = @"Joy";
-        cellLabel = @"JOY";
+    if (indexPath.row/2 < [lem getEmotionNameCount]) {
+        emotion = [lem getEmotionNameAtIndex:indexPath.row/2];
+        emotionColor = [lem getColorForEmotionNamed:emotion];
+        cellLabel = [emotion uppercaseString];
     }
-    if (indexPath.row/2 == 1) {
-        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Sad"]];
-        emotion = @"Sad";
-        cellLabel = @"SAD";
-    }
-    if (indexPath.row/2 == 2) {
-        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Hope"]];
-        emotion = @"Hope";
-        cellLabel = @"HOPE";
-    }
-    if (indexPath.row/2 == 3) {
-        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Anxious"]];
-        emotion = @"Anxious";
-        cellLabel = @"ANXIOUS";
-    }
-    if (indexPath.row/2 == 4) {
-        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Calm"]];
-        emotion = @"Calm";
-        cellLabel = @"CALM";
-    }
-    if (indexPath.row/2 == 5) {
-        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Anger"]];
-        emotion = @"Anger";
-        cellLabel = @"ANGER";
-    }
-    if (indexPath.row/2 == 6) {
-        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Confused"]];
-        emotion = @"Confused";
-        cellLabel = @"CONFUSED";
-    }
-    if (indexPath.row/2 == 7) {
-        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Shame"]];
-        emotion = @"Shame";
-        cellLabel = @"SHAME";
-    }
-    if (indexPath.row/2 == 8) {
-        emotionColor = [PEUtil colorFromHexString:[emotionColors valueForKey:@"Pick Your Own"]];
-        emotion = @"Pick Your Own";
-        cellLabel = @"PICK YOUR OWN";
-    }
-    if (indexPath.row/2 == 9) {
+    else { //comment cell
         cell.textLabel.textColor = [PEUtil colorFromHexString:COMMENT_CELL_TEXT_COLOR];
         emotion = @"Comment";
         cellLabel = @"Why are you feeling this way?";
         font = [UIFont systemFontOfSize:height_factor(COMMENT_PROMPT_FONT_SIZE)];
-        
     }
     
     [cell initForEmotion:emotion withColor:emotionColor];
@@ -354,8 +291,8 @@ BOOL editingCustomCell;
     // apply kerning to cell label
     cell.textLabel.attributedText = [self attributedStringWithText:cellLabel withKerning:EMOTION_TITLE_KERNING];
     
-    if (indexPath.row/2 < [self.emotions count] && [self.intensities objectForKey: [self.emotions objectAtIndex:indexPath.row/2]] != nil) {
-        [cell setIntensityFrame: [(NSNumber *)[self.intensities objectForKey: [self.emotions objectAtIndex:indexPath.row/2]] floatValue]];
+    if (indexPath.row/2 < [lem getEmotionNameCount] && [self.intensities objectForKey: [lem getEmotionNameAtIndex:indexPath.row/2]] != nil) {
+        [cell setIntensityFrame: [(NSNumber *)[self.intensities objectForKey: [lem getEmotionNameAtIndex:indexPath.row/2]] floatValue]];
         [self updateTextForCell:cell];
     }
     
@@ -416,21 +353,21 @@ BOOL editingCustomCell;
     int data = 2;
     
     // all but custom emotion
-    for (int i = 0 ; i < [self.emotions count] - 1 ; i++) {
+    for (int i = 0 ; i < [lem getEmotionNameCount] - 1 ; i++) {
         if (data == 10 || data == 11) {
             data+=2;
         }
-        emotion = [self.emotions objectAtIndex:i];
+        emotion = [lem getEmotionNameAtIndex: i];
         bit = [NSString stringWithFormat: @"&data%@%d=%@&data%@%d=%f", data<10?@"0":@"", data++, emotion, data<10?@"0":@"", data++, [(NSNumber *)[self.intensities valueForKey:emotion] floatValue]];
         postString = [postString stringByAppendingString:bit];
     }
     // now for custom emotion
-    PELogEmotionsCell *customCell = (PELogEmotionsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2-1 inSection:0]];
+    PELogEmotionsCell *customCell = (PELogEmotionsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[lem getEmotionNameCount]*2-1 inSection:0]];
     emotion = customCell.customEmotion ? customCell.customEmotion : @"No custom emotion";
     bit = [NSString stringWithFormat: @"&data%d=%@&data%d=%f", data++, emotion, data++, customCell.intensity];
     postString = [postString stringByAppendingString:bit];
     // now for comment
-    commentCell = (PELogEmotionsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.emotions count]*2+1 inSection:0]];
+    commentCell = (PELogEmotionsCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[lem getEmotionNameCount]*2+1 inSection:0]];
     bit = [NSString stringWithFormat: @"&data%d=%@", data++, (commentCell.customEmotionField ? commentCell.customEmotionField.text : @"No comment")];
     postString = [postString stringByAppendingString: bit];
     
@@ -456,8 +393,8 @@ BOOL editingCustomCell;
         emo.intensities = [NSMutableDictionary dictionary];
         
         int i = 0;
-        for ( ; i < [self.emotions count] - 1 ; i++) {
-            emotion = [self.emotions objectAtIndex:i];
+        for ( ; i < [lem getEmotionNameCount] - 1 ; i++) {
+            emotion = [lem getEmotionNameAtIndex: i];
             [emo.intensities setValue: ([self.intensities objectForKey:emotion]?[self.intensities objectForKey:emotion]:[NSNumber numberWithFloat:0.0]) forKey:emotion];
         }
         
@@ -598,7 +535,7 @@ BOOL editingCustomCell;
         // update intensity based on touch
         float intensity = [cell newIntensityWidth:touchPoint.x];
         
-        if (![cell.emotion isEqualToString: [self.emotions objectAtIndex:[emotions count]-1]]) {
+        if (![cell.emotion isEqualToString: [lem getEmotionNameAtIndex: [lem getEmotionNameCount]-1]]) {
             [self.intensities setValue:[NSNumber numberWithFloat:intensity] forKey: cell.emotion];
         }
         
@@ -611,20 +548,15 @@ BOOL editingCustomCell;
     float fontSize;
     float kerning;
     NSString *text;
-    if ([cell.emotion isEqualToString:@"Pick Your Own"]) {
-        kerning = EMOTION_INTENSITY_KERNING;
-        fontSize = height_factor(EMOTION_INTENSITY_FONT_SIZE);
-        text = [[[(NSString *)[emotionIntensities valueForKey:cell.emotion][((int)cell.intensity/2)] uppercaseString] stringByAppendingString: @" "] stringByAppendingString:[cell.customEmotion uppercaseString]] ;
-    }
-    else if (cell.intensity == 0) {
+    if (cell.intensity == 0) {
         kerning = EMOTION_TITLE_KERNING;
         fontSize = height_factor(EMOTION_TITLE_FONT_SIZE);
-        text = [cell.emotion uppercaseString];
+        text = [cell.customEmotion?cell.customEmotion:cell.emotion uppercaseString];
     }
     else {
         kerning = EMOTION_INTENSITY_KERNING;
         fontSize = height_factor(EMOTION_INTENSITY_FONT_SIZE);
-        text = [[emotionIntensities valueForKey:cell.emotion][((int)cell.intensity)/2] uppercaseString];
+        text = [[lem getTextForEmotionNamed:cell.customEmotion?cell.customEmotion:cell.emotion atIntensity:cell.intensity] uppercaseString];
     }
     cell.textLabel.font = [UIFont boldSystemFontOfSize:fontSize];
     cell.textLabel.attributedText = [self attributedStringWithText:text withKerning:kerning];
